@@ -1,0 +1,291 @@
+# i3 config file (v4)
+
+# config constants
+# ----------------
+
+set $webbrowser firefox
+set $mod Mod4
+set $i --no-startup-id
+
+# autoexec
+# --------
+exec $i exec_if_wlan
+
+# i3bar {{{
+bar {
+	status_command ~/.i3/barscript
+	font -erus-erusfont-medium-r-normal--11-80-100-100-c-60-iso10646-1
+	position top
+
+	colors {
+		statusline         #99AA88
+		background         #000000
+
+		#                  border  bg      fg
+		inactive_workspace #000000 #000000 #666666
+		urgent_workspace   #cd2222 #cd2222 #ffffff
+		focused_workspace  #000000 #000000 #99ee4e
+		active_workspace   #444444 #000000 #666666
+	}
+}
+# }}}
+
+# general options
+# ---------------
+
+font -erus-erusfont-medium-r-normal--11-80-100-100-c-60-iso10646-1
+ipc-socket /tmp/nestedcons
+new_window 1pixel
+workspace_layout default
+popup_during_fullscreen leave_fullscreen
+floating_modifier $mod
+
+# client colors {{{
+
+client.focused          #99EE4E #99EE4E #000000
+client.focused_inactive #050505 #050505 #99EE4E
+client.unfocused        #050505 #050505 #999999
+client.urgent           #FF0000 #CD2222 #FFFFFF
+
+# }}}
+
+# workspace names {{{
+
+set $w0 1·news
+set $w1 2·web
+set $w2 3
+set $w3 4
+set $w4 5
+set $w5 6
+set $w6 7
+set $w7 8
+set $w8 9
+set $w9 10·down
+set $w10 11
+set $w11 12
+
+# }}}
+
+# assignments and like {{{
+# ------------------------
+
+for_window [class="^arx$"] fullscreen
+for_window [class="^(hwengine|hedgewars)$"] fullscreen
+for_window [title="^crawl-tiles|Wah!Cade$"] border none
+for_window [title="^Amnesia: The Dark Descent launcher$"] floating enable
+for_window [class="^(rockboxui|Pychrom|emulator-arm|allegro|nx)$"] floating enable
+for_window [class="^Animate$" instance="^animate$"] floating enable
+for_window [class="^Display$" instance="^display$"] floating enable
+for_window [class="^Eclipse$" title="^(Eclipse SDK |Eclipse)$"] floating enable
+for_window [class="^MuPDF$"] border normal
+
+assign [class="^JDownloader|jd-Main$"] → $w9
+assign [class="^URxvt$" instance="^rtorrent$"] → $w9
+
+assign [class="^URxvt$" instance="^newsbeuter$"] → $w0
+
+assign [class="^Firefox|luakit$"] → $w1
+
+# }}}
+
+# bindings {{{
+# ------------
+
+# feh et
+bindsym $mod+x exec $i feh et
+bindsym $mod+Shift+x exec $i ical && feh et
+
+# clients menu with dmenu
+bindsym $mod+m exec $i ~/.i3/clients_menu
+
+# date (having a proper notification daemon would be nice)
+bindsym $mod+c exec $i (echo -n '^fg(#9afe2e)^i(/home/tharek/.dzen_icons/clock.xbm)^fg()  ' && date '+%H:%M') | dzbox 4
+
+# net
+bindsym XF86WWW exec $i $webbrowser
+bindsym XF86Phone exec $i urxvt -e weechat-curses
+bindsym $mod+w exec $i urxvt -e weechat-curses
+
+# direct access keys
+bindsym XF86ScreenSaver exec $i dmenu_apps -i -p "x"
+bindsym Shift+XF86ScreenSaver exec $i dmenu_wifi
+#bindsym XF86Tools exec $i dmenu_cli -i -p "term"
+bind 191 exec $i dmenu_cli -i -p "term"
+bindsym XF86Launch1 exec $i urxvt -e htop -u tharek
+
+# sound keys
+set $snd amixer set Master
+bindsym XF86AudioMute exec $i $snd togglemute
+bindsym XF86AudioLowerVolume exec $i $snd 2-
+bindsym Shift+XF86AudioLowerVolume exec $i $snd 10-
+bindsym XF86AudioRaiseVolume exec $i $snd unmute 2+
+bindsym Shift+XF86AudioRaiseVolume exec $i $snd unmute 10+
+
+# sound keys one-handed :)
+bindsym Mod5+F10 exec $i $snd togglemute
+bindsym Mod5+F11 exec $i $snd 2-
+bindsym Mod5+Shift+F11 exec $i $snd 10-
+bindsym Mod5+F12 exec $i $snd unmute 2+
+bindsym Mod5+Shift+F12 exec $i $snd unmute 10+
+
+# power
+bindsym XF86PowerOff exec $i dmshutdown
+bindsym Shift+XF86PowerOff exec $i cputwist
+
+# shift clipboards !
+bindsym Mod5+Insert exec $i sclip
+
+# multimedia keys
+bindsym XF86AudioNext exec $i ncmpcpp next
+bindsym XF86AudioPlay exec $i ncmpcpp toggle
+bindsym Shift+XF86AudioPlay exec $i urxvt -e ncmpcpp
+bindsym XF86AudioPrev exec $i ncmpcpp prev
+bindsym XF86AudioStop exec $i mpc && mpd --kill || mpd
+
+# xrandr
+#bindsym Mod5+F8 exec $i xrandr_menu
+bindsym Mod5+F8 exec $i razorxrandr
+
+# add current playing song to file
+bindsym Mod5+Ctrl+Down exec $i marksong
+
+# ncmpcpp
+bindsym Mod5+Left exec $i ncmpcpp prev
+bindsym Mod5+Shift+Left exec $i mpc seek -10
+bindsym Mod5+Right exec $i ncmpcpp next
+bindsym Mod5+Shift+Right exec $i mpc seek +10
+bindsym Mod5+Down exec $i ncmpcpp toggle
+bindsym Mod5+Shift+Down exec $i urxvt -e ncmpcpp
+bindsym Mod5+Up exec $i mpc && mpd --kill || mpd
+
+# unmount
+bindsym Shift+XF86AudioStop exec $i ejectmount
+bindsym Shift+Mod5+Up exec $i ejectmount
+
+# ranger
+bindsym $mod+e exec $i LESS=MR urxvt -e ranger
+
+bindsym $mod+F1 exec $i fifo-input
+bindsym $mod+F2 exec $i xseldo
+
+# Start terminal
+bindsym Shift+Mod5+Return exec $i urxvt
+bindsym Mod5+Return exec $i new_urxvt
+
+# Splitting
+bindsym $mod+g split h
+bindsym $mod+v split v
+
+# Fullscreen
+bindsym $mod+f fullscreen
+
+# Layouts
+bindsym $mod+d layout default
+bindsym $mod+Tab layout tabbed
+bindsym $mod+s layout stacking
+
+# Borders
+bindsym $mod+KP_1 border none
+bindsym $mod+KP_2 border 1pixel
+bindsym $mod+KP_3 border normal
+
+# toggle tiling / floating
+bindsym $mod+space floating toggle
+bindsym $mod+Shift+space focus mode_toggle
+
+# Kill client
+bindsym Mod1+F5 kill
+bindsym Mod1+Shift+F5 kill client
+
+# Restart reload or exit i3
+bindsym $mod+Shift+F11 restart
+bindsym $mod+Shift+F10 reload
+bindsym $mod+Shift+F12 exit
+
+# Focus
+bindsym Mod5+h focus left
+bindsym Mod5+j focus down
+bindsym Mod5+k focus up
+bindsym Mod5+l focus right
+
+# Move
+bindsym Mod5+Shift+h move left
+bindsym Mod5+Shift+j move down
+bindsym Mod5+Shift+k move up
+bindsym Mod5+Shift+l move right
+
+# Insert mode
+mode "insert" {
+	bindsym Escape mode "default"
+}
+bindsym $mod+i mode "insert"
+
+# Workspaces
+bind Mod4+10 workspace $w0
+bind Mod4+11 workspace $w1
+bind Mod4+12 workspace $w2
+bind Mod4+13 workspace $w3
+bind Mod4+14 workspace $w4
+bind Mod4+15 workspace $w5
+bind Mod4+16 workspace $w6
+bind Mod4+17 workspace $w7
+bind Mod4+18 workspace $w8
+bind Mod4+19 workspace $w9
+bind Mod4+20 workspace $w10
+bind Mod4+21 workspace $w11
+
+# Move to Workspaces
+bind Mod4+Shift+10 move workspace $w0; workspace $w0
+bind Mod4+Shift+11 move workspace $w1; workspace $w1
+bind Mod4+Shift+12 move workspace $w2; workspace $w2
+bind Mod4+Shift+13 move workspace $w3; workspace $w3
+bind Mod4+Shift+14 move workspace $w4; workspace $w4
+bind Mod4+Shift+15 move workspace $w5; workspace $w5
+bind Mod4+Shift+16 move workspace $w6; workspace $w6
+bind Mod4+Shift+17 move workspace $w7; workspace $w7
+bind Mod4+Shift+18 move workspace $w8; workspace $w8
+bind Mod4+Shift+19 move workspace $w9; workspace $w9
+bind Mod4+Shift+20 move workspace $w10; workspace $w10
+bind Mod4+Shift+21 move workspace $w11; workspace $w11
+
+# Workspaces
+bind Mod5+10 workspace $w0
+bind Mod5+11 workspace $w1
+bind Mod5+12 workspace $w2
+bind Mod5+13 workspace $w3
+bind Mod5+14 workspace $w4
+bind Mod5+15 workspace $w5
+bind Mod5+16 workspace $w6
+bind Mod5+17 workspace $w7
+bind Mod5+18 workspace $w8
+bind Mod5+19 workspace $w9
+bind Mod5+20 workspace $w10
+bind Mod5+21 workspace $w11
+
+# Move to Workspaces
+bind Mod5+Shift+10 move workspace $w0; workspace $w0
+bind Mod5+Shift+11 move workspace $w1; workspace $w1
+bind Mod5+Shift+12 move workspace $w2; workspace $w2
+bind Mod5+Shift+13 move workspace $w3; workspace $w3
+bind Mod5+Shift+14 move workspace $w4; workspace $w4
+bind Mod5+Shift+15 move workspace $w5; workspace $w5
+bind Mod5+Shift+16 move workspace $w6; workspace $w6
+bind Mod5+Shift+17 move workspace $w7; workspace $w7
+bind Mod5+Shift+18 move workspace $w8; workspace $w8
+bind Mod5+Shift+19 move workspace $w9; workspace $w9
+bind Mod5+Shift+20 move workspace $w10; workspace $w10
+bind Mod5+Shift+21 move workspace $w11; workspace $w11
+
+bindsym $mod+h move scratchpad
+bindsym $mod+u scratchpad show
+bindsym $mod+k focus parent
+bindsym $mod+j focus child
+
+bindsym $mod+KP_Subtract resize shrink width
+bindsym $mod+KP_Add resize grow width
+bindsym $mod+KP_Divide resize shrink height
+bindsym $mod+KP_Multiply resize grow height
+
+# }}}
+
+# vim:set filetype=i3 fdm=marker:

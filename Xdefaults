@@ -1,0 +1,170 @@
+! common settings ------------------------------------------------------------
+
+*font: -erus-erusfont-medium-r-normal--11-80-100-100-c-60-iso10646-1
+*BorderWidth: 1
+*BorderColor: #000000
+
+! terminal colors (tangoesque color scheme) ----------------------------------
+
+*background:  #0f0f0f
+*Background:  #0f0f0f
+*foreground:  #eaeaea
+*Foreground:  #eaeaea
+! Black
+*color0:      #0f0f0f
+*color8:      #555753
+! Red
+*color1:      #ff6565
+*color9:      #ff8d8d
+! Green
+*color2:      #93d44f
+*color10:     #c8e7a8
+! Yellow
+*color3:      #ffc123
+*color11:     #eab93d
+! Blue
+*color4:      #587aa4
+*color12:     #4475a4
+! Mangenta
+*color5:      #f57900
+*color13:     #f6a24f
+! Cyan
+*color6:      #46a4ff
+*color14:     #89b6e2
+! White
+*color7:      #cccccc
+*color15:     #ffffff
+
+
+! rxvt-unicode ---------------------------------------------------------------
+
+! colors
+!URxvt.foreground:         #000000
+!URxvt.background:         #ffffff
+URxvt.background:         #000000
+URxvt.foreground:         #cccccc
+URxvt.cursorColor:        #ffcc00
+
+! (false) transparency
+!URxvt.inheritPixmap:      true
+!URxvt.transparent:        true
+!URxvt.tintColor:          #222
+!URxvt.shading:            25
+
+! fading
+!URxvt.fading:             20
+!URxvt.fadeColor:          #1b1b1b
+
+! bell
+URxvt.urgentOnBell:      true
+URxvt.visualBell:        false
+
+! scrolling and scrollbar
+URxvt.saveLines:         32767
+URxvt.scrollTtyKeypress: true
+URxvt.scrollWithBuffer:  true
+URxvt.scrollTtyOutput:   false
+URxvt.scrollBar:         true
+URxvt.scrollstyle:       plain
+# I want a scrollbar, but I want it nearly invisible
+URxvt.scrollColor:       #070707
+URxvt.scrollBar_right:   true
+URxvt.secondaryScroll:   false
+
+! keyboard scrolling
+URxvt.keysym.Meta-Up:         command:\033]720;5\007
+URxvt.keysym.Meta-Down:       command:\033]721;5\007
+URxvt.keysym.Meta-Shift-Up:   command:\033]720;71\007
+URxvt.keysym.Meta-Shift-Down: command:\033]721;71\007
+
+URxvt.utmpInhibit:          true
+URxvt.perl-lib:             /usr/lib/urxvt/perl/
+URxvt.perl-ext-common:      default,url-select,keyboard-select,clipboard,new-window
+
+! cool suff
+URxvt.copyCommand:          xsel -ip
+URxvt.pasteCommand:         xsel -op
+URxvt.url-select.launcher:  firefox
+URxvt.url-select.underline: false
+URxvt.keysym.M-C-Insert:    perl:clipboard:copy
+URxvt.keysym.C-Insert:      perl:clipboard:paste_escaped
+URxvt.keysym.M-u:           perl:url-select:select_next
+URxvt.keysym.M-Escape:      perl:keyboard-select:activate
+URxvt.keysym.M-s:           perl:keyboard-select:search
+URxvt.keysym.M-n:           perl:new-window
+URxvt.colorUL:              #226aaa
+
+! fonts
+URxvt.font:              xft:Terminus:pixelsize=9:antialias=false, \
+                         xft:erusfont:pixelsize=9:antialias=false, \
+                         xft:clean:pixelsize=9:antialias=false
+URxvt.boldFont:          xft:erusfont:bold:pixelsize=9:antialias=false
+
+! pseudo-zooming with Ctrl-F*
+URxvt.keysym.Control-F1: command:\033]710;xft:fixed:pixelsize=6:antialias=false\007\033]711;xft:fixed:pixelsize=6:antialias=false\007
+URxvt.keysym.Control-F2: command:\033]710;xft:Terminus:pixelsize=9:antialias=false,xft:erusfont:pixelsize=9:antialias=false,xft:clean:pixelsize=9:antialias=false\007\033]711;xft:erusfont:bold:pixelsize=9:antialias=false\007
+URxvt.keysym.Control-F3: command:\033]710;xft:Inconsolata:pixelsize=18:antialias=true\007\033]711;xft:Deja Vu Sans Mono:bold:pixelsize=16:antialias=true\007
+URxvt.keysym.Control-F4: command:\033]710;xft:Inconsolata:pixelsize=22:antialias=true\007\033]711;xft:Deja Vu Sans Mono:bold:pixelsize=20:antialias=true\007
+URxvt.keysym.Control-F5: command:\033]710;xft:Inconsolata:pixelsize=32:antialias=true\007\033]711;xft:Deja Vu Sans Mono:bold:pixelsize=30:antialias=true\007
+URxvt.keysym.Control-F6: command:\033]710;xft:Inconsolata:pixelsize=48:antialias=true\007\033]711;xft:Inconsolata:bold:pixelsize=48:antialias=true\007
+URxvt.keysym.Control-F7: command:\033]710;xft:Inconsolata:pixelsize=64:antialias=true\007\033]711;xft:Inconsolata:bold:pixelsize=64:antialias=true\007
+
+! keypad fix
+URxvt.keysym.KP_Prior:    command:\033]720;100\007
+URxvt.keysym.KP_Next:     command:\033]721;100\007
+URxvt.keysym.KP_Up:       \033[A
+URxvt.keysym.KP_Down:     \033[B
+URxvt.keysym.KP_Left:     \033[D
+URxvt.keysym.KP_Right:    \033[C
+URxvt.keysym.KP_Insert:   \033[2~
+URxvt.keysym.KP_Delete:   \033[3~
+URxvt.keysym.KP_Add:      +
+URxvt.keysym.KP_Subtract: -
+URxvt.keysym.KP_Divide:   /
+URxvt.keysym.KP_Multiply: *
+URxvt.keysym.KP_Decimal:  .
+
+
+! weechat --------------------------------------------------------------------
+
+weechat*urgentOnBell: true
+
+
+! gv -------------------------------------------------------------------------
+
+gv*background:  #0f0f0f
+gv*foreground:  #eaeaea
+
+
+! xfig -----------------------------------------------------------------------
+
+xfig*font: -erus-erusfont-medium-r-normal--11-80-100-100-c-60-iso10646-1
+xfig*Background: #ffffff
+xfig*background: #0f0f0f
+xfig*Foreground: #000000
+xfig*foreground: #eaeaea
+
+! xdvi -----------------------------------------------------------------------
+
+xdvi*foreground: #000000
+xdvi*background: #ffffff
+gv*foreground:   #000000
+gv*background:   #ffffff
+
+
+! xterm ----------------------------------------------------------------------
+
+xterm*background:        #000000
+xterm*foreground:        #cccccc
+xterm*faceName:          terminus:pixelsize=10
+xterm*dynamicColors:     true
+xterm*utf8:              2
+xterm*eightBitInput:     true
+xterm*saveLines:         32767
+xterm*scrollTtyKeypress: true
+xterm*scrollTtyOutput:   false
+xterm*scrollBar:         false
+xterm*loginShell:        true
+xterm*jumpScroll:        false
+xterm*multiScroll:       true
+xterm*toolBar:           true

@@ -1,0 +1,214 @@
+colorscheme molokai
+
+" autocommands
+autocmd LocationChange ^https://mail\.google\.com/ :normal! <C-z>
+autocmd PageLoad ^https://accounts\.google\.com/ :normal! gi
+
+" custom styles {{{
+" -----------------
+" reflets: more space for content, improved readability
+style reflets.info   body {color: black !important}
+" nyaa: highlight overed row
+style nyaa.eu        .tlistrow:hover{background-color:#d0ddd0}
+" youtube: always display description (no javascript needed)
+style youtube.com    #watch-description-content{overflow:visible !important} #watch-description-toggle{display:none !important} #watch-description-extras{display:block !important} #watch-description-clip{position:relative !important}
+" dark gtk theme fixes
+style github.com     #pull_request_body{color: #333}
+style code.google.com input[type='button'], input[type='submit'], .butonify {color: #090909}
+" }}}
+
+" misc settings {{{
+" -----------------
+set defsearch=
+set complete=location,file
+set guioptions=s
+set hlfind
+set sanitizeshutdown=commandline,history,cookies,sessions
+set editor='urxvt -e vim -f +<line> +"sil! call cursor(0, <column>)" <file>'
+set scrolltime=5
+set showmode=caret,!normal,!find,!ex,!hints,base
+" output_multiline,operator,repl,text_edit,visual
+
+" do not want ;y to yank img[src]
+set extendedhinttags=[iI]:img,[asOTvVWy]:':-moz-any-link',area[href],iframe[src],[A]:[id],a[name],[f]:body,[F]:body,code,div,html,p,pre,span,[S]:'input:not([type=hidden])',textarea,button,select
+
+" patterns (improved for navigating french sites)
+set previouspattern='[←<«] Prev$','\bprev(ious)?\b','Précédent','plus ancien','\bolder\b',^<$,'^(←|<<|«)$','^(←|<|«)','(←|<|«)$'
+set nextpattern='^Next [→>»]','\bnext\b','Suivant','plus récent','^>$','^(→|>>|»)$','(→|>|»)$','^(→|>|»)','\bmore\b'
+
+" search with duckduckgo by default
+set defsearch=d
+" }}}
+
+" mappings {{{
+" ============
+
+" navigation basics {{{
+" ---------------------
+" history
+map b <A-Left>
+map m <A-Right>
+map H :jump<CR>
+
+" tabs
+map <S-tab> :tabp<CR>
+map <tab> :tabn<CR>
+map <C-t> :tabopen<CR>
+map > :tabmove! +1<CR>
+map < :tabmove! -1<CR>
+map D :tabclose<CR>:tabp<CR>
+map gy :tabdu<CR>
+
+" zooming
+map + zI
+map -- - zO
+
+" Quickmarks
+map \' `
+
+" remove highlightings for find pattern matches
+map <Space> :noh<CR>
+
+" source
+map vs y:tabopen view-source:<S-Ins><CR>
+map vS <view-source-externally>
+
+map <left> [[
+map <right> ]]
+map I :pageinfo 
+map S :saveas 
+" }}}
+
+" various places shortcuts {{{
+" ----------------------------
+"addons
+map ga :open about:addons<CR>
+map gA :tabopen about:addons<CR>
+
+" scrapbook
+map gs :open chrome://scrapbook/content/manage.xul<CR><C-z>
+map gS :tabopen chrome://scrapbook/content/manage.xul<CR><C-z>
+map s :sidebar! Scrapbook<CR>
+
+" places (bookmarks, history,…)
+map gp :open chrome://browser/content/places/places.xul<CR><C-z>
+map gP :tabopen chrome://browser/content/places/places.xul<CR><C-z>
+
+" Gmail
+map gm ohttp://mail.google.com<CR>
+map gM thttp://mail.google.com<CR>
+" }}}
+
+" search engines mapping {{{
+" --------------------------
+" animeka
+map ,a  oa 
+map ,pa oa <S-ins><CR>
+map ,Pa ta <S-ins><CR>
+" arch wiki
+map ,A  oaw 
+map ,pA oaw <S-ins><CR>
+map ,PA taw <S-ins><CR>
+" arch topic
+map ,t  oat 
+map ,pt oat <S-ins><CR>
+map ,Pt tat <S-ins><CR>
+" conjugueur
+map ,c  oconj 
+map ,pc oconj <S-ins><CR>
+map ,Pc tconj <S-ins><CR>
+" duckduckgo
+map ,d  od 
+map ,pd od <S-ins><CR>
+map ,Pd td <S-ins><CR>
+" en → fr
+map ,e  oen 
+map ,pe oen <S-ins><CR>
+map ,Pe ten <S-ins><CR>
+" fr → en
+map ,f  ofr 
+map ,pf ofr <S-ins><CR>
+map ,Pf tfr <S-ins><CR>
+" images
+map ,i  oi 
+map ,pi oi <S-ins><CR>
+map ,Pi ti <S-ins><CR>
+" jamendo
+map ,j  ojam 
+map ,pj ojam <S-ins><CR>
+map ,Pj tjam <S-ins><CR>
+" yopmail
+map ,y  oyop 
+map ,py oyop <S-ins><CR>
+map ,Py tyop <S-ins><CR>
+" nyaa
+map ,n  onyaa 
+map ,pn onyaa <S-ins><CR>
+map ,Pn tnyaa <S-ins><CR>
+" map
+map ,m  omap 
+map ,pm omap <S-ins><CR>
+map ,Pm tmap <S-ins><CR>
+" tinysub
+map ,s  osub 
+map ,ps osub <S-ins><CR>
+map ,Ps tsub <S-ins><CR>
+" urban dictionary
+map ,u  oslang 
+map ,pu oslang  <S-ins><CR>
+map ,Pu tslang  <S-ins><CR>
+" youtube
+map ,Y  oyou 
+map ,pY oyou <S-ins><CR>
+map ,PY tyou <S-ins><CR>
+" wikipedia
+map ,w  ow 
+map ,pw ow <S-ins><CR>
+map ,Pw tw <S-ins><CR>
+" wikipedia en
+map ,W  owe 
+map ,pW owe <S-ins><CR>
+map ,PW twe <S-ins><CR>
+" wikibooks
+map ,b  books 
+map ,pb books <S-ins><CR>
+map ,Pb books <S-ins><CR>
+" }}}
+
+" miscellanous {{{
+" ----------------
+" clear google cookies
+command! gquit,gq sanitize host google.com
+				\ sanitize host google.fr
+				\ cookies google.com clear
+				\ cookies google.fr clear
+
+" clear google cookies and delete tab (quick logout)
+map gd :gquit<CR>d
+
+" jamendo info page for current mpd song
+map gj :!gojam<CR>
+
+" get rid of the error message appearing when I (un)plug my laptop AC
+map <Sleep> <Esc>
+" }}}
+" }}}
+
+" commands {{{
+" ------------
+
+" useragent switching
+command! uagent -nargs=? -complete custom,'[["default","Default user-agent"],[navigator.userAgent,"Current user-agent"],["Googlebot/2.1 (+http://www.googlebot.com/bot.html)","Googlebot"],["Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.57 Safari/537.17","Chrome 24 for Windows 7"],["Mozilla/5.0 (compatible; MSIE 9.0; X11; Linux x86_64; Trident/5.0)","Internet Explorer 9.0 for Linux :p"]]'
+		\ -js
+		\ if(args.length) {
+		\ 	if(args[0]=="default")
+		\ 		Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefBranch).clearUserPref("general.useragent.override");
+		\ 	else
+		\ 		Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefBranch).setCharPref("general.useragent.override",args[0]);
+		\ 	commandline.echo("New user-agent: "+navigator.userAgent, commandline.HL_QUESTION);
+		\ }
+		\ else
+		\ 	commandline.echo("Current user-agent: "+navigator.userAgent, commandline.HL_QUESTION);
+" }}}
+
+" vim:set syntax=vim foldmethod=marker:

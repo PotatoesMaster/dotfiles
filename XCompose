@@ -1,0 +1,173 @@
+include "/usr/share/X11/locale/en_US.UTF-8/Compose"
+
+# cedilla
+<Multi_key> <C> <c> : "Ç"
+<Multi_key> <c> <C> : "Ç"
+<Multi_key> <c> <c> : "ç"
+
+# Mathematical Symbols
+<Multi_key> <equal>      <asciitilde>           : "≈"
+<Multi_key> <equal>      <slash>                : "≠"
+<Multi_key> <equal>      <equal>   <equal>      : "≡"
+<Multi_key> <equal>      <equal>   <equal>      <equal>  : "≣"
+<Multi_key> <greater>    <greater>              : "≫"
+<Multi_key> <less>       <less>                 : "≪"
+<Multi_key> <greater>    <equal>                : "≥"
+<Multi_key> <less>       <equal>                : "≤"
+<Multi_key> <asciitilde> <equal>                : "∝"
+<Multi_key> <i>          <n>       <f>          : "∞"
+<Multi_key> <x>          <x>                    : "×"
+<Multi_key> <colon>      <minus>                : "÷"
+<Multi_key> <plus>       <minus>                : "±"
+<Multi_key> <minus>      <plus>                 : "∓"
+<Multi_key> <r>          <t>       <2>          : "√"
+<Multi_key> <r>          <t>       <3>          : "∛"
+<Multi_key> <r>          <t>       <4>          : "∜"
+<Multi_key> <colon>      <period>               : "∴"
+<Multi_key> <period>     <colon>                : "∵"
+<Multi_key> <equal>      <greater>              : "⇒"
+<Multi_key> <minus>      <v>                    : "∀"
+<Multi_key> <E>          <E>                    : "∃"
+<Multi_key> <equal>      <equal>   <asciitilde> : "≅"
+<Multi_key> <O>          <slash>                : "∅"
+<Multi_key> <o>          <slash>                : "∅"
+<Multi_key> <i>          <n>       <t>          : "∫"
+<Multi_key> <p>          <p>                    : "¶"
+
+# triangle in corner
+<Multi_key> <t> <KP_1> : "◣"
+<Multi_key> <t> <KP_3> : "◢"
+<Multi_key> <t> <KP_7> : "◤"
+<Multi_key> <t> <KP_9> : "◥"
+
+# simple borders
+<Multi_key> <b> <KP_1> : "└"
+<Multi_key> <b> <KP_2> : "─"
+<Multi_key> <b> <KP_3> : "┘"
+<Multi_key> <b> <KP_4> : "│"
+<Multi_key> <b> <KP_6> : "│"
+<Multi_key> <b> <KP_7> : "┌"
+<Multi_key> <b> <KP_8> : "─"
+<Multi_key> <b> <KP_9> : "┐"
+
+# parenthese
+<Multi_key> <p> <KP_7> : "⎛"
+<Multi_key> <p> <KP_4> : "⎜"
+<Multi_key> <p> <KP_1> : "⎝"
+<Multi_key> <p> <KP_9> : "⎞"
+<Multi_key> <p> <KP_6> : "⎟"
+<Multi_key> <p> <KP_3> : "⎠"
+
+# square brackets
+<Multi_key> <s> <KP_7> : "⎡"
+<Multi_key> <s> <KP_4> : "⎢"
+<Multi_key> <s> <KP_1> : "⎣"
+<Multi_key> <s> <KP_9> : "⎤"
+<Multi_key> <s> <KP_6> : "⎥"
+<Multi_key> <s> <KP_3> : "⎦"
+
+# rounded brackets
+<Multi_key> <r> <KP_7> : "⎧"
+<Multi_key> <r> <KP_4> : "⎨"
+<Multi_key> <r> <KP_1> : "⎩"
+<Multi_key> <r> <KP_9> : "⎫"
+<Multi_key> <r> <KP_6> : "⎬"
+<Multi_key> <r> <KP_3> : "⎭"
+
+# Greek
+<Multi_key> <g> <A> : Greek_ALPHA
+<Multi_key> <g> <a> : Greek_alpha
+<Multi_key> <g> <B> : Greek_BETA
+<Multi_key> <g> <b> : Greek_beta
+<Multi_key> <g> <D> : Greek_DELTA
+<Multi_key> <g> <d> : Greek_delta
+<Multi_key> <g> <E> : Greek_EPSILON
+<Multi_key> <g> <e> : Greek_epsilon
+<Multi_key> <g> <F> : Greek_PHI
+<Multi_key> <g> <f> : Greek_phi
+<Multi_key> <g> <G> : Greek_GAMMA
+<Multi_key> <g> <g> : Greek_gamma
+<Multi_key> <g> <H> : Greek_ETA
+<Multi_key> <g> <h> : Greek_eta
+<Multi_key> <g> <I> : Greek_IOTA
+<Multi_key> <g> <i> : Greek_iota
+<Multi_key> <g> <J> : Greek_THETA
+<Multi_key> <g> <j> : Greek_theta
+<Multi_key> <g> <K> : Greek_KAPPA
+<Multi_key> <g> <k> : Greek_kappa
+<Multi_key> <g> <L> : Greek_LAMBDA
+<Multi_key> <g> <l> : Greek_lamda
+<Multi_key> <g> <M> : Greek_MU
+<Multi_key> <g> <m> : Greek_mu
+<Multi_key> <g> <N> : Greek_NU
+<Multi_key> <g> <n> : Greek_nu
+<Multi_key> <g> <O> : Greek_OMICRON
+<Multi_key> <g> <o> : Greek_omicron
+<Multi_key> <g> <P> : Greek_PI
+<Multi_key> <g> <p> : Greek_pi
+<Multi_key> <g> <Q> : Greek_CHI
+<Multi_key> <g> <q> : Greek_chi
+<Multi_key> <g> <R> : Greek_RHO
+<Multi_key> <g> <r> : Greek_rho
+<Multi_key> <g> <S> : Greek_SIGMA
+<Multi_key> <g> <s> : Greek_sigma
+<Multi_key> <g> <T> : Greek_TAU
+<Multi_key> <g> <t> : Greek_tau
+<Multi_key> <g> <U> : Greek_UPSILON
+<Multi_key> <g> <u> : Greek_upsilon
+<Multi_key> <g> <W> : Greek_OMEGA
+<Multi_key> <g> <w> : Greek_omega
+<Multi_key> <g> <X> : Greek_XI
+<Multi_key> <g> <x> : Greek_xi
+<Multi_key> <g> <Y> : Greek_PSI
+<Multi_key> <g> <y> : Greek_psi
+<Multi_key> <g> <Z> : Greek_ZETA
+<Multi_key> <g> <z> : Greek_zeta
+
+# Mnemonics
+<Multi_key> <v> <v> : "✓" U2713
+<Multi_key> <X> <X> : "✗" U2717 # ballot X — <x> <x> taken by Xorg for multiply
+
+# Control
+# =======
+
+# I love invisible characters. They are always here to save me when someone
+# want to force me to type some text. :)
+
+# A space so thin, it’s invisible.  Used to separate words in scripts
+# that don’t separate words such as Thai, Kmer, and Japanese.  Since
+# it’s invisible, ZWSP is actually not a space at all; but it might
+# get expanded in automatic paragraph justification.
+<Multi_key> <space> <0>: "​" U200B # ZERO WIDTH SPACE
+# common abbreviation
+<Multi_key> <z> <w> <s> <p>: "​" U200B # ZERO WIDTH SPACE
+
+# Byte‐order mark.  Inserted at the start of UTF16 and UTF32 texts to
+# sign byte direction (since U+FFEF is a non‐character), and also in
+# UTF8 just to help encoding detectors.  It used to double as a
+# zero‐width non‐breaking space, but that caused problems so it’s
+# deprecated; use word joiner (below) instead.
+<Multi_key> <b> <o> <m>: "﻿" UFEFF
+
+# The proper zero‐width no‐break space.
+<Multi_key> <w> <j>: "⁠" U2060 # WORD JOINER
+<Multi_key> <z> <w> <n> <b> <s> <p>: "⁠" U2060 # WORD JOINER
+
+# The following fine‐tune the bidirectional algorithm.  In fact they
+# might mess up the display of this file =) The sequences are the
+# official abbreviations and widely used.
+#
+# The “marks” are useful for overriding the default behavior of the
+# bidi algorithm, that considers a paragraph to be in the direction of
+# the first strongly‐directed letter.
+<Multi_key> <l> <r> <m>: "‎" U200E # LEFT TO RIGHT MARK
+<Multi_key> <r> <l> <m>: "‏" U200F # RIGHT TO LEFT MARK
+<Multi_key> <l> <r> <e>: "‪" U202A # LEFT TO RIGHT EMBEDDING
+<Multi_key> <r> <l> <e>: "‫" U202B # RIGHT TO LEFT EMBEDDING
+<Multi_key> <p> <d> <f>: "‬" U202C # POP DIRECTIONAL FORMATTING
+# The overrides will force bidi to treat _any_ character as one of
+# that directionality.
+<Multi_key> <l> <r> <o>: "‭" U202D # LEFT TO RIGHT OVERRIDE
+<Multi_key> <r> <l> <o>: "‮" U202E # RIGHT TO LEFT OVERRIDE
+
+# a free pop just to be sure: ‬

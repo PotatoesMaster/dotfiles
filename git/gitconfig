@@ -1,0 +1,105 @@
+[user]
+	name = Emanuel Guevel
+	email = guevel.emanuel@gmail.com
+
+[core]
+	pager = less -RS
+
+[alias]
+	# base
+	l = log
+	co = checkout
+	st = status
+	br = branch
+	pl = pull
+	ph = push
+	k = !gitk
+
+	# cancel changes to specified files
+	discard = checkout --
+	# cancel changes to all the repository's files
+	discard-all = !git checkout -- .
+
+	# comit
+	c = commit -v
+	ca = commit -a -v
+	am = commit --amend -v
+
+	# unstage
+	unadd = reset HEAD
+
+	# diff
+	d = diff --patch-with-stat
+	dt = diff --stat
+	ds = diff --staged --patch-with-stat
+	dst = diff --staged --stat
+
+	# show
+	s = show --patch-with-stat
+
+	# rebase
+	rb = rebase
+	rbi = rebase -i
+
+	# various pretty loggers from various places
+	lst = log --stat
+	ol = log --pretty=oneline
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue%aN%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+	lc = log ORIG_HEAD.. --stat --no-merges
+	lm = log --author='Emanuel Guevel'
+	# from http://blog.kfish.org/2010/04/git-lola.html
+	lol = log --graph --decorate --pretty=oneline --abbrev-commit
+	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+
+	# commands using the current branch name
+	# (using zsh, because it allows nested parameter expansions)
+	up = !zsh -c 'git push origin "${$(git symbolic-ref HEAD)##*/}"'
+	down = !zsh -c 'git pull upstream "${$(git symbolic-ref HEAD)##*/}"'
+	ff = !zsh -c 'git pull --ff-only upstream "${$(git symbolic-ref HEAD)##*/}"'
+
+	# Delete branch on origin (useful with github)
+	del = push --delete origin
+
+	# search in history
+	timegrep = log -S
+	diffgrep = log -p -S
+
+	# funny stuff
+	rank = !sh -c 'git log --pretty=format:%aN | sort | uniq -c | sort -rn'
+	wu = whatsup
+
+	# stolen from http://log.winsos.net/2013/02/06/ma-configuration-git.html
+	addm = !git-ls-files -m -z | xargs -0 git-add && git status
+	addu = !git-ls-files -o --exclude-standard -z | xargs -0 git-add && git status
+	rmm = !git ls-files -d -z | xargs -0 git-rm && git status
+	serve = daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
+
+[merge]
+	conflictstyle = diff3
+
+[color]
+	ui = true
+
+[merge]
+	tool = vimdiff3
+	summary = true
+
+[mergetool "vimdiff3"]
+	cmd = vim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+
+[diff]
+	tool = vimdiff3
+
+[rerere]
+	enabled = 1
+
+[diff "exif"]
+	textconv = exiftool
+
+[credential]
+	helper = cache
+
+[push]
+	default = simple
+[branch]
+	autosetupmerge = true

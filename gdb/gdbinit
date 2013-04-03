@@ -1,0 +1,23 @@
+set print pretty on
+set prompt \033[36m gdb \033[32m$ \033[0m
+
+# These commands provide facilities for debugging program using data structures
+# from queue.h. I certainly did not write it myself, but I do not remember where
+# they come from. :-/
+
+define dtailq
+ set $next = $arg0.tqh_first
+ while ($next != 0)
+  p $next
+  p *$next
+  set $next = $next.$arg1.tqe_next
+ end
+end
+
+define dslist
+ set $next = $arg0.slh_first
+ while ($next != 0)
+  p $next
+  set $next = $next.$arg1.sle_next
+ end
+end

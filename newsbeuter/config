@@ -1,0 +1,44 @@
+browser "firefox -new-tab %u &> /dev/null &"
+
+user-agent "Mozilla/5.0 (X11; Linux i686) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/11.0.696.71 Safari/534.24"
+# colors
+color info green black
+color listfocus black yellow
+color listnormal white default
+
+# bindings
+bind-key j down
+bind-key k up
+bind-key l open
+bind-key h quit
+bind-key RIGHT open
+bind-key LEFT quit
+bind-key v open-in-browser
+bind-key o open-in-browser-and-mark-read
+bind-key t toggle-show-read-feeds
+bind-key q hard-quit
+bind-key D hard-quit
+bind-key g pageup
+bind-key G pagedown
+bind-key N prev-unread
+bind-key a toggle-article-read
+
+# various formats
+articlelist-format " %f%?T?;%-17T;?%t"
+datetime-format "%d/%m"
+feedlist-format " %n %8u %t"
+
+# Missing French translation
+notify-format "Synchronisation terminée, %f fils non-lus (%n articles non-lus)"
+
+# Hack to separate feeds into categories
+highlight feedlist "╴.*" green default
+highlight feedlist "─+.*" blue default
+
+ignore-mode display
+
+# I don't want to be nasty, Cameron, but since I can't post comments on your
+# blog without login with OpenId/Google account/AIM, I don't want to see it
+# anymore. I would have been happy to send you a mail, but I didn't find your
+# mail adress.
+ignore-article "https://planet.archlinux.org/rss20.xml" "author = \"Cameron Will\""

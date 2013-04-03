@@ -1,0 +1,47 @@
+#
+# .rtorrent.rc - rtorrent configuration
+#
+
+upload_rate = 70
+download_rate = 700
+session = "~/.rtorrent/session"
+encryption = allow_incoming, try_outgoing, enable_retry
+dht = on
+peer_exchange = yes
+system.file_allocate.set = yes
+
+# color theme
+# (WARNING: require rtorrent-color)
+done_fg_color   = 2
+done_bg_color   = 0
+active_fg_color = 0
+active_bg_color = 3
+
+# xmlrpc interface
+#scgi_local = "~/.rtorrent/rpc.socket"
+
+# active torrent list fix
+schedule = filter_active,10,20,"view_filter = active,\"or={d.get_up_rate=,d.get_down_rate=}\""
+
+# sort main view by ratio
+schedule = sort_main,10,20,"view.sort_current = main,((less,((d.ratio))))"
+
+# directory for incomplete/new data
+directory = ~/downloads/torrents/incomplete
+
+# move completed torrents
+system.method.set_key = event.download.finished,move_complete,"d.set_directory=~/downloads/torrents/complete;execute=mv,-u,$d.get_base_path=,~/downloads/torrents/complete"
+
+# watch a directory for new torrents
+schedule = watch_directory,30,30,"load=~/downloads/torrents/watch/*.torrent,d.set_custom1=~/downloads/torrents/complete"
+
+port_range = 6016-6528
+port_random = yes
+
+max_uploads = 12
+max_peers = 20
+
+max_uploads_global = 20
+max_downloads_global = 15
+
+# vim: filetype=dosini

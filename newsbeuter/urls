@@ -1,0 +1,12 @@
+# sample file, just to show my "grouping hack"
+────────────────────────────────────────────╴Arch
+http://www.archlinux.org/feeds/news/
+https://planet.archlinux.org/rss20.xml
+────────────────────────────────────────────╴News
+http://feed.torrentfreak.com/Torrentfreak/
+http://www.debian.org/security/dsa
+─────────────────────────────────────╴Video Games
+http://planet.freegamedev.net/atom.xml
+http://planetdev.freegamedev.net/atom.xml
+─────────────────────────────────────────────╴Fun
+http://www.gloveandboots.com/?feed=rss2

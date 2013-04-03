@@ -1,0 +1,27 @@
+# ~/.mime.types - Custom mime types
+#
+# Mime-types defined here are recognized by perl-file-mimeinfo, mutt, python
+# mimetype module and possibly other tools, but not used by the command `file`.
+
+# Image
+image/postscript  eps
+image/postscript  ps
+image/tga         tga
+image/xcf         xcf
+image/dds         dds
+
+# Video
+video/x-binkvideo bik
+
+# Audio
+audio/x-gbs       gbs
+audio/x-amr       amr
+
+# Comics archives
+application/x-rar cbr
+application/zip   cbz
+
+# Guitarpro tablatures
+application/x-gtp gp3
+application/x-gtp gp5
+application/x-gtp gtp

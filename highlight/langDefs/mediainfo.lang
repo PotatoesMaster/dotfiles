@@ -1,0 +1,12 @@
+Description="MediaInfo"
+
+Keywords={
+  { Id=1,
+    Regex = [[^.+?:\x20]]
+  },
+  { Id=2,
+    Regex = [[^[^:]+$]],
+  }
+}
+
+Digits=[[^$]]

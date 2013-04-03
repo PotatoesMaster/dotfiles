@@ -1,0 +1,51 @@
+# ncmpcpp config file
+
+mpd_music_dir = "/home/tharek/music"
+playlist_display_mode = "columns"
+browser_display_mode = "columns"
+search_engine_display_mode = "columns"
+tag_editor_extended_numeration = "no"
+user_interface = "alternative"
+display_screens_numbers_on_start = "no"
+mouse_list_scroll_whole_page = "no"
+
+# Color of empty tag marker.
+empty_tag_color = "cyan"
+
+# Color of header window.
+header_window_color = "white"
+
+# Color of volume state.
+volume_color = "white"
+
+# Color of lines separating header and statusbar from main window.
+state_line_color = "black"
+
+# Color of MPD status flags.
+state_flags_color = "white"
+
+# Color of main window.
+main_window_color = "green"
+
+# Color of progressbar.
+progressbar_color = "blue"
+
+progressbar_look = "┉╸ "
+
+# Color of statusbar.
+statusbar_color = "white"
+
+# Color of separators used in alternative user interface.
+alternative_ui_separator_color = "black"
+
+# Color of active column's highlight.
+active_column_color = "yellow"
+
+main_window_highlight_color = "green"
+
+selected_item_prefix = "$8"
+browser_playlist_prefix = "$5→$9 "
+song_columns_list_format = "(5f)[yellow]{l} (25)[cyan]{a} (40)[]{t|f} (30)[red]{b}"
+
+external_editor = "vim"
+use_console_editor = "yes"
