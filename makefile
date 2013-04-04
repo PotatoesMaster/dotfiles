@@ -6,7 +6,7 @@ MKPATH="$(shell pwd)/"
 
 XDG_CONFIG_DIR=~/.config/
 
-all: i3_ mplayer_ ncmpcpp_ pentadactyl_ gdb_ git_ nano_ rtorrent_ misc ranger_
+all: i3_ mplayer_ ncmpcpp_ pentadactyl_ gdb_ git_ nano_ rtorrent_ misc feh_ highlight_ newsbeuter_ ranger_
 
 i3_:
 	mkdir -p ~/.i3
