@@ -1,0 +1,75 @@
+#compdef rdoc
+
+typeset -A opt_args
+local context state line
+
+_arguments -s -S \
+  "-e[Specifies the output encoding.  All filesread will be converted to this encoding.Preferred over --charset]" \
+  "--encoding[Specifies the output encoding.  All filesread will be converted to this encoding.Preferred over --charset]" \
+  "-a[Synonym for --visibility=private.]" \
+  "--all[Synonym for --visibility=private.]" \
+  "-x[Do not process files or directoriesmatching PATTERN.]" \
+  "--exclude[Do not process files or directoriesmatching PATTERN.]" \
+  "-E[Treat files ending with .new as if theyended with .old. Using '-E cgi=rb' willcause xxx.cgi to be parsed as a Ruby file.]" \
+  "--extension[Treat files ending with .new as if theyended with .old. Using '-E cgi=rb' willcause xxx.cgi to be parsed as a Ruby file.]" \
+  "-U[Forces rdoc to scan all sources even ifnewer than the flag file.]" \
+  "--force-update[Forces rdoc to scan all sources even ifnewer than the flag file.]" \
+  "--no-force-update[Forces rdoc to scan all sources even ifnewer than the flag file.]" \
+  "--pipe[Convert RDoc on stdin to HTML]" \
+  "-w[Set the width of tab characters.]" \
+  "--tab-width[Set the width of tab characters.]" \
+  "-V[Minimum visibility to document a method.One of 'public', 'protected' (the default)or 'private'. Can be abbreviated.]" \
+  "--visibility[Minimum visibility to document a method.One of 'public', 'protected' (the default)or 'private'. Can be abbreviated.]" \
+  "--markup[The markup format for the named files.The default is rdoc.  Valid values are:rd, rdoc, tomdoc]" \
+  "-O[Forces rdoc to write the output files,even if the output directory existsand does not seem to have been createdby rdoc.]" \
+  "--force-output[Forces rdoc to write the output files,even if the output directory existsand does not seem to have been createdby rdoc.]" \
+  "-f[Set the output formatter.  One of:  darkfish  ri]" \
+  "--fmt[Set the output formatter.  One of:  darkfish  ri]" \
+  "--format[Set the output formatter.  One of:  darkfish  ri]" \
+  "-i[Set (or add to) the list of directories tobe searched when satisfying :include:requests. Can be used more than once.]" \
+  "--include[Set (or add to) the list of directories tobe searched when satisfying :include:requests. Can be used more than once.]" \
+  "-C[Prints a report on undocumented items.Does not generate files.]" \
+  "--coverage-report[Prints a report on undocumented items.Does not generate files.]" \
+  "--no-coverage-report[Prints a report on undocumented items.Does not generate files.]" \
+  "--dcov[Prints a report on undocumented items.Does not generate files.]" \
+  "--no-dcov[Prints a report on undocumented items.Does not generate files.]" \
+  "-o[Set the output directory.]" \
+  "--output[Set the output directory.]" \
+  "--op[Set the output directory.]" \
+  "-d[Deprecated --diagram option.Prevents firing debug modewith legacy invocation.]" \
+  "-c[Specifies the output HTML character-set.Use --encoding instead of --charset ifavailable.]" \
+  "--charset[Specifies the output HTML character-set.Use --encoding instead of --charset ifavailable.]" \
+  "-A[Generate hyperlinks for all words thatcorrespond to known methods, even if theydo not start with '#' or '::' (legacybehavior).]" \
+  "--hyperlink-all[Generate hyperlinks for all words thatcorrespond to known methods, even if theydo not start with '#' or '::' (legacybehavior).]" \
+  "-m[NAME will be the initial page displayed.]" \
+  "--main[NAME will be the initial page displayed.]" \
+  "-N[Include line numbers in the source code.By default, only the number of the firstline is displayed, in a leading comment.]" \
+  "--line-numbers[Include line numbers in the source code.By default, only the number of the firstline is displayed, in a leading comment.]" \
+  "--no-line-numbers[Include line numbers in the source code.By default, only the number of the firstline is displayed, in a leading comment.]" \
+  "-H[A name of the form #name in a comment is apossible hyperlink to an instance methodname. When displayed, the '#' is removedunless this option is specified.]" \
+  "--show-hash[A name of the form #name in a comment is apossible hyperlink to an instance methodname. When displayed, the '#' is removedunless this option is specified.]" \
+  "-T[Set the template used when generatingoutput. The default depends on theformatter used.]" \
+  "--template[Set the template used when generatingoutput. The default depends on theformatter used.]" \
+  "-t[Set TITLE as the title for HTML output.]" \
+  "--title[Set TITLE as the title for HTML output.]" \
+  "--copy-files[Specify a file or directory to copy staticfiles from.If a file is given it will be copied intothe output dir.  If a directory is given theentire directory will be copied.You can use this multiple times]" \
+  "-W[Specify a URL for linking to a web frontendto CVS. If the URL contains a '%s', thename of the current file will besubstituted; if the URL doesn't contain a'%s', the filename will be appended to it.]" \
+  "--webcvs[Specify a URL for linking to a web frontendto CVS. If the URL contains a '%s', thename of the current file will besubstituted; if the URL doesn't contain a'%s', the filename will be appended to it.]" \
+  "-r[Generate output for use by 'ri'. The filesare stored in the '.rdoc' directory underyour home directory unless overridden by asubsequent --op parameter, so no specialprivileges are needed.]" \
+  "--ri[Generate output for use by 'ri'. The filesare stored in the '.rdoc' directory underyour home directory unless overridden by asubsequent --op parameter, so no specialprivileges are needed.]" \
+  "-R[Generate output for use by 'ri'. The filesare stored in a site-wide directory,making them accessible to others, sospecial privileges are needed.]" \
+  "--ri-site[Generate output for use by 'ri'. The filesare stored in a site-wide directory,making them accessible to others, sospecial privileges are needed.]" \
+  "--write-options[Write .rdoc_options to the currentdirectory with the given options.  Not alloptions will be used.  See RDoc::Optionsfor details.]" \
+  "--dry-run[Don't write any files]" \
+  "--no-dry-run[Don't write any files]" \
+  "-D[Displays lots on internal stuff.]" \
+  "--debug[Displays lots on internal stuff.]" \
+  "--no-debug[Displays lots on internal stuff.]" \
+  "--ignore-invalid[Ignore invalid options and continue(default true).]" \
+  "--no-ignore-invalid[Ignore invalid options and continue(default true).]" \
+  "-q[Don't show progress as we parse.]" \
+  "--quiet[Don't show progress as we parse.]" \
+  "-v[Display extra progress as RDoc parses]" \
+  "--verbose[Display extra progress as RDoc parses]" \
+  "--help[Display this help]" \
+  '*:file:_files' && return 0

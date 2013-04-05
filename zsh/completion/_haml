@@ -1,0 +1,33 @@
+#compdef haml
+
+typeset -A opt_args
+local context state line
+
+_arguments -s -S \
+  "-s[Read input from standard input instead of an input file]" \
+  "--stdin[Read input from standard input instead of an input file]" \
+  "--trace[Show a full traceback on error]" \
+  "--unix-newlines[Use Unix-style newlines in written files.]" \
+  "-c[Just check syntax, don't evaluate.]" \
+  "--check[Just check syntax, don't evaluate.]" \
+  "-t[Output style. Can be indented (default) or ugly.]" \
+  "--style[Output style. Can be indented (default) or ugly.]" \
+  "-f[Output format. Can be xhtml (default), html4, or html5.]" \
+  "--format[Output format. Can be xhtml (default), html4, or html5.]" \
+  "-e[Escape HTML characters (like ampersands and angle brackets) by default.]" \
+  "--escape-html[Escape HTML characters (like ampersands and angle brackets) by default.]" \
+  "--no-escape-attrs[Don't escape HTML characters (like ampersands and angle brackets) in attributes.]" \
+  "-q[Set attribute wrapper to double-quotes (default is single).]" \
+  "--double-quote-attributes[Set attribute wrapper to double-quotes (default is single).]" \
+  "-r[Same as 'ruby -r'.]" \
+  "--require[Same as 'ruby -r'.]" \
+  "-I[Same as 'ruby -I'.]" \
+  "--load-path[Same as 'ruby -I'.]" \
+  "-E[Specify the default external and internal character encodings.]" \
+  "--debug[Print out the precompiled Ruby source.]" \
+  "-?[Show this message]" \
+  "-h[Show this message]" \
+  "--help[Show this message]" \
+  "-v[Print version]" \
+  "--version[Print version]" \
+  '*:file:_files' && return 0

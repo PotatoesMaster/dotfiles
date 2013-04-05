@@ -1,0 +1,17 @@
+#compdef mv
+
+_arguments -s \
+  '(-b --backup)-b[backup]' \
+  '(-b --backup)--backup=[backup]:method:(none off numbered t existing nil simple never)' \
+  '(-f --force)'{-f,--force}'[do not prompt before overwriting]' \
+  '(-i --interactive)'{-i,--interactive}'[prompt before overwrite]' \
+  '(-n --no-clobber)'{-n,--no-clobber}'[do not overwrite an existing file]' \
+  '--strip-trailing-slashes[remove any trailing slashes from each source argument]' \
+  '(-S --suffix)'{-S,--suffix=}'[override the usual backup suffix]:backup suffix:' \
+  '(-t --target-directory)'{-t,--target-directory=}'[move all source arguments into target directory]:target directory:_files -/' \
+  '(-T --no-target-directory)'{-T,--no-target-directory}'[treat DEST as a normal file]' \
+  '(-u --update)'{-u,--update}'[move only when source is newer than destination or destination is missing]' \
+  '(-v --verbose)'{-v,--verbose}'[explain what is being done]' \
+  '--help' \
+  '--version' \
+  '*:file or directory:_files'
