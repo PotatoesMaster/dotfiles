@@ -73,7 +73,7 @@ for_window [class="^arx$"] fullscreen
 for_window [class="^(hwengine|hedgewars)$"] fullscreen
 for_window [title="^crawl-tiles|Wah!Cade$"] border none
 for_window [title="^Amnesia: The Dark Descent launcher$"] floating enable
-for_window [class="^(rockboxui|Pychrom|emulator-arm|allegro|nx)$"] floating enable
+for_window [class="^(rockboxui|Pychrom|emulator-arm|allegro|nx|gmic)$"] floating enable
 for_window [class="^Animate$" instance="^animate$"] floating enable
 for_window [class="^Display$" instance="^display$"] floating enable
 for_window [class="^Eclipse$" title="^(Eclipse SDK |Eclipse)$"] floating enable
