@@ -197,8 +197,36 @@ map <Sleep> <Esc>
 " commands {{{
 " ------------
 
+" create search engines bookmarks
+command! installsearchengines -description 'Create bookmarks for quite a bunch of different search engines'
+		\ silent bmark -tags search -k a     -title 'animeka'             http://www.animeka.com/search/index.html?req=%s&cat=search&type_search=all -k a
+		\ silent bmark -tags search -k d     -title 'DuckDuckGo'          https://duckduckgo.com/?q=%s&kr=b&k1=-1&kv=1&k2=-1&ke=-1&kj=ct&ky=e&kx=e&k9=#666666&kaa=#CCCCCC -k d
+		\ silent bmark -tags search -k aw    -title 'ArchWiki'            http://wiki.archlinux.org/index.php?title=Special%%3ASearch&search=%s&go=Go
+		\ silent bmark -tags search -k aur   -title 'AUR'                 https://aur.archlinux.org/packages.php?K=%s
+		\ silent bmark -tags search -k at    -title 'Arch Forum (topics)' https://bbs.archlinux.org/search.php?action=search&keywords=%s&show_as=topics
+		\ silent bmark -tags search -k ap    -title 'Arch Forum (posts)'  https://bbs.archlinux.org/search.php?action=search&keywords=%s&show_as=posts
+		\ silent bmark -tags search -k conj  -title 'Conjugaison Fr'      http://www.wordreference.com/conj/FRverbs.aspx?v=%s
+		\ silent bmark -tags search -k en    -title 'Fr → En'             http://www.wordreference.com/fren/%s
+		\ silent bmark -tags search -k fr    -title 'En → Fr'             http://www.wordreference.com/enfr/%s
+		\ silent bmark -tags search -k i     -title 'Google Images'       http://google.fr/images?q=%s&biw=1440&bih=900&tbm=isch
+		\ silent bmark -tags search -k jam   -title 'Jamendo'             http://www.jamendo.com/fr/search/#qs=q=%s&bq=freetext
+		\ silent bmark -tags search -k yop   -title 'Yopmail'             http://www.yopmail.com/%s
+		\ silent bmark -tags search -k nyaa  -title 'NyaaTorrents'        http://www.nyaa.eu/?page=search&cats=0_0&filter=0&term=%s
+		\ silent bmark -tags search -k ost   -title 'OST-Center'          http://www.ost-center.fr/recherche.php?mots_cles=%s
+		\ silent bmark -tags search -k map   -title 'Google Maps'         http://maps.google.fr/maps?hl=fr&q=%s&um=1&ie=UTF-8&sa=N&tab=wl
+		\ silent bmark -tags search -k sub   -title 'TinySubs'            http://tinysubs.com/search.php?q=%s&language_id=22
+		\ silent bmark -tags search -k slang -title 'Urban Dictionary'    http://www.urbandictionary.com/define.php?term=%s
+		\ silent bmark -tags search -k you   -title 'Youtube'             http://www.youtube.com/results?search_query=%s
+		\ silent bmark -tags search -k osm   -title 'Open Street Map'     http://nominatim.openstreetmap.org/search?q=%s
+		\ silent bmark -tags search -k w     -title 'Wikipédia Fr'        http://fr.wikipedia.org/w/index.php?search=%s
+		\ silent bmark -tags search -k we    -title 'Wikipedia En'        http://en.wikipedia.org/w/index.php?search=%s
+		\ silent bmark -tags search -k def   -title 'Wiktionary'          http://fr.wiktionary.org/w/index.php?search=%s
+		\ silent bmark -tags search -k books -title 'Wikibooks'           http://wikibooks.org/search-redirect.php?family=wikibooks&search=%s&language=fr
+		\ silent bmark -tags search -k imdb  -title 'IMDB'                http://imdb.com/find?s=all&q=%s
+		\ silent bmark -tags search -k df    -title 'Dwarf Fortress Wiki' http://dwarffortresswiki.org/index.php?title=Special%3ASearch&search=%s&go=Go
+
 " useragent switching
-command! uagent -nargs=? -complete custom,'[["default","Default user-agent"],[navigator.userAgent,"Current user-agent"],["Googlebot/2.1 (+http://www.googlebot.com/bot.html)","Googlebot"],["Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.57 Safari/537.17","Chrome 24 for Windows 7"],["Mozilla/5.0 (compatible; MSIE 9.0; X11; Linux x86_64; Trident/5.0)","Internet Explorer 9.0 for Linux :p"]]'
+command! uagent -description 'Change user-agent' -nargs=? -complete custom,'[["default","Default user-agent"],[navigator.userAgent,"Current user-agent"],["Googlebot/2.1 (+http://www.googlebot.com/bot.html)","Googlebot"],["Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.57 Safari/537.17","Chrome 24 for Windows 7"],["Mozilla/5.0 (compatible; MSIE 9.0; X11; Linux x86_64; Trident/5.0)","Internet Explorer 9.0 for Linux :p"]]'
 		\ -js
 		\ if(args.length) {
 		\ 	if(args[0]=="default")
