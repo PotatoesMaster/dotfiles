@@ -79,7 +79,6 @@ for_window [class="^Display$" instance="^display$"] floating enable
 for_window [class="^Eclipse$" title="^(Eclipse SDK |Eclipse)$"] floating enable
 for_window [class="^MuPDF$"] border normal
 
-assign [class="^JDownloader|jd-Main$"] → $w9
 assign [class="^URxvt$" instance="^rtorrent$"] → $w9
 
 assign [class="^URxvt$" instance="^newsbeuter$"] → $w0
@@ -91,14 +90,7 @@ assign [class="^Firefox|luakit$"] → $w1
 # bindings {{{
 # ------------
 
-# feh et
-bindsym $mod+x exec $i feh et
-bindsym $mod+Shift+x exec $i ical && feh et
-
-# clients menu with dmenu
-bindsym $mod+m exec $i ~/.i3/clients_menu
-
-# date (having a proper notification daemon would be nice)
+# display date (having a proper notification daemon would be nice)
 bindsym $mod+c exec $i (echo -n '^fg(#9afe2e)^i(/home/tharek/.dzen_icons/clock.xbm)^fg()  ' && date '+%H:%M') | dzbox 4
 
 # net
@@ -106,7 +98,7 @@ bindsym XF86WWW exec $i $webbrowser
 bindsym XF86Phone exec $i urxvt -e weechat-curses
 bindsym $mod+w exec $i urxvt -e weechat-curses
 
-# direct access keys
+# Bindings for special keys on top of my keyboard
 bindsym XF86ScreenSaver exec $i dmenu_apps -i -p "x"
 bindsym Shift+XF86ScreenSaver exec $i dmenu_wifi
 #bindsym XF86Tools exec $i dmenu_cli -i -p "term"
@@ -131,9 +123,6 @@ bindsym Mod5+Shift+F12 exec $i $snd unmute 10+
 # power
 bindsym XF86PowerOff exec $i dmshutdown
 bindsym Shift+XF86PowerOff exec $i cputwist
-
-# shift clipboards !
-bindsym Mod5+Insert exec $i sclip
 
 # multimedia keys
 bindsym XF86AudioNext exec $i ncmpcpp next
@@ -165,7 +154,7 @@ bindsym Shift+Mod5+Up exec $i ejectmount
 # ranger
 bindsym $mod+e exec $i LESS=MR urxvt -e ranger
 
-bindsym $mod+F1 exec $i fifo-input
+# Launch dmenu to select an action to execute on clipboard content
 bindsym $mod+F2 exec $i xseldo
 
 # Start terminal
