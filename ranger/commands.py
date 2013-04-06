@@ -11,8 +11,6 @@ from ranger.ext.spawn import spawn
 from ranger.fsobject import Directory
 import re
 
-alias('del', 'delete')
-
 class download(Command):
     """
     :download [filename]
