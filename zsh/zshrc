@@ -131,7 +131,6 @@ setopt correct
 
 autoload compdef
 compdef _man run-help
-compdef _pacman pacman-color
 # I don't want to type a password when I type `sudo something`
 # but I don't want either scripts or program (ex: yaourt) to sudo silently
 compdef _sudo sudo nopasssudo
@@ -358,7 +357,6 @@ alias archinstall='date -d "`head /var/log/pacman.log -n 1 | perl -ne '"'print f
 alias less='less -R'
 alias df='df --human-readable'
 alias du='du --human-readable'
-alias pacman='pacman-color'
 alias amoi='sudo chown tharek:users'
 alias aroot='sudo chown root:root'
 alias ux='chmod u+x'
