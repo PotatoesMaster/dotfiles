@@ -178,8 +178,8 @@ map ,Pb books <S-ins><CR>
 " miscellanous {{{
 " ----------------
 " clear google cookies
-command! gquit,gq sanitize host google.com
-				\ sanitize host google.fr
+command! gquit,gq sanitize -host google.com
+				\ sanitize -host google.fr
 				\ cookies google.com clear
 				\ cookies google.fr clear
 
