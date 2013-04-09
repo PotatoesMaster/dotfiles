@@ -2,7 +2,8 @@ nolirc = yes
 nojoystick = yes
 noborder = yes
 
-framedrop = yes
+# Coloured console messages
+msgcolor = yes
 
 # Allow moving backward/forward in a stream
 idx = yes
@@ -11,10 +12,9 @@ idx = yes
 MonitorAspect="16:10"
 
 # Video output
-
 vo = xv,x11
-
 double = yes
+framedrop = yes
 
 # Audio output
 ao = alsa,oss
@@ -32,7 +32,6 @@ sub-bg-color = 0        # black to white
 subfont-text-scale = 3  # truetype font scaling
 subfont-blur = 0        # Slight blur
 spuaa = 20
-utf8 = 1
 
 # Default languages
 slang = fr,fra,en,eng
