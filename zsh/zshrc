@@ -294,7 +294,8 @@ alias newsoptim='sqlite ~l/newsbeuter/cache.db VACUUM'
 alias cupstart='sudo systemctl load cups && sudo systemctl start cups'
 alias cupstop='sudo systemctl stop cups'
 alias cups_update_gutenprint='sudo /usr/sbin/cups-genppdupdate'
-alias netcfg='sudo /usr/bin/netcfg'
+alias netctl='sudo /usr/bin/netctl'
+alias netctl-auto-restart='sudo netctl-auto stop wlan0 && sudo netctl-auto start wlan0'
 
 # workaround for my problem at remembering the names of image magick tools
 for n in animate compare composite conjure convert display identify import mogrify montage stream; do
