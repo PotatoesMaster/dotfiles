@@ -103,3 +103,6 @@
 	default = simple
 [branch]
 	autosetupmerge = true
+[gui]
+	fontui = -family erusfont -size 9 -weight normal -slant roman -underline 0 -overstrike 0
+	fontdiff = -family erusfont -size 9 -weight normal -slant roman -underline 0 -overstrike 0
