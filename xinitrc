@@ -34,6 +34,9 @@ numlockx &
 # drive automounting
 devmon.init &
 
+# notifications
+dunst &
+
 # For use with slim to select wm
 case "${1-i3}" in
 	i3)

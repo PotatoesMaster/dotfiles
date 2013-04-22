@@ -90,8 +90,8 @@ assign [class="^Firefox|luakit$"] → $w1
 # bindings {{{
 # ------------
 
-# display date (having a proper notification daemon would be nice)
-bindsym $mod+c exec $i (echo -n '^fg(#9afe2e)^i(/home/tharek/.dzen_icons/clock.xbm)^fg()  ' && date '+%H:%M') | dzbox 4
+# display date in a notification
+bindsym $mod+c exec $i notify-send "$(date '+%H:%M')"
 
 # net
 bindsym XF86WWW exec $i $webbrowser
