@@ -66,6 +66,9 @@ map -- - zO
 " Quickmarks
 map \' `
 
+" Quit, saving session
+map ZZ :set sanitizeshutdown=<CR>:xall<CR>
+
 " remove highlightings for find pattern matches
 map <Space> :noh<CR>
 
