@@ -149,6 +149,10 @@ map ,Pn tnyaa <S-ins><CR>
 map ,m  omap 
 map ,pm omap <S-ins><CR>
 map ,Pm tmap <S-ins><CR>
+" ohloh
+map ,o  oohloh 
+map ,po oohloh <S-ins><CR>
+map ,Po tohloh <S-ins><CR>
 " tinysub
 map ,s  osub 
 map ,ps osub <S-ins><CR>
@@ -224,6 +228,7 @@ command! installsearchengines -description 'Create bookmarks for quite a bunch o
 		\ silent bmark -tags search -k books -title 'Wikibooks'           http://wikibooks.org/search-redirect.php?family=wikibooks&search=%s&language=fr
 		\ silent bmark -tags search -k imdb  -title 'IMDB'                http://imdb.com/find?s=all&q=%s
 		\ silent bmark -tags search -k df    -title 'Dwarf Fortress Wiki' http://dwarffortresswiki.org/index.php?title=Special%3ASearch&search=%s&go=Go
+		\ silent bmark -tags search -k ohloh -title 'Ohloh'               https://www.ohloh.net/p?q=%s
 
 " useragent switching
 command! uagent -description 'Change user-agent' -nargs=? -complete custom,'[["default","Default user-agent"],[navigator.userAgent,"Current user-agent"],["Googlebot/2.1 (+http://www.googlebot.com/bot.html)","Googlebot"],["Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.57 Safari/537.17","Chrome 24 for Windows 7"],["Mozilla/5.0 (compatible; MSIE 9.0; X11; Linux x86_64; Trident/5.0)","Internet Explorer 9.0 for Linux :p"]]'
