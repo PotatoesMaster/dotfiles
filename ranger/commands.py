@@ -131,48 +131,54 @@ class trash(Command):
     use the "current file" (where the cursor is)
 
     When attempting to trash non-empty directories or multiple
-    marked files, it will require a confirmation: The last word in
-    the line has to start with a 'y'.  This may look like:
-    :trash that shit, yeah!
-    :trash (selection) ? yes
+    marked files, it will require a confirmation.
     """
 
     allow_abbrev = False
 
-    def trash(self, files):
-        self.fm.execute_command(['mv', '--backup=numbered'] \
-            + files + ['/home/tharek/.trash'])
-        self.fm.tag_remove(paths=files)
+    def trash(self):
+        cwd = self.fm.thisdir
+        cf = self.fm.thisfile
+
+        # delete empty directories directly
+        if not cwd.marked_items and (cf.is_directory and not cf.is_link \
+                and len(os.listdir(cf.path)) == 0):
+            self.fm.delete()
+        else: # else move to trash
+            files = [f.path for f in self.fm.thistab.get_selection()]
+            self.fm.execute_command(['mv', '--backup=numbered'] \
+                + files + ['/home/tharek/.trash'])
+            self.fm.tag_remove(paths=files)
 
     def execute(self):
-        lastword = self.arg(-1)
-
-        if lastword.startswith('y'):
-            # user confirmed deletion!
-            files = [f.path for f in self.fm.env.get_selection() if f in self.fm.env.cwd.files]
-            return self.trash(files)
-        elif lastword != 'trash':
-            # user did not confirm deletion
+        import os
+        if self.rest(1):
+            self.fm.notify("Error: trash takes no arguments! It trashes "
+                    "the selected file(s).", bad=True)
             return
 
-        cwd = self.fm.env.cwd
-        cf = self.fm.env.cf
+        cwd = self.fm.thisdir
+        cf = self.fm.thisfile
+        if not cwd or not cf:
+            self.fm.notify("Error: no file selected for deletion!", bad=True)
+            return
 
-        # better ask for a confirmation, when attempting to
-        # delete multiple files or a non-empty directory.
-        if cwd.marked_items:
-            return self.fm.open_console("trash (selection) ? ")
+        # Use the same confirmation setting than the delete command
+        confirm = self.fm.settings.confirm_on_delete
+        many_files = (cwd.marked_items or (cf.is_directory and not cf.is_link \
+                and len(os.listdir(cf.path)) > 0))
+
+        if confirm != 'never' and (confirm != 'multiple' or many_files):
+            self.fm.ui.console.ask("Confirm deletion of: %s (y/N)" %
+                ', '.join(f.basename for f in self.fm.thistab.get_selection()),
+                self._question_callback, ('n', 'N', 'y', 'Y'))
         else:
-            if cf.is_directory and not cf.is_link:
-                if len(os.listdir(cf.path)) > 0:
-                    return self.fm.open_console("trash (directory) ? ")
-                else:
-                    # empty, delete really
-                    self.fm.delete()
+            # no need for a confirmation, just trash
+            self.trash()
 
-        files = [f.path for f in self.fm.env.get_selection() if f in self.fm.env.cwd.files]
-        # no need for a confirmation, just delete
-        self.trash(files)
+    def _question_callback(self, answer):
+        if answer == 'y' or answer == 'Y':
+            self.trash()
 
 
 class pasta(Command):
