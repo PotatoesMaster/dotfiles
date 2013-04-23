@@ -90,6 +90,8 @@ misc:
 	ln -sf $(MKPATH)/XDefaults                          ~/.XDefaults
 	chmod u+x xinitrc
 	ln -sf $(MKPATH)/xinitrc                            ~/.xinitrc
+	mkdir -p ~/.kbd-layout
+	ln -sf $(MKPATH)/kbd-layout/custom-azerty.xkb       ~/.kbd-layout/custom-azerty.xkb
 
 # Files located in XDG_CONFIG_DIR follow.
 

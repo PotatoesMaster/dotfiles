@@ -22,7 +22,7 @@ xset +fp /usr/share/fonts/local # add directory to X font path
 xsetroot -cursor_name left_ptr # arrow cursor on root window
 
 # custom keyboard mapping
-xkbcomp -w 0 -R/usr/share/X11/xkb/ ~/.clavier/mon_mien.xkb $DISPLAY
+xkbcomp -w 0 -R/usr/share/X11/xkb/ ~/.kbd-layout/custom-azerty.xkb $DISPLAY
 
 # turn off the screen after a while
 xset +dpms
