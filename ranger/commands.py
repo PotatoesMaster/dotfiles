@@ -169,7 +169,7 @@ class trash(Command):
                 and len(os.listdir(cf.path)) > 0))
 
         if confirm != 'never' and (confirm != 'multiple' or many_files):
-            self.fm.ui.console.ask("Confirm deletion of: %s (y/N)" %
+            self.fm.ui.console.ask("Confirm trashing of: %s (y/N)" %
                 ', '.join(f.basename for f in self.fm.thistab.get_selection()),
                 self._question_callback, ('n', 'N', 'y', 'Y'))
         else:
