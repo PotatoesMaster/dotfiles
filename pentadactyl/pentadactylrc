@@ -19,7 +19,6 @@ style code.google.com input[type='button'], input[type='submit'], .butonify {col
 
 " misc settings {{{
 " -----------------
-set defsearch=
 set complete=location,file
 set guioptions=s
 set hlfind
