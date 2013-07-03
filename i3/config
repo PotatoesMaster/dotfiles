@@ -103,6 +103,7 @@ bindsym XF86ScreenSaver exec $i dmenu_apps -i -p "x"
 bindsym Shift+XF86ScreenSaver exec $i dmenu_wifi
 #bindsym XF86Tools exec $i dmenu_cli -i -p "term"
 bind 191 exec $i dmenu_cli -i -p "term"
+bindsym Control+XF86ScreenSaver exec $i dmenu_cli -i -p "term"
 bindsym XF86Launch1 exec $i urxvt -e htop -u tharek
 
 # sound keys
