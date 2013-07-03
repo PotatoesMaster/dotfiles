@@ -2,6 +2,8 @@
 # ~/.zshrc -  config file for zsh (z shell)
 # ======================================================================
 
+[[ -z "$TMUX" ]] || export TERM=screen-256color
+
 ## TTY RELATED STUFF ####################################################### {{{
 if [ "$TERM" = "linux" ]; then
     # color hack
@@ -24,8 +26,8 @@ if [ "$TERM" = "linux" ]; then
   clear #for background artifacting
   export PATH=$HOME/.bin:$PATH
 
-    # mplayer on framebuffer
-    alias mplayer='mplayer -vo fbdev'
+  # mplayer on framebuffer
+  alias mplayer='mplayer -vo fbdev'
 fi
 ############################################################################ }}}
 
@@ -39,6 +41,9 @@ autoload zmv
 # general options {{{
 
 WORDCHARS="~$^"
+
+# display execution time if greater than 30 seconds
+REPORTTIME=30
 
 # never beep, NEVER!
 setopt nobeep
