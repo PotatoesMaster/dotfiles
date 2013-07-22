@@ -8,7 +8,7 @@ MKPATH="$(shell pwd)"
 
 XDG_CONFIG_DIR=~/.config
 
-all: i3_ mplayer_ ncmpcpp_ pentadactyl_ gdb_ git_ nano_ rtorrent_ vim_ zsh_ misc feh_ highlight_ newsbeuter_ ranger_
+all: i3_ mplayer_ ncmpcpp_ pentadactyl_ gdb_ git_ nano_ rtorrent_ vim_ zsh_ misc feh_ highlight_ newsbeuter_ ranger_ bin_
 
 i3_:
 	mkdir -p ~/.i3
@@ -120,3 +120,7 @@ ranger_:
 	ln -sf $(MKPATH)/ranger/plugins/extra_archives.py   $(XDG_CONFIG_DIR)/ranger/plugins/extra_archives.py
 	ln -sf $(MKPATH)/ranger/plugins/vcs_symbols.py      $(XDG_CONFIG_DIR)/ranger/plugins/vcs_symbols.py
 	ln -sf $(MKPATH)/ranger/plugins/w3mimgdisplay_options.py  $(XDG_CONFIG_DIR)/ranger/plugins/w3mimgdisplay_options.py
+
+bin_:
+	mkdir -p $(HOME)/.bin
+	ln -sf $(MKPATH)/bin/dubar                          $(HOME)/.bin/dubar
