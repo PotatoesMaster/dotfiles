@@ -61,7 +61,7 @@ set $w6 7
 set $w7 8
 set $w8 9
 set $w9 10·down
-set $w10 11
+set $w10 11·mail
 set $w11 12
 
 # }}}
@@ -84,6 +84,8 @@ assign [class="^URxvt$" instance="^rtorrent$"] → $w9
 assign [class="^URxvt$" instance="^newsbeuter$"] → $w0
 
 assign [class="^Firefox|luakit$"] → $w1
+
+assign [class="^Claws-mail$"] → $w10
 
 # }}}
 
