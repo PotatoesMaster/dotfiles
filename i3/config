@@ -36,6 +36,7 @@ bar {
 font -erus-erusfont-medium-r-normal--11-80-100-100-c-60-iso10646-1
 ipc-socket /tmp/nestedcons
 new_window 1pixel
+new_float normal 1
 workspace_layout default
 popup_during_fullscreen leave_fullscreen
 floating_modifier $mod
@@ -71,13 +72,14 @@ set $w11 12
 
 for_window [class="^arx$"] fullscreen
 for_window [class="^(hwengine|hedgewars)$"] fullscreen
-for_window [title="^crawl-tiles|Wah!Cade$"] border none
+for_window [class="^crawl-tiles$"] border none
 for_window [title="^Amnesia: The Dark Descent launcher$"] floating enable
 for_window [class="^(rockboxui|Pychrom|emulator-arm|allegro|nx|gmic|love)$"] floating enable
 for_window [class="^Animate$" instance="^animate$"] floating enable
 for_window [class="^Display$" instance="^display$"] floating enable
 for_window [class="^Eclipse$" title="^(Eclipse SDK |Eclipse)$"] floating enable
-for_window [class="^MuPDF$"] border normal
+for_window [class="^MuPDF$"] border normal 1
+for_window [class="^Wine$" instance="^explorer.exe$"] floating enable
 
 assign [class="^URxvt$" instance="^rtorrent$"] → $w9
 
@@ -155,7 +157,7 @@ bindsym Shift+XF86AudioStop exec $i ejectmount
 bindsym Shift+Mod5+Up exec $i ejectmount
 
 # ranger
-bindsym $mod+e exec $i LESS=MR urxvt -e ranger
+bindsym $mod+e exec $i LESS=SMR urxvt -e ranger
 
 # Launch dmenu to select an action to execute on clipboard content
 bindsym $mod+F2 exec $i xseldo
@@ -163,6 +165,13 @@ bindsym $mod+F2 exec $i xseldo
 # Start terminal
 bindsym Shift+Mod5+Return exec $i urxvt
 bindsym Mod5+Return exec $i new_urxvt
+
+# Extra fun: remap keys using xdotool
+# My laptop keyboard lack these direct keys
+bindsym --release $mod+Left exec $i xdotool key --clearmodifiers Home
+bindsym --release $mod+Right exec $i xdotool key --clearmodifiers End
+bindsym --release $mod+Up exec $i xdotool key --clearmodifiers Page_Up
+bindsym --release $mod+Down exec $i xdotool key --clearmodifiers Page_Down
 
 # Splitting
 bindsym $mod+g split h
@@ -179,7 +188,7 @@ bindsym $mod+s layout stacking
 # Borders
 bindsym $mod+KP_1 border none
 bindsym $mod+KP_2 border 1pixel
-bindsym $mod+KP_3 border normal
+bindsym $mod+KP_3 border normal 1
 
 # toggle tiling / floating
 bindsym $mod+space floating toggle
