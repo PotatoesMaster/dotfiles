@@ -78,7 +78,8 @@ vim_:
 zsh_:
 	ln -sf $(MKPATH)/zsh/zshrc                          ~/.zshrc
 	mkdir -p ~/.zsh
-	ln -sf $(MKPATH)/zsh/git-flow-completion.zsh        ~/.zsh/git-flow-completion.zsh
+	ln -sf $(MKPATH)/zsh/funcs.zsh                      ~/.zsh/funcs.zsh
+	ln -sf $(MKPATH)/zsh/alias.zsh                      ~/.zsh/alias.zsh
 	mkdir -p ~/.zsh/completion
 	ln -sf $(MKPATH)/zsh/completion/_haml               ~/.zsh/completion/_haml
 	ln -sf $(MKPATH)/zsh/completion/_mv                 ~/.zsh/completion/_mv

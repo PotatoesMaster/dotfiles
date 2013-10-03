@@ -2,28 +2,13 @@
 # ~/.zshrc -  config file for zsh (z shell)
 # ======================================================================
 
-[[ -z "$TMUX" ]] || export TERM=screen-256color
+## COMPAT STUFF ############################################################ {{{
 
-## TTY RELATED STUFF ####################################################### {{{
+# enable 256 colors in tmux
+[[ -n "$TMUX" ]] && export TERM=screen-256color
+
+# tty-only settings
 if [ "$TERM" = "linux" ]; then
-    # color hack
-  # echo -en "\e]P01b1b1b" #black
-  echo -en "\e]P8555753" #darkgrey
-  echo -en "\e]P1ff6b6b" #darkred
-  echo -en "\e]P9ff8d8d" #red
-  echo -en "\e]P2a3d46e" #darkgreen
-  echo -en "\e]PAc8e7a8" #green
-  echo -en "\e]P3eaca75" #brown
-  echo -en "\e]PBffd155" #yellow
-  echo -en "\e]P4435e87" #darkblue
-  echo -en "\e]PC587aa4" #blue
-  echo -en "\e]P5cf8243" #darkmagenta
-  echo -en "\e]PDf6a24f" #magenta
-  echo -en "\e]P6789ec6" #darkcyan
-  echo -en "\e]PE46a4ff" #cyan
-  echo -en "\e]P7ababab" #lightgrey
-  echo -en "\e]PFababab" #white
-  clear #for background artifacting
   export PATH=$HOME/.bin:$PATH
 
   # mplayer on framebuffer
@@ -34,6 +19,7 @@ fi
 ## OPTIONS ################################################################# {{{
 
 # autoload {{{
+
 autoload zmv
 
 #}}}
@@ -76,8 +62,7 @@ unsetopt hup
 # activate colors
 autoload -U colors && colors
 # LS_COLORS
-# eval $(dircolors ~/.ls_colors)
-export LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=00;31:*.tgz=00;31:*.arj=00;31:*.taz=00;31:*.lzh=00;31:*.lzma=00;31:*.tlz=00;31:*.txz=00;31:*.zip=00;31:*.z=00;31:*.Z=00;31:*.dz=00;31:*.gz=00;31:*.lz=00;31:*.xz=00;31:*.bz2=00;31:*.bz=00;31:*.tbz=00;31:*.tbz2=00;31:*.tz=00;31:*.deb=00;31:*.rpm=00;31:*.jar=00;31:*.war=00;31:*.ear=00;31:*.sar=00;31:*.rar=00;31:*.ace=00;31:*.zoo=00;31:*.cpio=00;31:*.7z=00;31:*.rz=00;31:*.cbz=00;31:*.cbr=00;31:*.jpg=00;33:*.jpeg=00;33:*.gif=00;33:*.bmp=00;33:*.pbm=00;33:*.pgm=00;33:*.ppm=00;33:*.tga=00;33:*.xbm=00;33:*.xpm=00;33:*.tif=00;33:*.tiff=00;33:*.png=00;33:*.svg=00;33:*.svgz=00;33:*.mng=00;33:*.pcx=00;33:*.xcf=00;33:*.emf=00;33:*.mov=00;35:*.mpg=00;35:*.mpeg=00;35:*.m2v=00;35:*.mkv=00;35:*.webm=00;35:*.ogm=00;35:*.mp4=00;35:*.m4v=00;35:*.mp4v=00;35:*.vob=00;35:*.qt=00;35:*.nuv=00;35:*.wmv=00;35:*.asf=00;35:*.rm=00;35:*.rmvb=00;35:*.flc=00;35:*.avi=00;35:*.fli=00;35:*.flv=00;35:*.gl=00;35:*.dl=00;35:*.xwd=00;35:*.yuv=00;35:*.cgm=00;35:*.axv=00;35:*.anx=00;35:*.ogv=00;35:*.ogx=00;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.axa=00;36:*.oga=00;36:*.spx=00;36:*.xspf=00;36:';
+eval $(dircolors ~/.ls_colors)
 
 #}}}
 
@@ -141,54 +126,11 @@ compdef _man run-help
 compdef _sudo sudo nopasssudo
 
 # some custom completions
-compctl -/ -g '*.pdf' zathura
 compctl -/ -g '*.(htm|html|gif)' luakit lk
 compctl -/ -g '*.(tgz|gz|xz)' namcap
 compctl -/ -g '*(/)' md cl
 compctl -/ -W '/usr/share/info/' -g '*' mano
 
-source ~/.zsh/git-flow-completion.zsh
-# }}}
-
-# power completion - abbreviation expansion {{{
-
-# see http://zshwiki.org/home/examples/zleiab for details
-# less risky than the global aliases but powerful as well
-# just type the abbreviation key and afterwards '\eg' to expand it
-declare -A abk
-setopt extendedglob
-setopt interactivecomments
-abk=(
-#   key   # value                  (#d additional doc string)
-#A# start
-    'bg'   '& exit ; exit'
-    'g'    '|& grep  '
-    'h'    '| head'
-    'hl'   ' --help |& less -r'    #d (Display help in pager)
-    'l'    '| less'
-    'll'   '|& less -r'
-    'n'    '&>/dev/null'           #d (No Output)
-    'r'    '| tr A-z N-za-m'       #d (ROT13)
-    'sl'   '| sort | less'
-    's'    '| sort -u'
-    'u'    '| filter_uniq'
-    't'    '| tail'
-    'v'    '|& vim -'
-        'yn'   '&& echo yes || echo no'
-#A# end
-)
-
-globalias() {
-    emulate -L zsh
-    setopt extendedglob
-    local MATCH
-
-    matched_chars='[.-|_a-zA-Z0-9]#'
-    LBUFFER=${LBUFFER%%(#m)[.-|_a-zA-Z0-9]#}
-    LBUFFER+=${abk[$MATCH]:-$MATCH}
-}
-
-zle -N globalias
 # }}}
 
 # history options {{{
@@ -207,8 +149,6 @@ function hist() {
     [[ "$#1" -lt 7 \
     || "$1" = "run-help "* \
     || "$1" = "cd "* \
-    || "$1" = "cdr" \
-    || "$1" = "cdr "* \
     || "$1" = "man "* \
     || "$1" = "h "* \
     || "$1" = "~ "* ]]
@@ -216,14 +156,6 @@ function hist() {
 }
 autoload add-zsh-hook
 add-zsh-hook zshaddhistory hist
-
-# cdr
-autoload -Uz chpwd_recent_dirs cdr
-add-zsh-hook chpwd chpwd_recent_dirs
-#zstyle ':completion:*:*:cdr:*:*' menu selection
-zstyle ':chpwd:*' recent-dirs-default true
-zstyle ':chpwd:*' recent-dirs-insert true
-zstyle ':chpwd:*' recent-dirs-prune parent
 
 [[ -n "$(alias run-help)" ]] && unalias run-help
 autoload run-help
@@ -267,296 +199,6 @@ hash -d py32='/usr/lib/python3.2/site-packages'
 hash -d py33='/usr/lib/python3.3/site-packages'
 ############################################################################ }}}
 
-## ALIASES ################################################################# {{{
-
-alias pandoc='pandoc --smart --normalize --reference-links'
-alias wwwget='wget --trust-server-names --content-disposition'
-alias texmex='latexmk -pdf -pdflatex="/usr/bin/xelatex -shell-escape" -interaction=nonstopmode'
-alias mencode_mmmkay='mencoder -mc 0 -noskip -oac lavc -ovc lavc -of mpeg -mpegopts format=dvd:tsaf -vf harddup -srate 48000 -af lavcresample=48000 -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=15:vstrict=0:acodec=mp2:abitrate=192'
-alias mencode_cam='mencoder -mc 0 -noskip -oac lavc -ovc lavc -of mpeg -mpegopts format=dvd:tsaf -vf harddup -tv driver=v4l2:device=/dev/video0:forceaudio:adevice=/dev/dsp -srate 48000 -af lavcresample=48000 -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=15:vstrict=0:acodec=mp2:abitrate=192 tv:// -o'
-alias pacgraph="pacgraph -d '#ff3200' -t '#ff8700' -l '#d77f66' -b '#1c1c1c' --disable-palette"
-alias accorder=lingot
-alias noswap='sudo swapoff /dev/sda2'
-alias whatisthismpdjamendotrack='searchjam "$(mpc -f "%file%")"'
-alias gollum='killall gollum;gollum'
-alias eman='MANPATH=/usr/lib/erlang/man man'
-
-# amnesia
-for i in '' -justine -launcher ; do
-    alias amnesia$i="export force_s3tc_enable=true;amnesia-tdd$i"
-done
-
-alias scope.sh='~c/ranger/scope.sh'
-
-# life is to short to always type the same things :)
-alias s='sudo'
-alias v='vim'
-alias vd='vimdiff'
-alias V='sudo vim'
-alias VD='sudo vimdiff'
-alias g='git'
-alias xk='xkbcomp -w 0 -R/usr/share/X11/xkb/ ~/.kbd-layout/custom-azerty.xkb $DISPLAY'
-alias newsoptim='sqlite ~l/newsbeuter/cache.db VACUUM'
-alias cupstart='sudo systemctl load cups && sudo systemctl start cups'
-alias cupstop='sudo systemctl stop cups'
-alias cups_update_gutenprint='sudo /usr/sbin/cups-genppdupdate'
-alias netctl='sudo /usr/bin/netctl'
-alias netctl-auto-restart='sudo netctl-auto stop wlan0 && sudo netctl-auto start wlan0'
-
-# workaround for my problem at remembering the names of image magick tools
-for n in animate compare composite conjure convert display identify import mogrify montage stream; do
-    alias im-$n=$n
-done
-
-alias ranger='LESS=R$LESS ranger'
-alias dfc='dfc -fTw -c always | /usr/bin/grep -P "(sd[ab]|media)"'
-alias cd=cdr
-alias topdf='libreoffice --invisible --convert-to pdf'
-
-alias dnsreverse="nmap -oG - -sL"
-
-# sometimes required after a kernel update
-alias alsa-retore='sudo alsactl -f /var/lib/alsa/asound.state store'
-
-# reminder aliases
-alias printer='lp'
-
-alias commentva-kernel='sudo tail /var/log/kernel.log -f'
-
-alias :xkeylist='vim /usr/include/X11/keysymdef.h'
-alias :xkbfr='vim /usr/share/X11/xkb/symbols/fr'
-
-alias misc='man ~d/man/astuces/misc.1.gz'
-alias installed='LANG=C pacman -Qi | awk '"'"'/^Name/ {pkg=$3} /Size/ {print $4$5,pkg}'"'"' | sort -n'
-
-# nice ls (colors and stuff)
-alias ls='ls --classify --tabsize=0 --group-directories-first --literal --color=auto --show-control-chars --human-readable'
-alias ll='ls -l'
-alias la='ls -A'
-alias lla='ls -lA'
-alias lt='ls -ltr'
-alias dir='ls -lSrah'
-alias lad='ls -d .*(/)'              # only show dot-directories
-alias lsa='ls -a .*(.)'              # only show dot-files
-alias lss='ls -l *(s,S,t)'           # only files with setgid/setuid/sticky flag
-alias lsl='ls -l *(@)'               # only symlinks
-alias lsx='ls -l *(*)'               # only executables
-alias lsw='ls -ld *(R,W,X.^ND/)'     # world-{readable,writable,executable} files
-alias lsbig="ls -flh *(.OL[1,10])"   # display the biggest files
-alias lsd='ls -d *(/)'               # only show directories
-alias lse='ls -d *(/^F)'             # only show empty directories
-alias lsnew='ls -tlh *(D.om[1,10])'  # display the newest files
-alias lsold='ls -rtlh *(D.Om[1,10])' # display the oldest files
-alias lssmall='ls -Srl *(.oL[1,10])' # display the smallest files
-
-alias rd='rmdir'
-alias lkg='linkgrab'
-alias cli='clisp -q -q -v -x "(setq *print-case* :downcase)" -repl'
-alias r100='mogrify -filter lanczos -resize 100x100'
-function v100 () {
-    convert "$1" -filter lanczos -resize 100x100 - | display
-}
-
-alias ems-flasher='ems-flasher --verbose'
-alias sudo='sudo nopasssudo'
-alias http-headers='noglob wget --server-response -O /dev/null -q'
-alias archinstall='date -d "`head /var/log/pacman.log -n 1 | perl -ne '"'print for /\[([^\]]+)\]/'"'`"'
-alias less='less -R'
-alias df='df --human-readable'
-alias du='du --human-readable'
-alias amoi='sudo chown tharek:users'
-alias aroot='sudo chown root:root'
-alias ux='chmod u+x'
-alias urge='echo "\007\c"'
-alias waspi='wget -rpkE -l 0 -nc -np -nH'
-alias wsave='wget -pkE -nc -np -nH'
-alias maj='yaourt -Syu --aur --devel'
-alias sql='mysql -u root'
-alias zmv='noglob zmv'
-alias grep='grep --color=auto'
-alias info='info --vi-keys'
-alias zrc='vim ~/.zshrc && source ~/.zshrc && zcompile ~/.zshrc'
-alias xmp='mplayer -prefer-ipv4 -cache 30000 -cache-min 3 -unicode -utf8 "`xsel -o`"'
-alias hl='highlight --out-format=ansi'
-alias h='run-help'
-alias sqlite='sqlite3 -column'
-alias url='filtr '"'"'/((?:https?:\/\/|ftp:\/\/|news:\/\/|mailto:|file:\/\/|www\.)[\w\-\@;\/?:&=%\$_.+!*\x27(),~#]+[\w\-\@;\/?&=%\$_+!*\x27()~])/g'"' | filter_uniq"
-alias hrefs='filtr '"'"'/href="([^"]+)"/g'"'"' | filter_uniq'
-alias filter_uniq="awk '!x[\$0]++'"
-
-############################################################################ }}}
-
-## FUNCTIONS ############################################################### {{{
-
-# diff time machine
-function prediff() {
-    if [[ $# != 1 ]]; then
-        echo "prediff, make a copy in a temporary directory.\nusage: prediff <filename>\nRun postdiff to make a diff."
-    else
-        name="$(basename "$1")"
-        mkdir -p "/tmp/difftm"
-        cp "$1" "/tmp/difftm/$name"
-    fi
-}
-function postdiff() {
-    if [[ $# != 1 ]]; then
-        echo "postdiff, diff a file previously copied with prediff.\nusage: postdiff <filename>"
-    else
-        name="$(basename "$1")"
-        filepath="$1"
-        shift
-        diff "$@" "/tmp/difftm/$name" "$filepath"
-    fi
-}
-
-function hi2odt() {
-    if [ $# -lt 2 ]; then
-        echo 'usage: hi2odt src dest [extra]'
-        return
-    fi
-    param1=$1
-    param2=$2
-    shift 2
-    highlight -O odt --config-file ~c/highlight/themes/brightvariant.theme "$@" -- "$param1" | sed 's/Standard/code/g;s/FreeMono/Inconsolata/g' | ifne sponge "$param2"
-}
-
-# hex to dec
-function todec() {
-    printf "$(for i in "$@"; do print -n '%d '; done)\n" $(for i in "$@"; do print -n ' 0x'$i; done)
-}
-# dec to hex
-function tohex() {
-    printf "$(for i in "$@"; do print -n '%x '; done)\n" "$@"
-}
-
-function searchjam() {
-    xml sel -t -v "//track[id=\"${${1%&stream*}##*id=}\"]" ~/.mpd/jamendo.xml
-}
-
-# search a library
-function findlib () {
-    find /lib /usr/lib /lib64 /usr/lib32 -name "*$1*.so*"
-}
-
-# quvi
-function dly () {
-    if [ $# = 0 ] ; then
-        quvi -f mp4_720p --exec "wget -c %u -O %t.mp4" "`xsel -o`"
-    else
-        quvi -f mp4_720p --exec "wget -c %u -O %t.mp4" $@
-    fi
-}
-
-# conversion
-function flactomp3   {
-    flac -d "$1" -c | lame -b 320 - "${1%.flac}.mp3"
-}
-
-function flactoogg   {
-    ffmpeg -i "$1" -acodec libvorbis -ac 2 -ab 128k "${1%.flac}.ogg"
-}
-
-accessed()           { print -l -- *(a-${1:-1}) }
-changed()            { print -l -- *(c-${1:-1}) }
-modified()           { print -l -- *(m-${1:-1}) }
-
-function waitend()       { while pgrep "$1" ; do sleep "${2-5}" ; done }
-function shutdownafter() { waitend "$1" 30 && sudo shutdown -h now }
-
-function filtr()     { [ $# = 1 ] && perl -ne "print "'"$_\n"'" for $1" || perl -ne "print \"$1\" for $2" }
-function replace()   { [ $# = 2 ] && perl -pe "$2" -i "$1" || echo "replace file command\nex: replace foo.bar s/foo/bar/g" }
-function rantag()    { f=":$(readlink -f "$1")"; tags="$(grep -v "^.$f$" ~/.config/ranger/tagged)\n${${2:0:1}:-*}$f"; echo -n "$tags" | sort -u --key=1.3 > ~/.config/ranger/tagged }
-function cssdata()   { [ $# -lt 2 ] && echo "Usage: cssdata file type\nex: cssdata foo.gif image/gif" && return 1 echo -n "url(\"data:$2;base64,"; base64 -w0 $1; echo -n "\")" }
-function trash()     { mv $@ $HOME/.trash }
-function jamadd()    { [ $# -lt 1 ] && url="$(xsel -o)" || url="$1"; id="${url##*/}"; mpc add "http://api.jamendo.com/get2/stream/track/redirect/?id=$id&streamencoding=mp31" }
-function jamaddalbum() { [ $# -lt 1 ] && url="$(xsel -o)" || url="$1"; curl "$url" | sed 's+/track+\n/track+g'| perl -ne 'print "$_\n" for /\/track\/(\d+)/' | filter_uniq | while read i; do mpc add "http://api.jamendo.com/get2/stream/track/redirect/?id=$i&streamencoding=mp31"; done }
-function jamplay()   { [ $# -lt 1 ] && url="$(xsel -o)" || url="$1"; curl "$url" | sed 's+/track+\n/track+g'| perl -ne 'print "$_\n" for /\/track\/(\d+)/' | filter_uniq | while read i; do echo "http://api.jamendo.com/get2/stream/track/redirect/?id=$i&streamencoding=mp31"; done > /tmp/jamendo-playlist; mplayer -playlist /tmp/jamendo-playlist }
-function jamplayone(){ [ $# -lt 1 ] && url="$(xsel -o)" || url="$1"; echo "$url" | sed 's+/track+\n/track+g'| perl -ne 'print "$_\n" for /\/track\/(\d+)/' | filter_uniq | read i; mplayer "http://api.jamendo.com/get2/stream/track/redirect/?id=$i&streamencoding=mp31" }
-function calc()      { echo $(($@)) }; alias '~'='noglob calc'
-function gitvimdiff  { GIT_EXTERNAL_DIFF="git_diff_wrapper" git --no-pager diff "$@" }
-function album_id    { track_id="$(mpc -f '%file%' | filtr '/id=(\d+)/')"; echo "Track id is $track_id" >&2 ; perl -lne "print for /<album><id>(\\d+)<\\/id>.*?<track><id>$track_id<\\/id>/" < .mpd/jamendo.xml >&1 }
-function dl_current  { oggjam "http://www.jamendo.com/en/album/`jamlbum_id`" }
-function up()        { for updirs in $(seq ${1:-1}); do cd ..; done; }
-function vimpatch()  { vim "$1" +"vert diffpa $2" }
-function join()      { glue=$1; shift; echo "${(ej:${glue}:)@}" }
-function xvid()      { mencoder -oac mp3lame -ovc xvid -vf scale=1280:720 "$1" -o "$2" -xvidencopts bitrate=1400 }
-
-# package-related stuff
-function yql         { /usr/bin/pacman -Ql $@ | sed 's/^[^ ]\+ //;/\/$/ d' }
-function grepkg() {
-    (( $# < 2 )) && return
-    pkg="$1"
-    shift
-    grep $@ `/usr/bin/pacman -Ql $pkg \
-        | sed 's/^[^ ]\+ //;/\/$/ d;/\.bmp$/ d;/\.gif$/ d;/png$/ d;/tga$/ d;/so$/ d;/gz$/ d;/tgz$/ d;/zip$/ d;/class$/ d;/mo$/ d'`
-}
-function findpkg() {
-    (( $# < 2 )) && return
-    pkg="$1"
-    shift
-    yql $pkg | grep $@
-}
-
-function mountiso() {
-  if [ ! "$1" ]; then
-    echo "missing iso image argument"
-    return
-    elif [ ! -f "$1" ]; then
-    echo "$1: iso image not found"
-    return
-  elif [ "`mount | grep /mnt/iso`" ]; then
-    echo "/mnt/iso is already in use"
-    return
-  fi
-  sudo mount -t iso9660 -o loop,ro "$1" /mnt/iso
-}
-
-function cl()       { cd "$1" && ls }
-
-# mkdir, then cd
-function md()       { mkdir -p "$@" && cd "$@" }
-
-# mkdir, then mv
-function mvd() {
-    if [ $# -lt 2 ]; then
-        echo "fail" >&2
-        return
-    fi
-    last="$@[$#@]"
-    [ $# -eq 2 ] && last="${last%/}/"
-    mkdir -p "${last#/*}" \
-        && mv $@
-}
-
-# mkdir, then mv, then cd
-function mvcd() {
-    if [ $# -lt 2 ]; then
-        echo "fail" >&2
-        return
-    fi
-    last="$@[$#@]"
-    [ $# -eq 2 ] && last="${last%/}/"
-    mkdir -p "${last%/*}" \
-        && mv $@ \
-        && cd "${last%/*}"
-}
-
-# mkdir, then cp
-function cpd() {
-    if [ $# -lt 2 ]; then
-        echo "fail" >&2
-        return
-    fi
-    last="$@[$#@]"
-    if [ $# -lt 2 ]
-    then last="${last%/}/"
-    fi
-    mkdir -p "${last%/*}" \
-        && cp $@
-}
-
-############################################################################ }}}
-
 ## PROMPT SETUP ############################################################ {{{
 
 setopt PROMPT_SUBST
@@ -579,9 +221,7 @@ else
     zstyle ':vcs_info:*' nvcsformats   ' %F{6}%~'
 
     precmd () { vcs_info }
-    #PS1='%F{5}[%F{2}%n%F{5}] %F{3}%3~ ${vcs_info_msg_0_}%f%# '
-    #PROMPT=' %F{6}%~ %f${vcs_info_msg_0_}%F{2}§ %f'
-    PROMPT=${RANGER_LEVEL+"%S%F{3}%B"${(r:$RANGER_LEVEL+8::+::in ranger:)}%b%s}'${vcs_info_msg_0_} %(0?,%F{2}\$,%F{1}!)%f '
+    PROMPT='${vcs_info_msg_0_} %(0?,%F{2}\$,%F{1}!)%f '
 
     # Put out a bell-character ($'\a') everytime a command finishes.
     # This will set the urgency hint, if the terminal is configured accordingly
@@ -604,9 +244,6 @@ special:fg=cyan
 default:fg=yellow
 isearch:fg=red
 )
-
-# zsh highlight stuff
-. ~g/../git/zsh-syntax-highlighting-filetypes/zsh-syntax-highlighting-filetypes.zsh
 
 ############################################################################ }}}
 
@@ -641,50 +278,29 @@ bindkey '\eOd'  emacs-backward-word  # Ctrl-←
 bindkey '\ev'   vi-cmd-mode
 bindkey '^X^V'  vi-cmd-mode
 
-# expand global alias
-bindkey '\eg'   globalias
-
-insert-last-typed-word() { zle insert-last-word -- 0 -1 };
-zle -N insert-last-typed-word;
-
-bindkey '\em'   insert-last-typed-word
-
-# run command line as user root via sudo:
-sudo-command-line() {
-    [[ -z $BUFFER ]] && zle up-history
-    if [[ $BUFFER != sudo\ * ]]; then
-        BUFFER="sudo $BUFFER"
-        CURSOR=$(( CURSOR+5 ))
-    fi
-}
-zle -N sudo-command-line
-bindkey '^s'  sudo-command-line
-
 # yaourt bindings (yaourt is a wrapper for pacman, Archlinux's package manager)
-bindkey -s '^Y'  'yaourt '
-bindkey -s '^Yl' 'yaourt -Ql '      # list files
-bindkey -s '^Yt' 'yaourt -Qdt'      # list non required packages
-bindkey -s '^Yq' 'yaourt -Q '       # list non required packages
-bindkey -s '^Yo' 'yaourt -Qo '      # find the package that owns a given file
-bindkey -s '^Yu' 'yaourt -U '       # install a package from a local file
-bindkey -s '^Yg' 'yaourt -G '       # get a package's PKGBUILD
-bindkey -s '^Yr' 'yaourt -Rcs '     # uninstall a package and its unrequired dependencies
-bindkey -s '^Yi' 'yaourt -Si '      # get informations on a package from repository
-bindkey -s '^Ys' 'yaourt -Qs '      # search in the installed packages
-bindkey -s '^Yb' 'yaourt -Sb '      # build and install a package from sources
-bindkey -s '^Yc' 'yaourt -C '       # manage .pac* files
-bindkey -s '^Yd' 'yaourt -Q --date' # list installed package, sorted by date
-bindkey -s '^Ya' 'yaourt -Qua '     # list outdated package
-bindkey -s '^Ym' 'yaourt -Qm '      # list package installed locally (build from AUR, for example)
-
-# useful but ugly bindings
-bindkey -s 'f' 'for i in ; do  "$i"; doneODODODODODODODODODODODODODODODOD'
-bindkey -s 'w' 'while ; do ; doneODODODODODODODODODODOD'
+bindkey -s '^x^y '  'yaourt '
+bindkey -s '^x^y^l' 'yaourt -Ql '      # list package files
+bindkey -s '^x^y^t' 'yaourt -Qdt'      # list non required packages
+bindkey -s '^x^y^o' 'yaourt -Qo '      # find the package that owns a given file
+bindkey -s '^x^y^u' 'yaourt -U '       # install a package from a local file
+bindkey -s '^x^y^g' 'yaourt -G '       # get a package's PKGBUILD
+bindkey -s '^x^y^r' 'yaourt -Rcs '     # uninstall a package and its unrequired dependencies
+bindkey -s '^x^y^i' 'yaourt -Si '      # get informations on a package from repository
+bindkey -s '^x^y^q' 'yaourt -Qi '      # get informations on a package installed
+bindkey -s '^x^y^s' 'yaourt -S '       # install from repository
+bindkey -s '^x^y^b' 'yaourt -Sb '      # build and install a package from sources
+bindkey -s '^x^y^c' 'yaourt -C '       # manage .pac* files
+bindkey -s '^x^y^d' 'yaourt -Q --date' # list installed package, sorted by date
+bindkey -s '^x^y^a' 'yaourt -Qua '     # list outdated package
+bindkey -s '^x^y^m' 'yaourt -Qm '      # list package installed locally (built from the AUR, for example)
 
 # Esc,Return multiselect
 bindkey -M menuselect '\e^M' accept-and-menu-complete
-bindkey -M menuselect '^o'   accept-and-infer-next-history
-bindkey -M menuselect '\e '  accept-and-infer-next-history
+
+insert-last-typed-word() { zle insert-last-word -- 0 -1 };
+zle -N insert-last-typed-word;
+bindkey '\em' insert-last-typed-word
 
 # add a command line to the shells history without executing it
 commit-to-history() {
@@ -695,5 +311,13 @@ zle -N commit-to-history
 bindkey "^x^h" commit-to-history
 
 ############################################################################ }}}
+
+# Alias and functions defined in other files
+
+source ~/.zsh/alias.zsh
+source ~/.zsh/funcs.zsh
+
+# alias to edit and compile zsh config
+alias zrc='$EDITOR ~/.zshrc ~/.zsh/{alias,funcs}.zsh && source ~/.zshrc && zcompile ~/.zshrc'
 
 # vim: ft=zsh fdm=marker ai ts=2 sw=2 noet :
