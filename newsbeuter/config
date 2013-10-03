@@ -5,6 +5,12 @@ user-agent "Mozilla/5.0 (X11; Linux i686) AppleWebKit/534.24 (KHTML, like Gecko)
 color info green black
 color listfocus black yellow
 color listnormal white default
+color listnormal_unread yellow default
+color listfocus_unread black yellow
+
+# bookmarking (with ^b) just download the page
+bookmark-cmd "__newsbeuter_download"
+bookmark-autopilot yes
 
 # bindings
 bind-key j down
