@@ -371,6 +371,7 @@ if has("autocmd")
 		au BufNewFile,BufRead *.t2t setlocal spell spelllang=fr tw=80
 		au BufNewFile,BufRead *.tex setlocal spell spelllang=fr
 		au BufNewFile,BufRead *.pdc setlocal spell spelllang=fr
+		au BufNewFile,BufRead *.md setlocal ft=markdown spell spelllang=fr
 
 		" When editing a file, always jump to the last known cursor position.
 		autocmd BufReadPost *
@@ -386,6 +387,32 @@ if has("autocmd")
 					\  setlocal omnifunc=syntaxcomplete#Complete |
 					\ endif
 	endif
+
+function! MarkdownLevel(maxlevel)
+    if a:maxlevel >= 1 && getline(v:lnum) =~ '^# .*$'
+        return ">1"
+    endif
+    if a:maxlevel >= 2 && getline(v:lnum) =~ '^## .*$'
+        return ">2"
+    endif
+    if a:maxlevel >= 3 && getline(v:lnum) =~ '^### .*$'
+        return ">3"
+    endif
+    if a:maxlevel >= 4 && getline(v:lnum) =~ '^#### .*$'
+        return ">4"
+    endif
+    if a:maxlevel >= 5 && getline(v:lnum) =~ '^##### .*$'
+        return ">5"
+    endif
+    if a:maxlevel >= 6 && getline(v:lnum) =~ '^###### .*$'
+        return ">6"
+    endif
+    return "="
+endfunction
+
+au BufEnter *.md setlocal foldexpr=MarkdownLevel(2)
+au BufEnter *.md setlocal foldmethod=expr
+au BufEnter *.md setlocal autoindent
 
 endif " has("autocmd")
 " }}}
