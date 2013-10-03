@@ -16,7 +16,7 @@ export GTK_IM_MODULE=xim # X input methods (e.g. XCompose) in more applications
 export TERMINAL='urxvt -e'
 export TERMCMD=urxvt
 
-export PATH=~/.bin:~/.gem/ruby/1.9.1/bin:"$PATH" # add user's .bin directory to path
+export PATH=~/.bin:~/.gem/ruby/2.0.0/bin:~/.gem/ruby/1.9.1/bin:"$PATH"
 
 xset +fp /usr/share/fonts/local # add directory to X font path
 xsetroot -cursor_name left_ptr # arrow cursor on root window
