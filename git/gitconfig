@@ -72,7 +72,9 @@
 	addm = !git-ls-files -m -z | xargs -0 git-add && git status
 	addu = !git-ls-files -o --exclude-standard -z | xargs -0 git-add && git status
 	rmm = !git ls-files -d -z | xargs -0 git-rm && git status
-	serve = daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
+
+	serve = daemon --reuseaddr --verbose --base-path=. --export-all
+	prepare-serve = !touch .git/git-daemon-export-ok
 
 [merge]
 	conflictstyle = diff3
@@ -106,3 +108,4 @@
 [gui]
 	fontui = -family erusfont -size 9 -weight normal -slant roman -underline 0 -overstrike 0
 	fontdiff = -family erusfont -size 9 -weight normal -slant roman -underline 0 -overstrike 0
+	spellingdictionary = en
