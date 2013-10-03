@@ -29,10 +29,10 @@
 	unadd = reset HEAD
 
 	# diff
-	d = diff --patch-with-stat
-	dt = diff --stat
-	ds = diff --staged --patch-with-stat
-	dst = diff --staged --stat
+	d = diff --patch-with-stat --patience
+	dt = diff --stat --patience
+	ds = diff --staged --patch-with-stat --patience
+	dst = diff --staged --stat --patience
 
 	# show
 	s = show --patch-with-stat
