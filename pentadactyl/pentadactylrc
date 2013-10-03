@@ -2,7 +2,7 @@ colorscheme molokai
 
 " autocommands
 autocmd LocationChange ^https://mail\.google\.com/ :normal! <C-z>
-autocmd PageLoad ^https://accounts\.google\.com/ :normal! gi
+autocmd PageLoad ^https://accounts\.google\.com/ :normal! <Esc>gi
 
 " custom styles {{{
 " -----------------
@@ -22,7 +22,7 @@ style code.google.com input[type='button'], input[type='submit'], .butonify {col
 set complete=location,file
 set guioptions=s
 set hlfind
-set sanitizeshutdown=commandline,history,cookies,sessions
+set sanitizeshutdown=
 set editor='urxvt -e vim -f +<line> +"sil! call cursor(0, <column>)" <file>'
 set scrolltime=5
 set showmode=caret,!normal,!find,!ex,!hints,base
@@ -65,8 +65,8 @@ map -- - zO
 " Quickmarks
 map \' `
 
-" Quit, saving session
-map ZZ :set sanitizeshutdown=<CR>:xall<CR>
+" Quit, clearing session
+map ZQ :set sanitizeshutdown=commandline,history,cookies,sessions<CR>:xall<CR>
 
 " remove highlightings for find pattern matches
 map <Space> :noh<CR>
@@ -83,9 +83,13 @@ map S :saveas
 
 " various places shortcuts {{{
 " ----------------------------
-"addons
+" addons
 map ga :open about:addons<CR>
 map gA :tabopen about:addons<CR>
+
+" downloads
+map gd :open about:downloads<CR>
+map gD :tabopen about:downloads<CR>
 
 " scrapbook
 map gs :open chrome://scrapbook/content/manage.xul<CR><C-z>
@@ -93,8 +97,12 @@ map gS :tabopen chrome://scrapbook/content/manage.xul<CR><C-z>
 map s :sidebar! Scrapbook<CR>
 
 " places (bookmarks, history,…)
-map gp :open chrome://browser/content/places/places.xul<CR><C-z>
-map gP :tabopen chrome://browser/content/places/places.xul<CR><C-z>
+map gb :open chrome://browser/content/places/places.xul<CR><C-z>
+map gB :tabopen chrome://browser/content/places/places.xul<CR><C-z>
+
+" preferences
+map gp :open about:preferences<CR>
+map gP :tabopen about:preferences<CR>
 
 " Gmail
 map gm ohttp://mail.google.com<CR>
@@ -188,9 +196,6 @@ command! gquit,gq sanitize -host google.com
 				\ sanitize -host google.fr
 				\ cookies google.com clear
 				\ cookies google.fr clear
-
-" clear google cookies and delete tab (quick logout)
-map gd :gquit<CR>d
 
 " jamendo info page for current mpd song
 map gj :!gojam<CR>
