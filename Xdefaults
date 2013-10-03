@@ -1,3 +1,6 @@
+! disable terminal status return (^E escape sequence)
+*answerbackString:
+
 ! common settings ------------------------------------------------------------
 
 *font: -erus-erusfont-medium-r-normal--11-80-100-100-c-60-iso10646-1
@@ -123,7 +126,6 @@ URxvt.keysym.KP_Subtract: -
 URxvt.keysym.KP_Divide:   /
 URxvt.keysym.KP_Multiply: *
 URxvt.keysym.KP_Decimal:  .
-
 
 ! weechat --------------------------------------------------------------------
 
