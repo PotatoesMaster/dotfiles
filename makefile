@@ -8,7 +8,7 @@ MKPATH="$(shell pwd)"
 
 XDG_CONFIG_DIR=~/.config
 
-all: i3_ mplayer_ ncmpcpp_ pentadactyl_ gdb_ git_ nano_ rtorrent_ vim_ zsh_ misc feh_ highlight_ newsbeuter_ ranger_ bin_
+all: i3_ mpv_ ncmpcpp_ pentadactyl_ gdb_ git_ nano_ rtorrent_ vim_ zsh_ misc feh_ highlight_ newsbeuter_ ranger_ bin_
 
 i3_:
 	mkdir -p ~/.i3
@@ -17,10 +17,10 @@ i3_:
 	ln -sf $(MKPATH)/i3/config                          ~/.i3/config
 	ln -sf $(MKPATH)/i3/conky.conf                      ~/.i3/conky.conf
 
-mplayer_:
-	mkdir -p ~/.mplayer
-	ln -sf $(MKPATH)/mplayer/config                     ~/.mplayer/config
-	ln -sf $(MKPATH)/mplayer/input.conf                 ~/.mplayer/input.conf
+mpv_:
+	mkdir -p ~/.mpv
+	ln -sf $(MKPATH)/mpv/config                     ~/.mpv/config
+	ln -sf $(MKPATH)/mpv/input.conf                 ~/.mpv/input.conf
 
 ncmpcpp_:
 	mkdir -p ~/.ncmpcpp

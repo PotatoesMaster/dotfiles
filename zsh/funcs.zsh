@@ -86,8 +86,8 @@ function cssdata()   { [ $# -lt 2 ] && echo "Usage: cssdata file type\nex: cssda
 function trash()     { mv $@ $HOME/.trash }
 function jamadd()    { [ $# -lt 1 ] && url="$(xsel -o)" || url="$1"; id="${url##*/}"; mpc add "http://api.jamendo.com/get2/stream/track/redirect/?id=$id&streamencoding=mp31" }
 function jamaddalbum() { [ $# -lt 1 ] && url="$(xsel -o)" || url="$1"; curl "$url" | sed 's+/track+\n/track+g'| perl -ne 'print "$_\n" for /\/track\/(\d+)/' | filter_uniq | while read i; do mpc add "http://api.jamendo.com/get2/stream/track/redirect/?id=$i&streamencoding=mp31"; done }
-function jamplay()   { [ $# -lt 1 ] && url="$(xsel -o)" || url="$1"; curl "$url" | sed 's+/track+\n/track+g'| perl -ne 'print "$_\n" for /\/track\/(\d+)/' | filter_uniq | while read i; do echo "http://api.jamendo.com/get2/stream/track/redirect/?id=$i&streamencoding=mp31"; done > /tmp/jamendo-playlist; mplayer -playlist /tmp/jamendo-playlist }
-function jamplayone(){ [ $# -lt 1 ] && url="$(xsel -o)" || url="$1"; echo "$url" | sed 's+/track+\n/track+g'| perl -ne 'print "$_\n" for /\/track\/(\d+)/' | filter_uniq | read i; mplayer "http://api.jamendo.com/get2/stream/track/redirect/?id=$i&streamencoding=mp31" }
+function jamplay()   { [ $# -lt 1 ] && url="$(xsel -o)" || url="$1"; curl "$url" | sed 's+/track+\n/track+g'| perl -ne 'print "$_\n" for /\/track\/(\d+)/' | filter_uniq | while read i; do echo "http://api.jamendo.com/get2/stream/track/redirect/?id=$i&streamencoding=mp31"; done > /tmp/jamendo-playlist; mpv -playlist /tmp/jamendo-playlist }
+function jamplayone(){ [ $# -lt 1 ] && url="$(xsel -o)" || url="$1"; echo "$url" | sed 's+/track+\n/track+g'| perl -ne 'print "$_\n" for /\/track\/(\d+)/' | filter_uniq | read i; mpv "http://api.jamendo.com/get2/stream/track/redirect/?id=$i&streamencoding=mp31" }
 function calc()      { echo $(($@)) }; alias '~'='noglob calc'
 function gitvimdiff  { GIT_EXTERNAL_DIFF="git_diff_wrapper" git --no-pager diff "$@" }
 function album_id    { track_id="$(mpc -f '%file%' | filtr '/id=(\d+)/')"; echo "Track id is $track_id" >&2 ; perl -lne "print for /<album><id>(\\d+)<\\/id>.*?<track><id>$track_id<\\/id>/" < .mpd/jamendo.xml >&1 }

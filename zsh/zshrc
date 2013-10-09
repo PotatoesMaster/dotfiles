@@ -11,8 +11,8 @@
 if [ "$TERM" = "linux" ]; then
   export PATH=$HOME/.bin:$PATH
 
-  # mplayer on framebuffer
-  alias mplayer='mplayer -vo fbdev'
+  # mpv on framebuffer
+  alias mpv='mpv -vo fbdev'
 fi
 ############################################################################ }}}
 

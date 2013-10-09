@@ -1,0 +1,28 @@
+# Coloured console messages
+msgcolor = yes
+
+# Allow moving backward/forward in a stream
+idx = yes
+
+# Video output
+vo = xv,x11
+framedrop = yes
+
+# Audio output
+ao = alsa,oss
+srate = 48000
+
+# Fullscreen
+fullscreen = yes
+
+# Default languages
+slang = fr,fra,en,eng
+alang = fr,en
+
+# Video filters
+#vf = screenshot,scale=1440:900,hqdn3d
+vf = hqdn3d
+
+# Soft volume
+softvol = yes
+softvol-max = 200
