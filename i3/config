@@ -222,6 +222,7 @@ mode "insert" {
 bindsym $mod+i mode "insert"
 
 # Workspaces
+bind Mod4+49 workspace back_and_forth
 bind Mod4+10 workspace $w0
 bind Mod4+11 workspace $w1
 bind Mod4+12 workspace $w2
@@ -236,6 +237,7 @@ bind Mod4+20 workspace $w10
 bind Mod4+21 workspace $w11
 
 # Move to Workspaces
+bind Mod4+Shift+49 move workspace back_and_forth; workspace back_and_forth
 bind Mod4+Shift+10 move workspace $w0; workspace $w0
 bind Mod4+Shift+11 move workspace $w1; workspace $w1
 bind Mod4+Shift+12 move workspace $w2; workspace $w2
@@ -250,6 +252,7 @@ bind Mod4+Shift+20 move workspace $w10; workspace $w10
 bind Mod4+Shift+21 move workspace $w11; workspace $w11
 
 # Workspaces
+bind Mod5+49 workspace back_and_forth
 bind Mod5+10 workspace $w0
 bind Mod5+11 workspace $w1
 bind Mod5+12 workspace $w2
@@ -264,6 +267,7 @@ bind Mod5+20 workspace $w10
 bind Mod5+21 workspace $w11
 
 # Move to Workspaces
+bind Mod5+Shift+49 move workspace back_and_forth; workspace back_and_forth
 bind Mod5+Shift+10 move workspace $w0; workspace $w0
 bind Mod5+Shift+11 move workspace $w1; workspace $w1
 bind Mod5+Shift+12 move workspace $w2; workspace $w2
