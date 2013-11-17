@@ -5,7 +5,7 @@ msgcolor = yes
 idx = yes
 
 # Video output
-vo = xv,x11
+vo = vdpau,opengl,xv,x11
 framedrop = yes
 
 # Audio output
