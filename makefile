@@ -47,33 +47,8 @@ rtorrent_:
 
 vim_:
 	ln -sf $(MKPATH)/vim/vimrc                          ~/.vimrc
-	mkdir -p ~/.vim/after
-	ln -sf $(MKPATH)/vim/after/css.vim                  ~/.vim/after/css.vim
-	mkdir -p ~/.vim/colors
-	ln -sf $(MKPATH)/vim/colors/harold.vim              ~/.vim/colors/harold.vim
-	mkdir -p ~/.vim/ftdetect
-	ln -sf $(MKPATH)/vim/ftdetect/django.vim            ~/.vim/ftdetect/django.vim
-	ln -sf $(MKPATH)/vim/ftdetect/luakit.vim            ~/.vim/ftdetect/luakit.vim
-	ln -sf $(MKPATH)/vim/ftdetect/plantuml.vim          ~/.vim/ftdetect/plantuml.vim
-	ln -sf $(MKPATH)/vim/ftdetect/txt2tags.vim          ~/.vim/ftdetect/txt2tags.vim
-	ln -sf $(MKPATH)/vim/ftdetect/xkb.vim               ~/.vim/ftdetect/xkb.vim
-	mkdir -p ~/.vim/ftplugin
-	ln -sf $(MKPATH)/vim/ftplugin/luakit.vim            ~/.vim/ftplugin/luakit.vim
-	ln -sf $(MKPATH)/vim/ftplugin/txt2tags.vim          ~/.vim/ftplugin/txt2tags.vim
-	mkdir -p ~/.vim/indent
-	ln -sf $(MKPATH)/vim/indent/luakit.vim              ~/.vim/indent/luakit.vim
-	mkdir -p ~/.vim/plugin
-	ln -sf $(MKPATH)/vim/plugin/vim_movelines.vim       ~/.vim/plugin/vim_movelines.vim
-	mkdir -p ~/.vim/syntax
-	ln -sf $(MKPATH)/vim/syntax/luakit.vim              ~/.vim/syntax/luakit.vim
-	ln -sf $(MKPATH)/vim/syntax/plantuml.vim            ~/.vim/syntax/plantuml.vim
-	ln -sf $(MKPATH)/vim/syntax/ranger.vim              ~/.vim/syntax/ranger.vim
-	ln -sf $(MKPATH)/vim/syntax/wps.vim                 ~/.vim/syntax/wps.vim
-	ln -sf $(MKPATH)/vim/syntax/xkb.vim                 ~/.vim/syntax/xkb.vim
-	mkdir -p ~/.vim/UltiSnips
-	ln -sf $(MKPATH)/vim/UltiSnips/htmldjango.snippets  ~/.vim/UltiSnips/htmldjango.snippets
-	ln -sf $(MKPATH)/vim/UltiSnips/java.snippets        ~/.vim/UltiSnips/java.snippets
-	ln -sf $(MKPATH)/vim/UltiSnips/txt2tags.snippets    ~/.vim/UltiSnips/txt2tags.snippets
+	ln -sf $(MKPATH)/vim/vimrc.local                    ~/.vimrc.local
+	test -d ~/.vim/bundle/vundle || git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 
 zsh_:
 	ln -sf $(MKPATH)/zsh/zshrc                          ~/.zshrc

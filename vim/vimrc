@@ -1,457 +1,80 @@
-" ======================================================================
-" .vimrc
-" config file for Vim (Vi Improved)
-" ======================================================================
+set nocompatible              " be iMproved
+filetype off                  " required!
 
-" General settings                                                   {{{
-" ======================================================================
-
-" More flexible backspace
-set backspace=indent,eol,start
-" Automatically indent, and do not try to be smart
-" (prefer filetype based indent)
-set autoindent nosmartindent
-" Disable implicit use of X clipboard
-set clipboard=exclude:cons\|linux
-
-set modeline     " Enable modelines, even as root
-set nocompatible " Do not ensure compatibility with vi at all cost
-set bg=dark      " Dark background
-set hlsearch     " highlights search matches
-set laststatus=2 " Always show a status line"
-set wildmenu     " Enhanced mode for command-line completion
-set noshowmatch  " Do not jump to the matching bracket automatically
-set noswapfile   " No swap files
-set hidden       " Keep hidden buffers' data
-set lazyredraw   " Do not redraw screen when executing macros
-
-set nobackup     " Do not keep a backup file
-set history=50   " Keep 50 lines of command line history
-set ruler        " Show the cursor position all the time
-set showcmd      " Display incomplete commands
-set incsearch    " Do incremental searching
-set mouse=a      " Enable mouse
-set number       " Display line numbers
-set tildeop      " ~ is an operator
-set nowrap       " Do not wrap long lines
-set lbr          " Smart line wrapping (do not break into words)
-set noet         " Do not expand tab as multiple spaces
-
-syntax on        " Enable syntax highlighting
-
-set virtualedit=block
-set wildmode=longest:full,full
-set spellsuggest=fast
-
-set grepprg=grep\ -nH\ $*
-set tabstop=4
-set shiftwidth=4
-set expandtab
-set fillchars=vert:│,fold:- 
-set cino=>s,e0,n0,f0,{0,}0,^0,L-1,:s,=s,l0,b0,gs,hs,ps,ts,is,+s,c3,C0,/0,(0,u0,U0,w0,Ws,m0,j1,J1,)20,*70,#0
-
-" Enable file type detection.
-" Use the default filetype settings, so that mail gets 'tw' set to 72,
-" 'cindent' is on in C files, etc.
-" Also load indent files, to automatically do language-dependent indenting.
-filetype plugin indent on
-
-let g:tex_flavor='latex'
-let g:Tex_DefaultTargetFormat='pdf'
-let Tlist_Inc_Winwidth='0'
-let python_highlight_all=1 " Better python syntax
-let php_sql_query=1        " highlight SQL request in php string
-let php_htmlInStrings=1    " highlight HTML tags in php string
-let mapleader = ","
-let c_space_errors = 1
-let java_space_errors = 1
-
-if &term !=# "linux"
-	set listchars=tab:·\ ,nbsp:…,precedes:<,extends:> ",eol:↵
-else
-	set listchars=tab:-\ ,nbsp:=,precedes:<,extends:>
-endif
-
-set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/.vim/after
-
-colorscheme harold
-if has("gui_running")
-	set guioptions-=T
-	" kills popup dialogs
-	set go+=c
-else
-	" console-menu
-	source $VIMRUNTIME/menu.vim
-	"set wildmenu "allready set
-	set cpo-=<
-	set wcm=<C-Z>
-endif
-"colorscheme github
-
-" default compiler set to gcc (for error detection in make output)
-compiler gcc
-
-set tags+=~/.vim/systags
-
-" Binary mode specific settings                                      {{{
-" ----------------------------------------------------------------------
-if &binary == 1
-	nmap <Down> g<Down>
-	nmap <Up> g<Up>
-	nmap j gj
-	nmap k gk
-	set wrap
-endif
-" }}}
-" }}}
-
-" Functions                                                          {{{
-" ======================================================================
-
-" :TODO
+" manage bundles with Vundle
 "
-" Searches TODO/FIXME in all files (except for hidden ones) in all directories
-" (up to 100 levels) and displays them in the quickfix window, see :help quickfix
-function! TODO()
-	:vimgrep /TODO\|FIXME/ **/*
-	:cwindow
-endfunction
-command Todo call TODO()
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
 
-" :DiffOrig
-"
-" Convenient command to see the difference between the current buffer and the
-" file it was loaded from
-if !exists(":DiffOrig")
-	command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-				\ | wincmd p | diffthis
+" required! 
+Bundle 'gmarik/vundle'
+
+" sensible default config
+Bundle 'tpope/vim-sensible'
+
+" amalgamation of crap for editing runtime files
+Bundle 'tpope/vim-scriptease'
+
+" asynchronous build and test dispatcher
+Bundle 'tpope/vim-dispatch'
+
+" continuously updated session files
+Bundle 'tpope/vim-obsession'
+
+" unicode character metadata
+Bundle 'tpope/vim-characterize'
+
+" helpers for UNIX
+Bundle 'tpope/vim-eunuch'
+
+" comment stuff out
+Bundle 'tpope/vim-commentary'
+
+" easily search for, substitute, and abbreviate multiple variants of a word
+Bundle 'tpope/vim-abolish'
+
+" enable repeating supported plugin maps with .
+Bundle 'tpope/vim-repeat'
+
+" experimental enhancement of f and t keys
+Bundle 'tpope/vim-flatfoot'
+
+" quoting/parenthesizing made simple
+Bundle 'tpope/vim-surround'
+
+" fancy status line
+Bundle 'bling/vim-airline'
+
+" Emacs-style yank ring
+Bundle 'vim-scripts/YankRing.vim'
+
+" git diff in the sign column
+Bundle 'airblade/vim-gitgutter'
+
+" three-way merge helper
+Bundle 'sjl/splice.vim'
+
+" perform all insert mode completions with Tab
+Bundle 'ervandew/supertab'
+
+" Sublime Text style multiple selections
+Bundle 'terryma/vim-multiple-cursors'
+
+" plugin that displays tags in a window
+Bundle 'majutsushi/tagbar'
+
+" syntax for Rockbox theme files
+Bundle 'vim-scripts/wps.vim'
+
+" my junk
+Bundle 'PotatoesMaster/vim-colors-harold'
+Bundle 'PotatoesMaster/vim-movelines'
+Bundle 'PotatoesMaster/i3-vim-syntax'
+
+filetype plugin indent on     " required!
+
+syntax on
+
+if filereadable(expand('~/.vimrc.local'))
+  source ~/.vimrc.local
 endif
-
-" :Underline
-"
-" My very first vim function :')
-" underline / overline a line with given character
-function! Underline(direction)
-	let c = getchar()
-	let l = getline(".")
-	if c =~ '^\d\+$'
-		let c = nr2char(c)
-	endif
-	if c =~ "\<Esc>" || c =~ "\<C-C>"
-		exe "norm! \<Esc>"
-		return ""
-	endif
-	return append(
-				\ line('.')+a:direction,
-				\ matchstr(l,'^\\s*').substitute(substitute(l,'^\\s*','',''),'.',c,'g'))
-endfunction
-nnoremap <silent> <Plug>Overline  :<C-U>call Underline(-1)<CR>
-nnoremap <silent> <Plug>Underline :<C-U>call Underline(0)<CR>
-
-" :RangerSelect
-function RangerSelect(action)
-	try
-		silent !ranger %:h --choosefile=/tmp/chosen
-	catch
-		silent !ranger --choosefile=/tmp/chosen
-	endtry
-	if filereadable('/tmp/chosen')
-		let flist = split(system('cat /tmp/chosen'), "\n")
-		for file in flist
-			exe a:action . ' ' . file
-		endfor
-		unlet file
-		unlet flist
-		call system('rm /tmp/chosen')
-	endif
-	redraw!
-endfun
-
-" The two following functions come from <http://leafo.net/posts/using_dmenu_to_open_quickly.html>
-
-" Strip the newline from the end of a string
-function! Chomp(str)
-	return substitute(a:str, '\n$', '', '')
-endfunction
-
-" Find a file and pass it to cmd
-function! DmenuOpen(cmd)
-	let depth = v:count1
-	let fname = Chomp(system("( git ls-files 2>/dev/null || find . -type f -maxdepth " . depth . " ) | dmenu -i -l 20 -p " . a:cmd))
-	if empty(fname)
-		return
-	endif
-	execute a:cmd . " " . fname
-endfunction
-
-" Prettify XML
-function! PrettyXML()
-	:% !xmllint --format --recover - 2>/dev/null<CR>
-endfunction
-
-nnoremap <silent> <Plug>Open  :<C-U>call DmenuOpen("e")<CR>
-map ,O <Plug>Open
-
-"}}}
-
-" Mappings                                                           {{{
-" ======================================================================
-
-" Normal mode                                                        {{{
-" ----------------------------------------------------------------------
-
-" Don't use Ex mode, use Q for formatting
-nmap Q gq
-vmap Q gq
-
-nmap ZA      :qa!<CR>
-nmap ZZ      :wqa<CR>
-" Y should behave like C and D!
-nmap Y       y$
-" cycle between buffers with tab
-nmap <Tab>   :bn<CR>
-nmap <S-Tab> :bN<CR>
-" delete buffer
-nmap <C-B>   :bdel<CR>
-
-" Press Space to turn off highlighting and clear any message already
-" displayed.
-nmap <silent> <Space> :nohlsearch<Bar>:echo<CR>
-" highlight hovered word without moving
-nmap <silent> <F8>    :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
-" Press F3 to toggle highlighting on/off, and show current value.
-nmap <F3> :set hlsearch! hlsearch?<CR>
-
-" go to next error
-nmap <silent> <Leader>en  :cn!<CR>
-" go to previous error
-nmap <silent> <Leader>ep  :cp!<CR>
-
-" Keep search matches in the middle of the window.
-nnoremap n nzzzv
-nnoremap N Nzzzv
-
-nmap <silent> <F9>    :make<CR>
-
-" side scrolling with <C-←> and <C-→>
-nmap <silent> <Esc>Od 5zh
-nmap <silent> <Esc>Oc 5zl
-
-nmap <Leader>o <Plug>Overline
-nmap <Leader>u <Plug>Underline
-
-" Open a file with ranger
-nmap <silent> <Leader>r :call RangerSelect('edit')<CR>
-"}}}
-
-" Insert mode                                                        {{{
-" ----------------------------------------------------------------------
-
-" vim-latexsuite require this to be mapped
-" to be able to insert the letter 'é' in tex files
-imap <F24>   <Plug>Tex_InsertItemOnThisLine
-
-" turn word to xml tag: <word></word>
-imap <F8>    <Esc>diwi<<C-R>"></<C-R>"><Esc>T>i
-" turn word to bbtag: [word][/word]
-imap <F9>    <Esc>diwi[<C-R>"][/<C-R>"]<Esc>T]i
-" turn word uppercase
-imap <C-F>   <Esc>gUiw`]a
-
-" <C-←> and <C-→> have emacs behaviour (move the cursor by word)
-imap <silent> <Esc>Od <C-o>b
-imap <silent> <Esc>Oc <C-o>e
-
-" UltiSnips mappings
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-"}}}
-
-" Command line mode                                                  {{{
-" ----------------------------------------------------------------------
-
-" start of line
-cnoremap <C-A>      <Home>
-" end of line
-cnoremap <C-E>      <End>
-"}}}
-
-" Visual mode                                                        {{{
-" ----------------------------------------------------------------------
-
-" keep selection on indenting/unindenting
-vmap < <gv
-vmap > >gv
-"}}}
-
-" Multiple modes                                                     {{{
-" ----------------------------------------------------------------------
-
-" save document with <F2>
-nmap <silent> <F2> :update<CR>
-imap <silent> <F2> <C-o>:update<CR>
-
-" swap this char and next one
-nnoremap <silent> gc xph
-" swap this char and previous
-nnoremap <silent> gx xhPl
-" swap this word and next
-nnoremap <silent> gw "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><c-o>/\w\+\_W\+<CR><c-l>:noh<CR>
-" swap this word and previous
-nnoremap <silent> gl "_yiw?\w\+\_W\+\%#<CR>:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><c-o><c-l>:noh<CR>
-" visual swapping
-vnoremap <C-X> <Esc>`.``gvP``P
-
-" global substitute shortcuts
-nmap <Leader>ss yiw:%s/<C-R>"//g<Left><Left>
-vmap <Leader>ss :<C-U>%s/<C-R>"//g<Left><Left>
-nmap <Leader>so yiw:%s/\<<C-R>"\>//g<Left><Left>
-vmap <Leader>so :<C-U>%s/\<<C-R>"\>//g<Left><Left>
-
-" Pasting
-" ----------------------------------------------------------------------
-function! Mypaste()
-	:set paste
-	put *
-	:set nopaste
-endfunction
-
-" menu
-noremap <F1> :emenu <C-Z>
-
-map <leader>p :call Mypaste()<CR>
-"}}}
-"}}}
-
-" Commands                                                           {{{
-" ======================================================================
-
-" select a file with ranger, then insert it (like :read)
-command Read :call RangerSelect('r')
-command Ascii :set virtualedit=all
-command Noascii :set virtualedit=block
-command Trimend :%s/[ \t]\+$//
-command Rehash :source ~/.vimrc
-
-command! -range=% -nargs=0 Tab2Space execute "<line1>,<line2>s/^\\t\\+/\\=substitute(submatch(0),'\\t',repeat(' ',".&ts."),'g')"
-command! -range=% -nargs=0 Space2Tab execute "<line1>,<line2>s/^\\( \\{".&ts."\\}\\)\\+/\\=substitute(submatch(0),' \\{".&ts."\\}','\\t','g')"
-command! -range=% -nargs=1 Tab2Space execute "<line1>,<line2>s/^\\t\\+/\\=substitute(submatch(0), '\\t', repeat(' ', ".<args>."), 'g')"
-command! -range=% -nargs=1 Space2Tab execute "<line1>,<line2>s/^\\( \\{".<args>."\\}\\)\\+/\\=substitute(submatch(0),' \\{".<args>."\\}','\\t','g')"
-"}}}
-
-" Files autocommands                                                 {{{
-" ======================================================================
-
-" Only do this part when compiled with support for autocommands.
-if has("autocmd")
-
-	" put these in an autocmd group, so that we can delete them easily.
-	augroup vimrcEx
-		" remove all autocommands in that group
-		au!
-
-		" set 'textwidth' to 80 characters for text files
-		autocmd FileType text setlocal textwidth=80
-
-		" Vim help
-		autocmd FileType vim      nmap K yiw:h <C-R>"<Enter>
-
-		" compilers
-		autocmd Filetype python   :syntax match pythonOperator "\(+\|-\|/\|=\|(\|)\|{\|}\|\[\|\]\|>\|<\|,\|\.\)"
-
-		" Open office zipped documents
-		au BufReadCmd *.odt,*.ott,*.ods,*.ots,*.odp,*.otp,*.odg,*.otg,*.oxt call zip#Browse(expand("<amatch>"))
-		au BufReadCmd *.docx,*.docm,*.dotx,*.xlsx,*.pptx call zip#Browse(expand("<amatch>"))
-
-		" nice diff files folding
-		autocmd Filetype diff
-					\ :set foldmethod=expr foldexpr=getline(v:lnum)!~'^diff\ '
-
-		au BufNewFile,BufRead *.t2t setlocal spell spelllang=fr tw=80
-		au BufNewFile,BufRead *.tex setlocal spell spelllang=fr
-		au BufNewFile,BufRead *.pdc setlocal spell spelllang=fr
-		au BufNewFile,BufRead *.md setlocal ft=markdown spell spelllang=fr
-
-		" When editing a file, always jump to the last known cursor position.
-		autocmd BufReadPost *
-					\ if line("'\"") > 1 && line("'\"") <= line("$") |
-					\  exe "normal! g`\"" |
-					\ endif
-
-	augroup END
-
-	if exists("+omnifunc")
-		autocmd Filetype *
-					\ if &omnifunc == "" |
-					\  setlocal omnifunc=syntaxcomplete#Complete |
-					\ endif
-	endif
-
-function! MarkdownLevel(maxlevel)
-    if a:maxlevel >= 1 && getline(v:lnum) =~ '^# .*$'
-        return ">1"
-    endif
-    if a:maxlevel >= 2 && getline(v:lnum) =~ '^## .*$'
-        return ">2"
-    endif
-    if a:maxlevel >= 3 && getline(v:lnum) =~ '^### .*$'
-        return ">3"
-    endif
-    if a:maxlevel >= 4 && getline(v:lnum) =~ '^#### .*$'
-        return ">4"
-    endif
-    if a:maxlevel >= 5 && getline(v:lnum) =~ '^##### .*$'
-        return ">5"
-    endif
-    if a:maxlevel >= 6 && getline(v:lnum) =~ '^###### .*$'
-        return ">6"
-    endif
-    return "="
-endfunction
-
-au BufEnter *.md setlocal foldexpr=MarkdownLevel(2)
-au BufEnter *.md setlocal foldmethod=expr
-au BufEnter *.md setlocal autoindent
-
-endif " has("autocmd")
-" }}}
-
-" Miscs                                                              {{{
-" ======================================================================
-
-" highlight likely erroneous white spaces                            {{{
-" ----------------------------------------------------------------------
-
-" discreet colors
-highlight ExtraWhitespace ctermbg=233 ctermfg=235
-"highlight ExtraWhitespace ctermbg=white ctermfg=white
-" highlights mixed tabs and spaces and white spaces at eol
-match ExtraWhitespace /\s\+$\| \+\ze\t\|\t\+\ze \|[^\t]\zs\t\+/
-
-let s:showextrawhitespace = 0
-
-" :ToggleShowExtraWhiteSpace
-function ToggleShowExtraWhiteSpace()
-	if s:showextrawhitespace == 0
-		match ExtraWhitespace /\s\+$\| \+\ze\t\|\t\+\ze \|[^\t]\zs\t\+/
-		set list
-		let s:showextrawhitespace = 1
-	else
-		match none ExtraWhitespace
-		set nolist
-		let s:showextrawhitespace = 0
-	endif
-endfunction
-
-" Change diff file colors
-highlight diffFile cterm=bold ctermfg=white
-highlight link diffAdded Constant
-highlight link diffRemoved Error
-
-nnoremap <silent> <Plug>ToggleShowExtraWhiteSpace :<C-U>call ToggleShowExtraWhiteSpace()<CR>
-nmap <silent> ,tw <Plug>ToggleShowExtraWhiteSpace
-"}}}
-"}}}
-
-" vim: fdm=marker ai ts=2 sw=2 noet :

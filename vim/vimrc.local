@@ -1,0 +1,330 @@
+" ======================================================================
+" .vimrc
+" config file for Vim (Vi Improved)
+" ======================================================================
+
+" General settings                                                   {{{
+" ======================================================================
+
+set wildmode=list:longest,full
+set splitright
+set splitbelow
+
+set hidden
+
+set guioptions-=T guioptions-=e guioptions-=L guioptions-=r
+set guifont=monofur\ 13
+
+" Automatically indent, and do not try to be smart
+" (prefer filetype based indent)
+set autoindent nosmartindent
+" Disable implicit use of X clipboard
+set clipboard=exclude:cons\|linux
+
+set modeline     " Enable modelines
+set nocompatible " Do not ensure compatibility with vi at all cost
+set hlsearch     " highlights search matches
+set laststatus=2 " Always show a status line
+set wildmenu     " Enhanced mode for command-line completion
+set noshowmatch  " Do not jump to the matching bracket automatically
+set noswapfile   " No swap files
+set hidden       " Keep hidden buffers' data
+set lazyredraw   " Do not redraw screen when executing macros
+
+set nobackup     " Do not keep a backup file
+set history=50   " Keep 50 lines of command line history
+set ruler        " Show the cursor position all the time
+set showcmd      " Display incomplete commands
+set incsearch    " Do incremental searching
+set mouse=nvi    " Enable mouse
+set number       " Display line numbers
+set tildeop      " ~ is an operator
+set nowrap       " Do not wrap long lines
+set lbr          " Better line wrapping (keep words entire)
+set noet         " Do not expand tab as multiple spaces
+
+syntax on        " Enable syntax highlighting
+
+set virtualedit=block
+set wildmode=longest:full,full
+set spellsuggest=fast
+
+set grepprg=grep\ -nH\ $*
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set fillchars=vert:│,fold:- 
+set cino=>s,e0,n0,f0,{0,}0,^0,L-1,:s,=s,l0,b0,gs,hs,ps,ts,is,+s,c3,C0,/0,(0,u0,U0,w0,Ws,m0,j1,J1,)20,*70,#0
+
+set timeoutlen=1200 " A little bit more time for macros
+set ttimeoutlen=50 " Make Esc work faster
+
+" Enable file type detection.
+" Use the default filetype settings, so that mail gets 'tw' set to 72,
+" 'cindent' is on in C files, etc.
+" Also load indent files, to automatically do language-dependent indenting.
+filetype plugin indent on
+
+let g:tex_flavor='latex'
+let Tlist_Inc_Winwidth='0'
+let python_highlight_all=1 " Better python syntax
+let php_sql_query=1        " highlight SQL request in php string
+let php_htmlInStrings=1    " highlight HTML tags in php string
+let c_space_errors = 1
+let java_space_errors = 1
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_left_sep = '▌'
+let g:airline_right_sep = '▐'
+
+set background=dark
+colorscheme harold
+
+" }}}
+
+" Mappings                                                           {{{
+" ======================================================================
+
+" Normal mode                                                        {{{
+" ----------------------------------------------------------------------
+
+" Don't use Ex mode, use Q for formatting
+nmap Q gq
+vmap Q gq
+
+nmap ZA      :qa!<CR>
+nmap ZZ      :wqa<CR>
+" why Y does not behave like C and D?
+nmap Y       y$
+" cycle between buffers with tab
+nmap <Tab>   :bn<CR>
+nmap <S-Tab> :bN<CR>
+" delete buffer
+nmap <C-B>   :bdel<CR>
+
+" Press Space to turn off highlighting and clear any message already
+" displayed.
+nmap <silent> <Space> :nohlsearch<Bar>:echo<CR>
+" highlight hovered word without moving
+nmap <silent> <F8>    :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+
+" Keep search matches in the middle of the window.
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+nmap <silent> <F9>    :make<CR>
+
+" side scrolling with <C-←> and <C-→>
+nmap <silent> <Esc>Od 5zh
+nmap <silent> <Esc>Oc 5zl
+
+"}}}
+
+" Insert mode                                                        {{{
+" ----------------------------------------------------------------------
+
+" turn word to xml tag: <word></word>
+imap <F8>    <Esc>diwi<<C-R>"></<C-R>"><Esc>T>i
+" turn word to bbtag: [word][/word]
+imap <F9>    <Esc>diwi[<C-R>"][/<C-R>"]<Esc>T]i
+" turn word uppercase
+imap <C-F>   <Esc>gUiw`]a
+
+" <C-←> and <C-→> emacs style move the cursor by word)
+imap <silent> <Esc>Od <C-o>b
+imap <silent> <Esc>Oc <C-o>e
+
+" UltiSnips mappings
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+"}}}
+
+" Command line mode                                                  {{{
+" ----------------------------------------------------------------------
+
+" start of line
+cnoremap <C-A> <Home>
+" end of line
+cnoremap <C-E> <End>
+
+"}}}
+
+" Visual mode                                                        {{{
+" ----------------------------------------------------------------------
+
+" keep selection on indenting/unindenting
+vmap < <gv
+vmap > >gv
+
+"}}}
+
+" Multiple modes                                                     {{{
+" ----------------------------------------------------------------------
+
+" save document with <F2>
+nmap <silent> <F2> :update<CR>
+imap <silent> <F2> <C-o>:update<CR>
+
+" visual swapping
+vnoremap <C-X> <Esc>`.``gvP``P
+
+" global substitute shortcuts
+nmap <Leader>ss yiw:%s/<C-R>"//g<Left><Left>
+nmap <Leader>so yiw:%s/\<<C-R>"\>//g<Left><Left>
+
+"}}}
+
+"}}}
+
+" Commands                                                           {{{
+" ======================================================================
+
+command Trimend :%s/[ \t]\+$//
+command Rehash :source ~/.vimrc
+
+command! -range=% -nargs=0 Tab2Space execute "<line1>,<line2>s/^\\t\\+/\\=substitute(submatch(0),'\\t',repeat(' ',".&ts."),'g')"
+command! -range=% -nargs=0 Space2Tab execute "<line1>,<line2>s/^\\( \\{".&ts."\\}\\)\\+/\\=substitute(submatch(0),' \\{".&ts."\\}','\\t','g')"
+command! -range=% -nargs=1 Tab2Space execute "<line1>,<line2>s/^\\t\\+/\\=substitute(submatch(0), '\\t', repeat(' ', ".<args>."), 'g')"
+command! -range=% -nargs=1 Space2Tab execute "<line1>,<line2>s/^\\( \\{".<args>."\\}\\)\\+/\\=substitute(submatch(0),' \\{".<args>."\\}','\\t','g')"
+
+"}}}
+
+" Files autocommands                                                 {{{
+" ======================================================================
+
+" Only do this part when compiled with support for autocommands.
+if has("autocmd")
+
+  " put these in an autocmd group, so that we can delete them easily.
+  augroup vimrcEx
+
+    " remove all autocommands in that group
+    au!
+
+    " Open office zipped documents
+    au BufReadCmd *.odt,*.ott,*.ods,*.ots,*.odp,*.otp,*.odg,*.otg,*.oxt call zip#Browse(expand("<amatch>"))
+    au BufReadCmd *.docx,*.docm,*.dotx,*.xlsx,*.pptx call zip#Browse(expand("<amatch>"))
+
+    " set 'textwidth' to 80 characters for text files
+    autocmd FileType text
+          \ setlocal textwidth=80
+
+    " Vim help
+    autocmd FileType vim
+          \ nmap K yiw:h <C-R>"<Enter>
+
+    autocmd Filetype python
+          \ syntax match pythonOperator "\(+\|-\|/\|=\|(\|)\|{\|}\|\[\|\]\|>\|<\|,\|\.\)"
+
+    " nice diff files folding
+    autocmd Filetype diff
+          \ set foldmethod=expr foldexpr=getline(v:lnum)!~'^diff\ '
+
+    " When editing a file, always jump to the last known cursor position.
+    autocmd BufReadPost *
+          \ if line("'\"") > 1 && line("'\"") <= line("$") |
+          \  exe "normal! g`\"" |
+          \ endif
+
+    function! MarkdownLevel(maxlevel)
+      if a:maxlevel >= 1 && getline(v:lnum) =~ '^# .*$'
+        return ">1"
+      endif
+      if a:maxlevel >= 2 && getline(v:lnum) =~ '^## .*$'
+        return ">2"
+      endif
+      if a:maxlevel >= 3 && getline(v:lnum) =~ '^### .*$'
+        return ">3"
+      endif
+      if a:maxlevel >= 4 && getline(v:lnum) =~ '^#### .*$'
+        return ">4"
+      endif
+      if a:maxlevel >= 5 && getline(v:lnum) =~ '^##### .*$'
+        return ">5"
+      endif
+      if a:maxlevel >= 6 && getline(v:lnum) =~ '^###### .*$'
+        return ">6"
+      endif
+      return "="
+    endfunction
+
+    au BufNewFile,BufRead *.md,*.pdc,*.markdown
+          \ setlocal ft=markdown
+
+    au FileType markdown
+          \ setlocal foldexpr=MarkdownLevel(2) foldmethod=expr autoindent
+
+    " i want tabs in my gitconfig
+    au FileType gitconfig
+          \ setlocal noet
+
+    au FileType vim
+          \ setlocal ts=2 sw=2
+
+    if exists("+omnifunc")
+      autocmd Filetype *
+            \ if &omnifunc == "" |
+            \  setlocal omnifunc=syntaxcomplete#Complete |
+            \ endif
+    endif
+
+  augroup END
+
+endif " has("autocmd")
+
+" }}}
+
+" Miscs                                                              {{{
+" ======================================================================
+
+" highlight likely erroneous white spaces                            {{{
+" ----------------------------------------------------------------------
+
+" discreet colors
+highlight ExtraWhitespace ctermbg=233 ctermfg=235
+"highlight ExtraWhitespace ctermbg=white ctermfg=white
+" highlights mixed tabs and spaces and white spaces at eol
+match ExtraWhitespace /\s\+$\| \+\ze\t\|\t\+\ze \|[^\t]\zs\t\+/
+
+let s:showextrawhitespace = 0
+
+" :ToggleShowExtraWhiteSpace
+function ToggleShowExtraWhiteSpace()
+  if s:showextrawhitespace == 0
+    match ExtraWhitespace /\s\+$\| \+\ze\t\|\t\+\ze \|[^\t]\zs\t\+/
+    set list
+    let s:showextrawhitespace = 1
+  else
+    match none ExtraWhitespace
+    set nolist
+    let s:showextrawhitespace = 0
+  endif
+endfunction
+
+" Change diff file colors
+highlight diffFile cterm=bold ctermfg=white
+highlight link diffAdded Constant
+highlight link diffRemoved Error
+
+nnoremap <silent> <Plug>ToggleShowExtraWhiteSpace :<C-U>call ToggleShowExtraWhiteSpace()<CR>
+nmap <silent> <leader>tw <Plug>ToggleShowExtraWhiteSpace
+
+"}}}
+
+if has("gui_running")
+  " kills popup dialogs
+  set go+=c
+else
+  " activate console menu
+  source $VIMRUNTIME/menu.vim
+  set cpo-=<
+  set wcm=<C-Z>
+
+  noremap <F1> :emenu <C-Z>
+endif
+
+"}}}
+
+" vim: fdm=marker ai ts=2 sw=2 et :
