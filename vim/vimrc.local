@@ -81,6 +81,21 @@ let g:airline_theme='wombat'
 set background=dark
 colorscheme harold
 
+" Highlight color adjustments                                        {{{
+" ----------------------------------------------------------------------
+
+" signs in Sy
+highlight link SignifySignAdd    Constant
+highlight link SignifySignDelete Error
+highlight link SignifySignChange String
+
+" diff file colors
+highlight diffFile cterm=bold ctermfg=white
+highlight link diffAdded Constant
+highlight link diffRemoved Error
+
+" }}}
+
 " }}}
 
 " Mappings                                                           {{{
@@ -303,11 +318,6 @@ function ToggleShowExtraWhiteSpace()
     let s:showextrawhitespace = 0
   endif
 endfunction
-
-" Change diff file colors
-highlight diffFile cterm=bold ctermfg=white
-highlight link diffAdded Constant
-highlight link diffRemoved Error
 
 nnoremap <silent> <Plug>ToggleShowExtraWhiteSpace :<C-U>call ToggleShowExtraWhiteSpace()<CR>
 nmap <silent> <leader>tw <Plug>ToggleShowExtraWhiteSpace

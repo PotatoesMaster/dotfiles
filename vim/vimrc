@@ -48,8 +48,8 @@ Bundle 'bling/vim-airline'
 " Emacs-style yank ring
 Bundle 'vim-scripts/YankRing.vim'
 
-" git diff in the sign column
-Bundle 'airblade/vim-gitgutter'
+" vcs diff in the sign column
+Bundle 'mhinz/vim-signify'
 
 " three-way merge helper
 Bundle 'sjl/splice.vim'
