@@ -22,6 +22,10 @@ alias lssmall='ls -Srl *(.oL[1,10])' # display the smallest files
 # ===================
 
 alias s='sudo'
+alias vim='LANG=en_US.UTF-8 vim'
+alias vimdiff='LANG=en_US.UTF-8 vimdiff'
+alias gvim='LANG=en_US.UTF-8 gvim'
+alias gvimdiff='LANG=en_US.UTF-8 gvimdiff'
 alias v='vim'
 alias vd='vimdiff'
 alias V='sudo vim'
