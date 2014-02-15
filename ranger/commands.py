@@ -272,11 +272,10 @@ class compress(Command):
             cwd.load_content()
 
         original_path = cwd.path
-        parts = self.line.split()
-        au_flags = parts[1:]
+        dest = self.line[self.line.index(' ')+1:]
 
-        descr = "compressing files in: " + os.path.basename(parts[1])
-        obj = CommandLoader(args=['apack'] + au_flags + \
+        descr = "compressing files in: " + os.path.basename(dest)
+        obj = CommandLoader(args=['apack', dest] + \
             [os.path.relpath(f.path, cwd.path) for f in marked_files], descr=descr)
 
         obj.signal_bind('after', refresh)
