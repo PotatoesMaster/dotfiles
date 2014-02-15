@@ -51,8 +51,6 @@ xkb_keymap {
     xkb_compatibility {
         include "complete"
 
-        indicator "Caps Lock" { controls = Overlay1; allowExplicit = True; drivesKeyboard = True; };
-
         interpret F24 {
             action = Redirect(Key=<INS>, modifiers=Shift); // insert-shift
         };
@@ -87,14 +85,10 @@ xkb_keymap {
         key <AD03> { [ e, E, braceright ] }; // e E }
         key <AD04> { [ r, R, parenright ] }; // r R )
         key <AD05> { [ t, T ] }; // t T
-        key <AD06> { [ y, Y ], // y Y
-            overlay1 = <HOME> };
-        key <AD07> { [ u, U, dead_acute ], // u U ´
-            overlay1 = <PGDN> };
-        key <AD08> { [ i, I, dead_grave ], // i I `
-            overlay1 = <PGUP> };
-        key <AD09> { [ o, O, dead_circumflex ], // o O ^
-            overlay1 = <END> };
+        key <AD06> { [ y, Y ] }; // y Y
+        key <AD07> { [ u, U, dead_acute ] }; // u U ´
+        key <AD08> { [ i, I, dead_grave ] }; // i I `
+        key <AD09> { [ o, O, dead_circumflex ] }; // o O ^
         key <AD10> { [ p, P, dead_diaeresis ] }; // p P ¨
         key <AD11> { [ asterisk, asciitilde ] }; // * ~
         key <AD12> { [ exclam, question, exclamdown, questiondown ] }; // ! ? ¡ ¿
@@ -108,16 +102,11 @@ xkb_keymap {
         key <AC03> { [ d, D, braceleft ] }; // d D {
         key <AC04> { [ f, F, parenleft ] }; // f F (
         key <AC05> { [ g, G ] }; // g G
-        key <AC06> { [ h, H ], // h H
-            overlay1 = <LEFT> };
-        key <AC07> { [ j, J ], // j J
-            overlay1 = <DOWN> };
-        key <AC08> { [ k, K ], // k K
-            overlay1 = <UP> };
-        key <AC09> { [ l, L ], // l L
-            overlay1 = <RGHT> };
-        key <AC10> { [ m, M, asciicircum, mu ], // m M ^ µ
-            overlay1 = <ESC> };
+        key <AC06> { [ h, H ] }; // h H
+        key <AC07> { [ j, J ] }; // j J
+        key <AC08> { [ k, K ] }; // k K
+        key <AC09> { [ l, L ] }; // l L
+        key <AC10> { [ m, M, asciicircum, mu ] }; // m M ^ µ
         key <AC11> { [ apostrophe, quotedbl, grave ] }; // ' " `
         key <BKSL> { [ Delete, F24 ] };
 
@@ -142,12 +131,7 @@ xkb_keymap {
         // Underscore on Shift + Space, I love it :)
         key <SPCE> { [ space, underscore, nobreakspace, nobreakspace ] }; // SPC _ NBSP
 
-        // AltGr + Menu toggle 'Overlay1' and associated mappings (alternate
-        // mappings are defined above — seek overlay1=key).
-        // Toggling part of the layout seemed at first a good idea to me, but
-        // finally I found it cumbersome.
-        // I decided to keep this as a reminder though.
-        key <MENU> { [ grave, Menu, VoidSymbol, Menu ], actions = [ NoAction(), NoAction(), LockControls(controls=Overlay1), NoAction() ] };
+        key <MENU> { [ grave, Menu ] };
 
         modifier_map Control { <LCTL> };
         modifier_map Control { <RCTL> };
