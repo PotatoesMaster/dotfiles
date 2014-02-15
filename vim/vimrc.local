@@ -77,6 +77,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline_theme='wombat'
+let g:yankring_history_dir = '~/.vim'
 
 set background=dark
 colorscheme harold
@@ -222,6 +223,7 @@ if has("autocmd")
     " Open office zipped documents
     au BufReadCmd *.odt,*.ott,*.ods,*.ots,*.odp,*.otp,*.odg,*.otg,*.oxt call zip#Browse(expand("<amatch>"))
     au BufReadCmd *.docx,*.docm,*.dotx,*.xlsx,*.pptx call zip#Browse(expand("<amatch>"))
+    au BufReadCmd *.cbz call zip#Browse(expand("<amatch>"))
 
     " set 'textwidth' to 80 characters for text files
     autocmd FileType text

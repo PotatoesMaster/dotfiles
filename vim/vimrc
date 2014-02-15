@@ -51,9 +51,6 @@ Bundle 'vim-scripts/YankRing.vim'
 " vcs diff in the sign column
 Bundle 'mhinz/vim-signify'
 
-" three-way merge helper
-Bundle 'sjl/splice.vim'
-
 " perform all insert mode completions with Tab
 Bundle 'ervandew/supertab'
 
