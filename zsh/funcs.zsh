@@ -131,3 +131,5 @@ function cl()       { cd "$1" && ls }
 
 # mkdir, then cd
 function md()       { mkdir -p "$@" && cd "$@" }
+
+function genpass()  { SIZE="${1-50}"; for c in $(echo "obase=94; ibase=16; $(head -c $SIZE /dev/urandom 2> /dev/null | xxd -p -u -c $SIZE)" | env BC_LINE_LENGTH=999 bc); do printf "%b" $(printf '\\x%x ' $(expr $c + 33));done | cut --bytes=-$SIZE }
