@@ -14,7 +14,7 @@ exec $i exec_if_wlan
 # i3bar {{{
 bar {
 	status_command ~/.i3/barscript
-	font -erus-erusfont-medium-r-normal--11-80-100-100-c-60-iso10646-1
+    font pango: erusfont 9
 	position top
 
 	colors {
@@ -33,7 +33,7 @@ bar {
 # general options
 # ---------------
 
-font -erus-erusfont-medium-r-normal--11-80-100-100-c-60-iso10646-1
+font pango: erusfont 9
 ipc-socket /tmp/nestedcons
 new_window 1pixel
 new_float normal 1
@@ -74,6 +74,7 @@ for_window [class="^arx$"] fullscreen
 for_window [class="^(hwengine|hedgewars)$"] fullscreen
 for_window [class="^crawl-tiles$"] border none
 for_window [title="^Amnesia: The Dark Descent launcher$"] floating enable
+for_window [title="^The Dark Mod$"] border none
 for_window [class="^(rockboxui|Pychrom|emulator-arm|allegro|nx|gmic|love)$"] floating enable
 for_window [class="^Animate$" instance="^animate$"] floating enable
 for_window [class="^Display$" instance="^display$"] floating enable
@@ -81,7 +82,7 @@ for_window [class="^Eclipse$" title="^(Eclipse SDK |Eclipse)$"] floating enable
 for_window [class="^MuPDF$"] border normal 1
 for_window [class="^Wine$" instance="^explorer.exe$"] floating enable
 
-assign [class="^URxvt$" instance="^rtorrent$"] → $w9
+assign [class="^URxvt$" instance="^(rtorrent|trmission)$"] → $w9
 
 assign [class="^URxvt$" instance="^newsbeuter$"] → $w0
 
