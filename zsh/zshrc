@@ -105,9 +105,7 @@ zstyle ':completion:*:manuals.*'  insert-sections   true
 
 zmodload zsh/complist
 
-setopt hist_ignore_space
 setopt extendedglob
-#setopt completealiases
 unsetopt menucomplete
 
 zstyle ':completion:*:*:kill:*:processes' command 'ps -axco pid,user,command'
@@ -140,10 +138,7 @@ export SAVEHIST=1000
 export HISTSIZE=1000
 export HISTFILE=$HOME/.history
 setopt INC_APPEND_HISTORY
-setopt HIST_SAVE_NO_DUPS
 setopt HIST_FIND_NO_DUPS
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_REDUCE_BLANKS
 setopt NO_BANG_HIST
 
 # don't add garbage to history
@@ -192,6 +187,7 @@ hash -d x="$HOME/.bin"
 hash -d y="$HOME/sources/_misc/build_sandbox"
 hash -d z="$HOME/documents/zines"
 
+hash -d gh="$HOME/sources/_misc/repos/github.me"
 hash -d vimfiles='/usr/share/vim/vimfiles'
 hash -d pacman_pkg='/var/cache/pacman/pkg'
 hash -d pyranger='/usr/lib/python3.3/site-packages/ranger'
