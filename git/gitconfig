@@ -54,6 +54,7 @@
 	# commands using the current branch name
 	# (using zsh, because it allows nested parameter expansions)
 	up = !zsh -c 'git push origin "${$(git symbolic-ref HEAD)##*/}"'
+	upf = !zsh -c 'git push -f origin "${$(git symbolic-ref HEAD)##*/}"'
 	down = !zsh -c 'git pull upstream "${$(git symbolic-ref HEAD)##*/}"'
 	ff = !zsh -c 'git pull --ff-only upstream "${$(git symbolic-ref HEAD)##*/}"'
 
@@ -67,6 +68,7 @@
 	# funny stuff
 	rank = !sh -c 'git log --pretty=format:%aN | sort | uniq -c | sort -rn'
 	wu = whatsup
+	fap = fetch --all --prune
 
 	# stolen from http://log.winsos.net/2013/02/06/ma-configuration-git.html
 	addm = !git-ls-files -m -z | xargs -0 git-add && git status
