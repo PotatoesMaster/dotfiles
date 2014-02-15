@@ -355,6 +355,10 @@ class extractthere(Command):
 
 class play_anime(Command):
     def execute(self):
+        if len(self.fm.thisdir.marked_items) > 0:
+            self.fm.notify("You can't do that with files selected.", bad=True)
+            return
+
         cwd = self.fm.env.cwd
         # select next tagged file
         self.fm.execute_console("search_next order=tag")
@@ -365,17 +369,21 @@ class play_anime(Command):
         if cwd.pointer + 1 == len(cwd.files):
             self.fm.move(left=1)
         else:
-            self.fm.tag_toggle(paths=[cwd.files[cwd.pointer + 1].path], tag='>', movedown=True)
+            self.fm.move(down=1)
+            self.fm.tag_toggle(tag='>', movedown=False)
         self.fm.execute_file(selection, mode=self.quantifier or 0)
 
 class toggle_play(Command):
     def execute(self):
-        cwd = self.fm.env.cwd
-        selection = cwd.pointed_obj
+        if len(self.fm.thisdir.marked_items) > 0:
+            self.fm.notify("You can't do that with files selected.", bad=True)
+            return
+
+        path = self.fm.thisfile.path
         tag = '"'
-        if not self.fm.tags.tags.get(selection.path) == '>':
+        if not self.fm.tags.tags.get(path) == '>':
             tag = '>'
-        self.fm.tag_toggle(paths=[selection.path], tag=tag, movedown=False)
+        self.fm.tag_toggle(value=True, tag=tag, movedown=False)
 
 class store_file(Command):
     "Store current selected file"
