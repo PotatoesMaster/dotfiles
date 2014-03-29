@@ -164,8 +164,7 @@ bindsym $mod+e exec $i LESS=SMR urxvt -e ranger
 bindsym $mod+F2 exec $i xseldo
 
 # Start terminal
-bindsym Shift+Mod5+Return exec $i urxvt
-bindsym Mod5+Return exec $i new_urxvt
+bindsym Mod5+Return exec $i urxvt
 
 # Extra fun: remap keys using xdotool
 # My laptop keyboard lack these direct keys
