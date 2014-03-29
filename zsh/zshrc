@@ -164,7 +164,6 @@ autoload run-help-sudo
 ## NAMED DIRECTORIES ####################################################### {{{
 hash -d B="$HOME/.backgrounds"
 hash -d G="$HOME/games"
-hash -d M="$HOME/music"
 hash -d R="$HOME/sources/python/ranger"
 hash -d S="$HOME/sources"
 hash -d T="$HOME/downloads/torrents"
@@ -175,7 +174,7 @@ hash -d d="$HOME/documents"
 hash -d g="$HOME/sources/_misc/repos/git"
 hash -d i="$HOME/images"
 hash -d l="$HOME/.local/share"
-hash -d m="$HOME/m2lse"
+hash -d m="$HOME/music"
 hash -d o="$HOME/sources/_misc/repos/github.me/openmw"
 hash -d p="$HOME/documents/paperasse"
 hash -d q="$HOME/downloads/quvi"
@@ -190,11 +189,9 @@ hash -d z="$HOME/documents/zines"
 hash -d gh="$HOME/sources/_misc/repos/github.me"
 hash -d vimfiles='/usr/share/vim/vimfiles'
 hash -d pacman_pkg='/var/cache/pacman/pkg'
-hash -d pyranger='/usr/lib/python3.3/site-packages/ranger'
-hash -d py26='/usr/lib/python2.6/site-packages'
 hash -d py27='/usr/lib/python2.7/site-packages'
-hash -d py32='/usr/lib/python3.2/site-packages'
-hash -d py33='/usr/lib/python3.3/site-packages'
+hash -d py34='/usr/lib/python3.4/site-packages'
+hash -d pyranger=~py34/ranger
 ############################################################################ }}}
 
 ## PROMPT SETUP ############################################################ {{{
