@@ -198,8 +198,8 @@ nmap <Leader>so yiw:%s/\<<C-R>"\>//g<Left><Left>
 " Commands                                                           {{{
 " ======================================================================
 
-command Trimend :%s/[ \t]\+$//
-command Rehash :source ~/.vimrc
+command! Trimend :%s/[ \t]\+$//
+command! Rehash :source ~/.vimrc
 
 command! -range=% -nargs=0 Tab2Space execute "<line1>,<line2>s/^\\t\\+/\\=substitute(submatch(0),'\\t',repeat(' ',".&ts."),'g')"
 command! -range=% -nargs=0 Space2Tab execute "<line1>,<line2>s/^\\( \\{".&ts."\\}\\)\\+/\\=substitute(submatch(0),' \\{".&ts."\\}','\\t','g')"
@@ -224,6 +224,7 @@ if has("autocmd")
     au BufReadCmd *.odt,*.ott,*.ods,*.ots,*.odp,*.otp,*.odg,*.otg,*.oxt call zip#Browse(expand("<amatch>"))
     au BufReadCmd *.docx,*.docm,*.dotx,*.xlsx,*.pptx call zip#Browse(expand("<amatch>"))
     au BufReadCmd *.cbz call zip#Browse(expand("<amatch>"))
+    au BufReadCmd *.love call zip#Browse(expand("<amatch>"))
 
     " set 'textwidth' to 80 characters for text files
     autocmd FileType text
@@ -309,7 +310,7 @@ match ExtraWhitespace /\s\+$\| \+\ze\t\|\t\+\ze \|[^\t]\zs\t\+/
 let s:showextrawhitespace = 0
 
 " :ToggleShowExtraWhiteSpace
-function ToggleShowExtraWhiteSpace()
+function! ToggleShowExtraWhiteSpace()
   if s:showextrawhitespace == 0
     match ExtraWhitespace /\s\+$\| \+\ze\t\|\t\+\ze \|[^\t]\zs\t\+/
     set list
