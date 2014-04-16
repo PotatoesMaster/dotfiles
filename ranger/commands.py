@@ -419,17 +419,26 @@ class play_anime(Command):
             return
 
         cwd = self.fm.env.cwd
-        # select next tagged file
+        # select next tagged file, save it to play later
         self.fm.execute_console("search_next order=tag")
         selection = cwd.pointed_obj
         if not selection.is_file or not self.fm.tags.tags.get(selection.path) == '>':
+            # not quite the right tag, do nothing
             return
+        # remove tag from selected file
         self.fm.tag_remove(movedown=False)
         if cwd.pointer + 1 == len(cwd.files):
+            # no file past this one, go up one dir
             self.fm.move(left=1)
+            # as we will play the last file, we can assume
+            # the directory state will go from play (>) to paused (")
+            if self.fm.tags.tags.get(selection.path) == '>':
+                self.fm.tag_toggle(tag='"', movedown=False)
         else:
+            # there is a file below, mark it to play it next time
             self.fm.move(down=1)
             self.fm.tag_toggle(tag='>', movedown=False)
+        # finally play the saved file
         self.fm.execute_file(selection, mode=self.quantifier or 0)
 
 class toggle_play(Command):

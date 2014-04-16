@@ -1,6 +1,8 @@
 import os.path
 from ranger.ext.spawn import spawn
 
+# Expand zsh hashes in ranger
+
 vanilla_expand = os.path.expanduser
 hashes = [x.split('=') for x in spawn('zsh', '-ic', 'hash -d')[:-1].split('\n')]
 hashes = {k: v for (k, v) in hashes}
