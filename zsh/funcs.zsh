@@ -81,7 +81,6 @@ function shutdownafter() { waitend "$1" 30 && sudo shutdown -h now }
 
 function filtr()     { [ $# = 1 ] && perl -ne "print "'"$_\n"'" for $1" || perl -ne "print \"$1\" for $2" }
 function replace()   { [ $# = 2 ] && perl -pe "$2" -i "$1" || echo "replace file command\nex: replace foo.bar s/foo/bar/g" }
-function rantag()    { f=":$(readlink -f "$1")"; tags="$(grep -v "^.$f$" ~/.config/ranger/tagged)\n${${2:0:1}:-*}$f"; echo -n "$tags" | sort -u --key=1.3 > ~/.config/ranger/tagged }
 function cssdata()   { [ $# -lt 2 ] && echo "Usage: cssdata file type\nex: cssdata foo.gif image/gif" && return 1 echo -n "url(\"data:$2;base64,"; base64 -w0 $1; echo -n "\")" }
 function trash()     { mv $@ $HOME/.trash }
 function jamadd()    { [ $# -lt 1 ] && url="$(xsel -o)" || url="$1"; id="${url##*/}"; mpc add "http://api.jamendo.com/get2/stream/track/redirect/?id=$id&streamencoding=mp31" }
