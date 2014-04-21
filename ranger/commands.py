@@ -432,7 +432,7 @@ class play_anime(Command):
             self.fm.move(left=1)
             # as we will play the last file, we can assume
             # the directory state will go from play (>) to paused (")
-            if self.fm.tags.tags.get(selection.path) == '>':
+            if self.fm.tags.tags.get(self.fm.env.cwd.pointed_obj.path) == '>':
                 self.fm.tag_toggle(tag='"', movedown=False)
         else:
             # there is a file below, mark it to play it next time
