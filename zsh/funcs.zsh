@@ -81,7 +81,7 @@ shutdownafter() { waitend "$1" 30 && sudo shutdown -h now }
 
 filtr()       { [ $# = 1 ] && perl -ne "print "'"$_\n"'" for $1" || perl -ne "print \"$1\" for $2" }
 replace()     { [ $# = 2 ] && perl -pe "$2" -i "$1" || echo "replace file command\nex: replace foo.bar s/foo/bar/g" }
-cssdata()     { [ $# -lt 2 ] && echo "Usage: cssdata file type\nex: cssdata foo.gif image/gif" && return 1 echo -n "url(\"data:$2;base64,"; base64 -w0 $1; echo -n "\")" }
+cssdata()     { [ $# -lt 2 ] && echo "Usage: cssdata file type\nex: cssdata foo.gif image/gif" && return 1; echo -n "url(\"data:$2;base64,"; base64 -w0 $1; echo -n "\")" }
 trash()       { mv $@ $HOME/.trash }
 jamadd()      { [ $# -lt 1 ] && url="$(xsel -o)" || url="$1"; id="${url##*/}"; mpc add "http://api.jamendo.com/get2/stream/track/redirect/?id=$id&streamencoding=mp31" }
 jamaddalbum() { [ $# -lt 1 ] && url="$(xsel -o)" || url="$1"; curl "$url" | sed 's+/track+\n/track+g'| perl -ne 'print "$_\n" for /\/track\/(\d+)/' | filter_uniq | while read i; do mpc add "http://api.jamendo.com/get2/stream/track/redirect/?id=$i&streamencoding=mp31"; done }
@@ -103,7 +103,7 @@ grepkg() {
     (( $# < 2 )) && return
     pkg="$1"
     shift
-    grep $@ `/usr/bin/pacman -Ql $pkg \
+    grep "$@" `/usr/bin/pacman -Ql $pkg \
         | sed 's/^[^ ]\+ //;/\/$/ d;/\.bmp$/ d;/\.gif$/ d;/png$/ d;/tga$/ d;/so$/ d;/gz$/ d;/tgz$/ d;/zip$/ d;/class$/ d;/mo$/ d'`
 }
 
@@ -134,3 +134,5 @@ cl() { cd "$1" && ls }
 md() { mkdir -p "$@" && cd "$@" }
 
 genpass() { SIZE="${1-50}"; for c in $(echo "obase=94; ibase=16; $(head -c $SIZE /dev/urandom 2> /dev/null | xxd -p -u -c $SIZE)" | env BC_LINE_LENGTH=999 bc); do printf "%b" $(printf '\\x%x ' $(expr $c + 33));done | cut --bytes=-$SIZE }
+
+gmic-dropshadow() { gmic "$1" -drop_shadow 5,5,5,0.1,20 -output "${1%.*}"_shadowed.png }
