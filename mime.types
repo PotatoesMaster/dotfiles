@@ -17,6 +17,7 @@ video/x-binkvideo bik
 audio/x-gbs       gbs
 audio/x-amr       amr
 audio/x-monkey    ape
+audio/x-mode      mod
 
 # Comics archives
 application/x-rar cbr
