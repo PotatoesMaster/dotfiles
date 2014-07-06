@@ -293,4 +293,4 @@ bindsym $mod+KP_Multiply resize grow height
 
 # }}}
 
-# vim:set filetype=i3 fdm=marker:
+# vim:set fdm=marker:
