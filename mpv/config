@@ -1,8 +1,5 @@
 # Coloured console messages
-msgcolor = yes
-
-# Allow moving backward/forward in a stream
-idx = yes
+msg-color = yes
 
 # Video output
 vo = opengl,xv,x11
@@ -10,7 +7,7 @@ framedrop = yes
 
 # Audio output
 ao = alsa,oss
-srate = 48000
+audio-samplerate = 48000
 
 # Fullscreen
 fullscreen = yes
@@ -20,12 +17,12 @@ slang = fr,fra,en,eng
 alang = fr,en
 
 # Video filters
-#vf = screenshot,scale=1440:900,hqdn3d
 vf = hqdn3d
+screenshot-format = png
 
 # Soft volume
 softvol = yes
 softvol-max = 200
 
-joystick = no
-lirc = yes
+input-joystick = no
+input-lirc = yes
