@@ -57,7 +57,7 @@ set fillchars=vert:│,fold:-
 set cino=>s,e0,n0,f0,{0,}0,^0,L-1,:s,=s,l0,b0,gs,hs,ps,ts,is,+s,c3,C0,/0,(0,u0,U0,w0,Ws,m0,j1,J1,)20,*70,#0
 
 set timeoutlen=1200 " A little bit more time for macros
-set ttimeoutlen=50 " Make Esc work faster
+set ttimeoutlen=10 " Make Esc work faster
 
 " Enable file type detection.
 " Use the default filetype settings, so that mail gets 'tw' set to 72,
@@ -272,6 +272,9 @@ if has("autocmd")
     au BufNewFile,BufRead *.md,*.pdc,*.markdown
           \ setlocal ft=markdown
 
+    au BufNewFile,BufRead *.qml
+          \ setlocal ft=qml
+
     au FileType markdown
           \ setlocal foldexpr=MarkdownLevel(2) foldmethod=expr autoindent
 
@@ -279,8 +282,15 @@ if has("autocmd")
     au FileType gitconfig
           \ setlocal noet
 
+    au FileType go
+          \ setlocal noet equalprg=gofmt
+
     au FileType vim
           \ setlocal ts=2 sw=2
+
+    " Editing subtitle files: quick and dirty "play the video at this position" mapping
+    au BufNewFile,BufRead *.srt
+          \ map <F9> mn?^0:<CR> "tyt,:!mpv "<C-r>%<C-w>mp4" --start=<C-r>t<CR>`n
 
     if exists("+omnifunc")
       autocmd Filetype *
