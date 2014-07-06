@@ -1,0 +1,2 @@
+#!/bin/bash
+exif "$1" | highlight -O ansi -S exif | less -RM

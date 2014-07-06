@@ -97,6 +97,5 @@ ranger_:
 	ln -sf $(MKPATH)/ranger/plugins/vcs_symbols.py      $(XDG_CONFIG_DIR)/ranger/plugins/vcs_symbols.py
 	ln -sf $(MKPATH)/ranger/plugins/w3mimgdisplay_options.py  $(XDG_CONFIG_DIR)/ranger/plugins/w3mimgdisplay_options.py
 
-bin_:
-	mkdir -p $(HOME)/.bin
-	ln -sf $(MKPATH)/bin/dubar                          $(HOME)/.bin/dubar
+scripts_:
+	ln -sf $(MKPATH)/scripts                            $(HOME)/.scripts

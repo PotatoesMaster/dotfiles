@@ -1,0 +1,10 @@
+#!/bin/sh
+# scan a web page using quvi, choose which video to open
+if [ $# = 0 ] ; then
+    url="$(xsel -o)"
+else
+    url="$1"
+fi
+
+choice="$(quvi scan "$url" | grep -v '^#' | dmenu -p 'stream')" && \
+    xseldo "$choice"

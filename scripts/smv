@@ -1,0 +1,13 @@
+#!/bin/zsh
+
+[ -f "$1" -a -f "$2" ] || exit
+
+n=$RANDOM
+while [ -f $n ]
+do
+  n=$RANDOM
+done
+
+mv "$1" "$n" || exit
+mv "$2" "$1" || { mv "$n" "$1" ; exit }
+mv "$n" "$2" && echo done

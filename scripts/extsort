@@ -1,0 +1,37 @@
+#!/usr/bin/bash
+
+if [[ x"$1" != "x-f" ]]; then
+    cat << EOF
+$(basename "$0")
+
+  Scan files in the current directory,
+  create a directory by file extension
+  and move files into
+
+  usage: $(basename "$0") -f
+EOF
+    exit 1
+fi
+
+# return file extensions from files in current dir
+get_extensions() {
+    find -O3 . -maxdepth 1 -type f | awk '
+        BEGIN {
+            ext[0] = 0;
+        };
+        {
+            filename = substr($0, 3);
+            pos = match(filename, /\.[^/.]+$/);
+            if (pos)
+                exts[substr(filename, pos + 1)] = 1;
+        }
+        END {
+            for (i in exts)
+                print i;
+        };'
+}
+
+# get extensions, create dirs and move the files in
+get_extensions | while read ext; do
+    mkdir "$ext" && mv *."$ext" "$ext"
+done

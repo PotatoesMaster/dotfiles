@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Move a file and make a symlink.
+# I use that to sort/rename downloaded files while keeping symlinks to them in
+# my torrent dir.
+#
+# $ backln file newlocation
+# When this command is executed, file is moved to newlocation
+# and a symlink named 'file' points to 'newlocation'.
+
+
+abort () {
+    echo "$@" >&2
+    exit 1
+}
+
+usage () {
+    abort "usage: `basename $0` src_file dest_file"
+}
+
+[[ $# != 2 ]] && usage
+
+src="$1"
+dest="$2"
+
+[ -e "$dest" ] && abort "dest file already exists"
+
+mkdir -p "`dirname "$dest"`"
+mv "$src" "$dest"
+ln -s "$dest" "$src"
+rantag maybe_set_play "$dest"
+echo "[32mlinked $dest[0m"

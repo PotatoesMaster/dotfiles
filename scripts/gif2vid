@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if (( $# != 2 )); then
+	echo "usage: $0 file.gif file.avi"
+	exit 1
+fi
+
+basename="${1##*/}"
+basename="${1%.gif}"
+
+mkdir -p /tmp/gif2vid
+if (($? > 0)); then
+	echo "cannot create temp dir"
+	exit 1
+fi
+
+echo "convert '$1' '/tmp/gif2vid/$basename%05d.png'"
+convert "$1" "/tmp/gif2vid/$basename%05d.png"
+if (($? > 0)); then
+	echo "convert error"
+	exit 1
+fi
+trap "rm -f '/tmp/gif2vid/$basename'*.png" EXIT
+
+echo "ffmpeg -i '/tmp/gif2vid/${basename}05%d.png' -qscale 1 -vcodec msmpeg4v2 '$2'"
+ffmpeg -i "/tmp/gif2vid/${basename}%05d.png" "$2"
+if (($? > 0)); then
+	echo "Error producing video"
+	exit 1
+fi

@@ -1,0 +1,18 @@
+#!/bin/bash
+res="$(netctl list|sed 's/^[ *]\+//;$arestart\nstop\nstart'|dmenu -p profile)" || exit
+case $res in
+    start)
+        sudo netctl-auto start wlan0
+        ;;
+    stop)
+        sudo netctl-auto stop wlan0
+        ;;
+    restart)
+        sudo netctl-auto stop wlan0
+        sudo netctl-auto start wlan0
+        ;;
+    *)
+        sudo netctl stop-all
+        sudo netctl start "$res"
+        ;;
+esac

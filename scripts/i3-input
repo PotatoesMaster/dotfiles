@@ -1,0 +1,23 @@
+#!/bin/zsh
+( a="`dmenu -p 'i3'`" && i3-msg "$a" ) <<EOF
+border 1pixel
+border none
+border normal
+exec
+exit
+focus
+fullscreen global
+fullscreen normal
+kill client
+kill window
+layout default
+layout stacked
+layout tabbed
+move
+open
+reload
+restart
+window floating
+window tiling
+workspace
+EOF

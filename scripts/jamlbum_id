@@ -1,0 +1,4 @@
+#!/bin/zsh
+tr_name=`mpc -f '%file%' | head -n 1`
+tr_id=${${tr_name%&*}#*=}
+perl -lne 'print for /<album><id>(\d+)<\/id>.*?<track><id>'$tr_id'<\/id>/' < ~/.mpd/jamendo.xml

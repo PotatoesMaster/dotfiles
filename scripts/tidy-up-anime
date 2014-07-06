@@ -1,0 +1,25 @@
+#!/bin/bash
+
+do_it() {
+patterndo \
+  "$HOME/downloads/torrents/complete" \
+  '\[(.*)\] (.*) - (\d+(?:v\d+)?) \[.*\].mkv' \
+  "$HOME"'/animes/$2/$2 $3 [$1].mkv' \
+  backln
+
+# this one is a little bit crazier
+# (replace undescores with spaces)
+patterndo \
+  "$HOME/downloads/torrents/complete/[UTW] Shinsekai Yori [h264-720p]" \
+  '\[(.*)\]_(.*)_-_(\d+(?:v\d+)?)_\[.*\].mkv' \
+  "$HOME"'/animes/@{[$2 =~ s/_/ /gr]}/@{[$2 =~ s/_/ /gr]} $3 [$1].mkv' \
+  backln
+}
+
+if [[ x"$1" = x"-v" ]]; then
+    # do it verbosely
+    do_it
+else
+    # do it more quietly
+    do_it 2>/dev/null
+fi

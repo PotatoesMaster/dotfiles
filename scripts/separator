@@ -1,0 +1,2 @@
+#!/bin/zsh
+echo "\e[90m${(l:$COLUMNS::=:)}\e[0m"

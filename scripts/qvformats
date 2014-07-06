@@ -1,0 +1,2 @@
+#!/bin/sh
+quvi dump -S -p enum "$@" | awk '/^QUVI_MEDIA_STREAM_PROPERTY_ID/ {print substr($0, 31)}'

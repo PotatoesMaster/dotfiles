@@ -1,0 +1,9 @@
+#!/bin/sh
+# play a video stream in mpv
+if [ $# = 0 ] ; then
+    url="$(xsel -o)"
+else
+    url="$1"
+fi
+
+mpv --cache=30000 --cache-initial=2 --cache-seek-min=2 --quvi-format="default" "$url"

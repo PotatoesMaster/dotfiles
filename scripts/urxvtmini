@@ -1,0 +1,2 @@
+#!/bin/sh
+urxvt -fn 'xft:fixed:pixelsize=6' -fb 'xft:fixed:pixelsize=6'

@@ -2,7 +2,7 @@
 # Copyright (C) 2013  Emanuel Guével
 # This software is distributed under the terms of the GNU GPL version 3.
 
-# Chunk of code stolen from ranger, a file manager for the console ;)
+# Some chunks of code are stolen from ranger, a file manager for the console ;)
 
 from subprocess import Popen, PIPE
 ESC_CHAR = chr(0x1b)

@@ -1,0 +1,65 @@
+#!/bin/zsh
+
+function _ls () {
+  [ "$1" = "-R" ] && print -l **/* || print -l *
+}
+
+# creation fichier temp
+f=$(mktemp)
+
+trap "rm -f $f" EXIT
+
+_ls "$1" > $f
+[ `wc -l <$f` -lt 1 ] && exit
+vim $f
+
+# ls → tableau t
+c=0
+_ls "$1" | while read n
+do
+  t[$((++c))]="$n"
+done
+
+# c2 = nb ligne de $f
+c2=$(wc -l <$f)
+
+# quitte si nb de ligne ≠
+[ $c -eq $c2 ] || exit
+
+# récup des lignes du fichier dans tableau t2
+c2=0
+while read n
+do
+  t2[$((++c2))]="$n"
+done <$f
+
+# t3 : tableau des noms qui changent
+j=0
+for i in {1..$c}
+do
+  [ "$t[$i]" != "$t2[$i]" ] && t3[$((++j))]=$i
+done
+
+# renommage temporaire
+for i in $t3
+do
+  t4[$i]="$(mktemp --tmpdir=. -u)"
+done
+
+# rennomage 1
+for i in $t3
+do
+  mv -n "$t[$i]" "$t4[$i]"
+done
+
+# rennomage 2
+for i in $t3
+do
+	case "$t2[$i]" in
+		*/*)
+			mkdir -p "${t2[$i]%/*}"
+			;;
+	esac
+
+  mv -n "$t4[$i]" "$t2[$i]"
+done

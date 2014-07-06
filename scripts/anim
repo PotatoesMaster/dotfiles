@@ -1,0 +1,56 @@
+#!/bin/zsh
+
+# Display the list of series present in my directory of animes.
+# Sort them by tags and try to display the number of the last episode.
+# Colored outpout.
+#
+# Sample of output produced:
+# > 26 : Ghost in the Shell SAC S2
+# > 09 : Hellsing Ultimate
+# > 16 : Zetsuen no Tempest
+# " 16 : Jojo's Bizarre Adventure
+# " 14 : Psycho-Pass
+#
+# I use ranger's tags to manage anime series. Here are the different state for series:
+#  > means "to be watched" (a file tagged with that is the episode I will watch next)
+#  " means "waiting new episodes" (episode not out yet / not downloaded yet)
+#  - means "nothing more to see here" (all seen and no more episodes to come)
+#  Untagged directories are full series I have not started to watch.
+#
+#  Directories tagged with ?, -, +, x and # are not displayed in the list.
+
+MAIN_DIR="$HOME/animes"
+
+(( $# >= 1 )) && MAIN_DIR="$1"
+
+typeset -A play pause nop
+
+cat ~/.config/ranger/tagged | while read tag; do
+	case "$tag" in
+		\>:$MAIN_DIR/*)
+			play[${tag#?:$MAIN_DIR/}]=1
+			;;
+		\":$MAIN_DIR/*)
+			pause[${tag#?:$MAIN_DIR/}]=1
+			;;
+		(?|-|+|x|#):$MAIN_DIR/*)
+			nop[${tag#?:$MAIN_DIR/}]=1
+			;;
+	esac
+done
+cd $MAIN_DIR
+for i in *(/)
+do
+	if [ "$nop[$i]" = 1 ] ; then
+		continue
+	elif [ "$play[$i]" = 1 ] ; then
+		print -Pn "%F{3}> "
+	elif [ "$pause[$i]" = 1 ] ; then
+		print -Pn "%F{1}\" "
+	else
+		print -Pn "%F{0}- "
+	fi
+	print -P "%F{6}`ls "$i" | perl -ne 'print "$1\n" for /(\d+)[^\d]*\.[^\.]+/' \
+		| tail -n -1` %F{4}:%F{2} ${i##*/}%f"
+done \
+	| sort -k1.9,1.10 -k2.22,2.500

@@ -1,0 +1,37 @@
+#!/bin/zsh
+
+MAIN_DIR="$HOME/scans"
+
+(( $# >= 1 )) && MAIN_DIR="$1"
+
+typeset -A play pause nop
+
+cat ~/.config/ranger/tagged | while read tag; do
+	case "$tag" in
+		\>:$MAIN_DIR/*)
+			play[${tag#?:${MAIN_DIR}/}]=1
+			;;
+		\":$MAIN_DIR/*)
+			pause[${tag#?:${MAIN_DIR}/}]=1
+			;;
+		(-|+|x|#):$MAIN_DIR}/*)
+			nop[${tag#?:${MAIN_DIR}/}]=1
+			;;
+	esac
+done
+cd $MAIN_DIR
+for i in *(/)
+do
+	if [ "$nop[$i]" = 1 ] ; then
+		continue
+	elif [ "$play[$i]" = 1 ] ; then
+		print -n "\e[33m> "
+	elif [ "$pause[$i]" = 1 ] ; then
+		print -n "\e[31m\" "
+	else
+		print -n "\e[30m- "
+	fi
+	print "\e[36m`ls "$i" | perl -ne 'print "$1\n" for /(\d+)[^\d]*$/' \
+		| tail -n -1` \e[34m:\e[32m ${i##*/}\e[0m"
+done \
+	| sort -k1.6,1.7 -k2.25,2.500

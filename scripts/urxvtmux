@@ -1,0 +1,9 @@
+#!/bin/bash
+
+PID=$(pidof $1)
+
+if tmux has-session -t "$1"; then
+    exec urxvt -name "$1" -title "$1" -e tmux attach-session -t "$1"
+else
+    exec urxvt -name "$1" -title "$1" -e tmux new-session -s "$1" "$1"
+fi

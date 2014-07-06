@@ -1,0 +1,17 @@
+#!/bin/bash
+
+do_it() {
+patterndo \
+  "$HOME/downloads/quvi" \
+  'Question de guitare (.*) ?\??\.mp4' \
+  "$HOME"'/videos/web/guitare/# Débutant/Questions de guitare/$1 ?.mp4' \
+  mv
+}
+
+if [[ x"$1" = x"-v" ]]; then
+    # do it verbosely
+    do_it
+else
+    # do it more quietly
+    do_it 2>/dev/null
+fi

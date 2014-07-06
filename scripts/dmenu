@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Little wrapper for dmenu.
+# Call slmenu (console clone of dmenu) if no graphic environment is found.
+
+if [ -z "$DISPLAY" ]; then
+	slmenu "$@"
+else
+	/usr/bin/dmenu -nb \#000 -nf \#AAA -sb \#"$I3_COLOR" -sf \#000 $@
+fi

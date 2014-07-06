@@ -1,0 +1,106 @@
+#!/bin/bash
+
+# A script to get the xml database dump of Jamendo database and build a
+# playlist with all the tracks.
+
+# Uses wget, gunzip and perl.
+
+# Note: the playlist did not include informations on artist, album and track names.
+# These informations are retrieved by mpd when the track is read.
+
+# infos about Jamendo database dumps at
+# http://developer.jamendo.com/fr/wiki/NewDatabaseDumps
+
+function error() {
+	echo $@
+	exit 1
+}
+
+DUMP_LOCATION=~/.mpd/jamendo.xml
+PLAYLIST_NAME=~/.mpd/playlists/jamendo.m3u
+
+# default file format is mp3 because id3 tags are not decoded by mpd for ogg streams
+FILE_FORMAT=mp31
+
+if [ $# = 0 ]; then
+	[ -e "$DUMP_LOCATION" ] || DOWNLOAD_DUMP=1
+	MAKE_PLAYLIST=1
+else
+	while getopts 'dmp:x:f:h' opt
+	do
+		case "$opt" in
+			d)
+				DOWNLOAD_DUMP=1;;
+			m)
+				MAKE_PLAYLIST=1;;
+			p)
+				PLAYLIST_NAME="$OPTARG";;
+			x)
+				DUMP_LOCATION="$OPTARG";;
+			f)
+				case "$OPTARG" in
+					mp3)
+						FILE_FORMAT=mp31;;
+					ogg)
+						FILE_FORMAT=ogg2;;
+					*)
+						ERROR=1
+						break;;
+				esac;;
+			*)
+				ERROR=1;
+				break;;
+		esac
+	done
+fi
+
+if [ -n "$ERROR" ]; then
+	cat >&2 << EOF
+${0##*/}, an utility to build an huge playlist from Jamendo, intended to use with mpd.
+Adjust max_playlist_length setting in your mpd.conf to load the whole playlist.
+
+Usage: $0 <options>
+ Options:
+ -d          : download-dump      Download xml database dump from Jamendo server.
+
+ -x <path>   : dump-location      Location of the database dump (where it would be downloaded.
+                                  to and where from it will be read from).
+                                  Default to ~/.mpd/jamendo.xml.
+
+ -m          : make-playlist      Build a playlist from the xml dump.
+
+ -f <format> : file-format        Music file format querried (mp3 or ogg).
+                                  Default to mp3.
+
+ -p <path>   : playlist-location  Destination of the generated playlist file.
+                                  Default to ~/.mpd/playlists/jamendo.m3u.
+
+ -h          : help               Displays this help.
+
+If no options given, -dm is implied.
+EOF
+	exit 1
+fi
+
+if [ -z "$DOWNLOAD_DUMP" -a -z "$MAKE_PLAYLIST" ]; then
+	error "Nothing to do. Use option -m and/or -d."
+fi
+
+if [ -n "$DOWNLOAD_DUMP" ]; then
+	echo "Start downloading Jamendo database dump..."
+	wget -O- 'http://img.jamendo.com/data/dbdump_artistalbumtrack.xml.gz' \
+			| gunzip -c - > "$DUMP_LOCATION.tmp" && \
+			mv "$DUMP_LOCATION"{.tmp,} || \
+	error "Dump download failed!"
+	echo "Database dump downloaded as $DUMP_LOCATION"
+fi
+
+if [ -n "$MAKE_PLAYLIST" ]; then
+	echo "Building playlist from $DUMP_LOCATION (format: ${FILE_FORMAT:0:-1})..."
+	[ -e "$DUMP_LOCATION" ] || error "$DUMP_LOCATION does not exist!"
+
+	# TODO: use an appropriated tool, because parsing xml with regexes is ugly :)
+	perl -ne 'print "http://api.jamendo.com/get2/stream/track/redirect?id=$_\&streamencoding='"$FILE_FORMAT"'\n"
+			for /<track><id>(\d+)<\/id>/g' "$DUMP_LOCATION" > "$PLAYLIST_NAME"
+	echo "Playlist $PLAYLIST_NAME built (`wc -l < "$PLAYLIST_NAME"` tracks)"
+fi

@@ -1,0 +1,4 @@
+#!/bin/bash
+transmission-daemon --log-error
+transmission-remote-cli
+transmission-remote --exit

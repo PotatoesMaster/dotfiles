@@ -1,0 +1,6 @@
+#!/bin/zsh
+
+# Rename photos from an APN. Quick and dirty.
+
+date -d "` exif "$1" -t 0x9003 | perl -lne 'print for /Value: (.*)$/' | sed -e 's/:\([0-9]\+\):\([0-9]\+\)/-\1-\2/'`" '+%Y-%m-%d %Hh%Mm%S' | read d
+mv "$1" "${1%/*.JPG}/$d.jpg"

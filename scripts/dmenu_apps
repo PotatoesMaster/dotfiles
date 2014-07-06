@@ -1,0 +1,31 @@
+#!/bin/zsh
+
+# Menu for graphical applications.
+
+exe=`dmenu -i -p x << EOF
+klystrack
+milkytracker
+ariamaestosa
+eclipse
+scribus
+libreoffice
+gimp
+geoloc
+inkscape
+xfig
+tuxguitar
+audacity
+lmms
+klavaro
+dia
+games
+xkill
+xfontsel
+gtkfontsel
+qnote
+scrot
+chbg
+pychrom
+vbox
+claws
+EOF` && exec ${=exe}

@@ -1,0 +1,22 @@
+#!/bin/zsh
+
+# A simple menu to switch git branch (using dmenu)
+
+typeset -A branches
+branches=()
+git branch "$@" | while read br; do
+	branches+=("$br" 1)
+done
+
+branch="$(echo "${(kF)branches[@]}" | dmenu -p branch)" || exit
+[[ "$branch" == "" ]] && exit
+
+if [[ "${branches[$branch]}" == 1 ]]; then
+	branch="${branch##* }"
+	branch="${branch%%* \*}"
+	branch="${branch%% *}"
+
+	git co "$branch"
+else
+	git co -b "$branch"
+fi

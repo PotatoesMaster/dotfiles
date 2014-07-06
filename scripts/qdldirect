@@ -1,0 +1,13 @@
+#!/bin/sh
+if [ $# = 1 ] ; then
+    choice="$1"
+    url="$(xsel -o)"
+elif [ $# = 2 ] ; then
+    url="$1"
+    choice="$2"
+else
+    echo 'usage: qdldirect [url] format'
+    exit 1
+fi
+
+quvi get -s "$choice" "$url"

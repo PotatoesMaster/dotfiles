@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Options for devmon, the automount daemon.
+
+killall devmon
+exec devmon \
+	--exec-on-drive   "notify-send '%d mount'"   \
+	--exec-on-unmount "notify-send '%d unmount'" \
+	--exec-on-remove  "notify-send '%f removed'" \
+	--ignore-label    'lglive-096'

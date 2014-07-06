@@ -1,0 +1,26 @@
+#!/bin/bash
+# Display the requested gnu info page as a man page using info2man.
+
+if (( $# < 1 )); then
+	echo "usage: mano <info_page> [man options…]" >&2
+	exit 1
+fi
+
+INFOPATH="/usr/share/info"
+INFOPAGE="$INFOPATH/$1"
+shift
+
+if [ -e "$INFOPAGE" ]; then
+	: # okay
+elif [ -e "$INFOPAGE.gz" ]; then
+	INFOPAGE="$INFOPAGE.gz"
+elif [ -e "$INFOPAGE.info" ]; then
+	INFOPAGE="$INFOPAGE.info"
+elif [ -e "$INFOPAGE.info.gz" ]; then
+	INFOPAGE="$INFOPAGE.info.gz"
+else
+	echo "$1 info page not found." >&2
+	exit 1
+fi
+
+info2man "$INFOPAGE" | man "$@" -l -

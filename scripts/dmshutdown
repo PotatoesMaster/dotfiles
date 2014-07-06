@@ -1,0 +1,15 @@
+#!/bin/sh
+
+cmd=`echo -e "Shutdown\nRestart\nLogout" | dmenu -i`
+
+case $cmd in
+	Shutdown)
+		systemctl poweroff
+		;;
+	Restart)
+		systemctl reboot
+		;;
+	Logout)
+		i3-msg exit
+		;;
+esac

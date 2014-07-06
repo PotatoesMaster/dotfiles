@@ -1,0 +1,25 @@
+#!/bin/zsh
+
+# menu for games
+
+exe=`dmenu -i -p x << EOF
+darkmod
+mwlauncher
+mwedit
+tescs
+supertuxkart
+supermeatboy
+arx
+crawl-tiles
+flare
+garden
+gish
+lugaru
+nxengine
+osmos
+snes9x-gtk
+wahcade
+wahcade-setup
+dolphin-emu
+zsdx
+EOF` && exec $exe

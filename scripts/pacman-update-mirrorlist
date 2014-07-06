@@ -1,0 +1,9 @@
+#!/bin/bash
+
+sudo mispipe 'reflector -c France -a 10 -f 6' 'ifne sponge /etc/pacman.d/mirrorlist'
+if (($?)); then
+	echo "Something went wrong."
+else
+	echo -e "/etc/pacman.d/mirrorlist updated:\n"
+	cat /etc/pacman.d/mirrorlist
+fi

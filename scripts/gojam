@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# open the jamendo page of the currently playing album with the default web-browser
+
+ALBUM_URL="$(jamendo-mpd-get2 album_url)" || exit 1
+
+# open the page
+echo "$ALBUM_URL"
+xdg-open "$ALBUM_URL"

@@ -1,0 +1,8 @@
+#!/bin/zsh
+# start programs if wifi access is up
+stats=`iwconfig wlan0` 2>/dev/null 
+if [[ "$stats" = *"Tx-Power"* ]] && [[ "$stats" != *"Tx-Power=off"* ]]; then
+	firefox &
+	urxvt -name newsbeuter -title newsbeuter -e newsbeuter &
+	claws &
+fi

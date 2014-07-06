@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# A little script to choose a wallpaper with feh.
+
+if [ $# = 1 ]
+then
+  feh -U "$1" | \
+		grep -q "^$1\$" && \
+		rm $HOME/.slim/background.jpg && \
+		ln -s "`readlink -m "$1"`" $HOME/.slim/background.jpg && \
+		feh --bg-scale $HOME/.slim/background.jpg || \
+		echo There was a problem...
+else
+  feh -z $HOME/.backgrounds -A 'rm '$HOME'/.slim/background.jpg && ln -s "%f" '$HOME'/.slim/background.jpg && feh --bg-scale '$HOME'/.slim/background.jpg && pkill feh'
+fi

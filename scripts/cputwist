@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# A script to select the current cpufreq cpu governor using dmenu.
+# `enable_remote` must be set in cpufreqd.conf for this to work.
+
+current_governor="$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)"
+
+function govs() {
+    for i in `cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors`; do
+        case $i in
+            $current_governor)
+                echo "* $i";;
+            *)
+                echo $i;;
+        esac
+    done
+}
+choosen_one="$(govs | dmenu -p cpu)" || exit 1
+
+case $choosen_one in
+    \**)
+        exit;;
+    *Hz\ min)
+        freq="${choosen_one% *}"
+        sudo cpupower frequency-set -d $freq && \
+            notify-send cputwist "min frequency is now <b>$freq</b>" || \
+            notify-send cputwist "failed to set min frequency to <b>$freq</b>";;
+    *Hz\ max)
+        freq="${choosen_one% *}"
+        sudo cpupower frequency-set -u $freq && \
+            notify-send cputwist "max frequency is now <b>$freq</b>" || \
+            notify-send cputwist "failed to set max frequency to <b>$freq</b>";;
+    *)
+        sudo cpupower frequency-set -g $choosen_one && \
+            notify-send cputwist "<b>$choosen_one</b> governor set" || \
+            notify-send cputwist "failed to set governor <b>$choosen_one</b>";;
+esac

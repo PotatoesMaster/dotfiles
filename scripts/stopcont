@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# script to pause/unpause a process
+# usage: stopcont <process_name>
+# process_name is matched by killall
+
+SIG=STOP
+UP_TWO_LINE="$(tput cuu1;tput cuu1)"
+
+while :; do
+	:|slmenu -t -p "$1 $SIG?" || exit 0
+	echo -n "$UP_TWO_LINE"
+	killall -$SIG "$1"
+	case $SIG in
+		STOP) SIG=CONT ;;
+		*)    SIG=STOP ;;
+	esac
+done

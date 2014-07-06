@@ -1,0 +1,51 @@
+#!/bin/perl
+
+# Calculate total play time for Dungeon Crawl Stone Soup
+
+use strict;
+use warnings;
+use POSIX;
+
+my $days = 0;
+my $hours = 0;
+my $minutes = 0;
+my $seconds = 0;
+
+my $directory = "$ENV{'HOME'}/.crawl/morgue";
+opendir(my $dir, $directory) or die "Error: Cannot read $directory";
+
+while (my $file = readdir $dir) {
+
+    next unless $file =~ /^morgue.*\.txt$/;
+
+    if (open(my $file_h, '<', "$directory/$file")) {
+        while (<$file_h>) {
+            next unless $_ =~ /The game lasted (\d\d):(\d\d):(\d\d)/;
+            $hours += $1;
+            $minutes += $2;
+            $seconds += $3;
+            last;
+        }
+    } else {
+        print "Warning: Cannot read $file\n";
+    }
+}
+
+closedir $dir;
+
+if ($seconds >= 60) {
+    $minutes += POSIX::floor($seconds / 60);
+    $seconds = $seconds % 60;
+}
+
+if ($minutes >= 60) {
+    $hours += POSIX::floor($minutes / 60);
+    $minutes = $minutes % 60;
+}
+
+if ($hours >= 24) {
+    $days += POSIX::floor($hours / 24);
+    $hours = $hours % 24;
+}
+
+print "The game lasted ${days}d ${hours}h ${minutes}m ${seconds}s. Get a life, dude.\n"

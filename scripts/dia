@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Launch dia in integrated mode (one window) by default.
+
+/usr/bin/dia --nosplash --integrated $@

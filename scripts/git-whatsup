@@ -1,0 +1,21 @@
+#!/bin/zsh
+
+count="${1-5}"
+
+function treeinfos () {
+	print -P "${nop+\n}%F{2}$1%f"; nop=1
+
+	fmt='
+		reldate=%(authordate:relative)
+		refname=%(refname:short)
+		subject=%(subject)
+		author=%(authorname)
+		print -P "%%B${(r:15:::::)reldate}%%b%%F{3} ${(r:25:::::)refname}%%f$subject %%F{4}$author%%f"'
+	script="$(git for-each-ref --count="$count" --sort='-authordate' --shell --format="$fmt" "refs/$1")"
+	eval "$script"
+}
+
+git remote | while read rem; do
+	treeinfos "remotes/$rem"
+done
+treeinfos heads

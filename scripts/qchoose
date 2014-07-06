@@ -1,0 +1,11 @@
+#!/bin/sh
+# open video stream in mplayer using quvi, select video format in dmenu using dmenquvi
+if [ $# = 0 ] ; then
+    url="$(xsel -o)"
+else
+    url="$1"
+fi
+
+formats="$(qvformats "$url")" || exit
+choice="$(dmenu -p format <<< "$formats")" && \
+    mpv --cache=30000 --cache-initial=2 --cache-seek-min=2 --quvi-format="$choice" "$url"

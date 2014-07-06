@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Display git aliases or add one
+
+if (( $# == 0 )); then
+	git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'
+elif (( $# == 2 )); then
+	git config --global alias."$1" "$2" && exit 0
+else
+	echo "usage: git alias [<new alias> <original command>]" >&2
+	exit 1
+fi

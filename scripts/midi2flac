@@ -1,0 +1,14 @@
+#!/bin/sh
+# Find all files in a directory (-f for files, -d for directories to list)
+# echo the file name
+# use Timidity to convert from midi to flac
+
+for i in *.mid
+do
+if [ -f $i ]
+then
+	echo "Converting '$i' to '$i.flac'..."
+	timidity "$i" -Ow -o "$i.flac"
+fi
+done
+exit 0

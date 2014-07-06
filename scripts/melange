@@ -1,0 +1,31 @@
+#!/usr/bin/python
+
+# Reads the named file or the standard input and randomize in-word letters
+# positions, preserving the first and the last character of each word.
+# Positions of special characters are preserved too.
+
+import re
+import sys
+import random
+
+def shuffle_str(string):
+	ls = list(string[1:-1])
+	random.shuffle(ls)
+	ls.insert(0, string[:1])
+	ls.append(string[-1:])
+	return ''.join(ls)
+
+def shuffle_stream_words(in_stream): 
+	for line in in_stream:
+		for i in re.split(r'(\w+)(\W*)', line):
+			if len(i) > 3 and re.match(r'\w', i):
+				print(shuffle_str(i), end='')
+			else:
+				# osef
+				print(i, end='')
+
+if len(sys.argv) > 1:
+	with open(sys.argv[1]) as s:
+		shuffle_stream_words(s)
+else:
+	shuffle_stream_words(sys.stdin)

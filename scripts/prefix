@@ -1,0 +1,8 @@
+#!/bin/zsh
+
+prefix="$1"
+shift
+
+for i in "$@"; do
+    mv "$i" "${prefix}_$i"
+done

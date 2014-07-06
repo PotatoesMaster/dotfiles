@@ -1,0 +1,86 @@
+#!/bin/zsh
+# Quick access to config files.
+# Running without argument lists the commands available.
+
+EDITOR="${EDITOR-vim}"
+
+case $1 in
+e)   $EDITOR ~/.scripts/e
+;;
+d)   $EDITOR ~/.scripts/{dmenu_apps,dmenu_cli,games}
+;;
+c)   $EDITOR ~/.conkyrc
+;;
+
+v)   $EDITOR ~/.vimrc{,.local}
+;;
+h)   $EDITOR ~/.config/herbstluftwm/autostart
+;;
+hp)  $EDITOR ~/.config/herbstluftwm/panel.sh
+;;
+i)   $EDITOR ~/.i3/{config,conky.conf}
+;;
+g)   $EDITOR ~/.gitconfig
+;;
+f)   $EDITOR ~/.config/feh/{keys,themes}
+;;
+p)   $EDITOR ~/.pentadactylrc
+;;
+
+r)   $EDITOR ~/.config/ranger/{rc.conf,commands.py,rifle.conf}
+;;
+rp)  $EDITOR ~/.config/ranger/plugins/*.py
+;;
+rb)  $EDITOR ~/.config/ranger/{bookmarks,tagged}
+;;
+rs)  $EDITOR ~/.config/ranger/scope.sh
+;;
+
+rt)  $EDITOR ~/.rtorrent.rc
+;;
+
+l)   $EDITOR ~/.config/luakit/{globals,rc,my_binds}.lua
+;;
+lb)  $EDITOR ~/.local/share/luakit/{bookmarks,quickmarks}
+;;
+lf)  $EDITOR ~/.local/share/luakit/forms.lua
+;;
+
+m)   $EDITOR ~/.mpv/{config,input.conf}
+;;
+n)   $EDITOR ~/.config/newsbeuter/{config,urls}
+;;
+
+nc)  $EDITOR ~/.ncmpcpp/config
+;;
+
+xc)  $EDITOR ~/.XCompose
+;;
+xd)  $EDITOR ~/.Xdefaults
+;;
+xi)  $EDITOR ~/.xinitrc
+;;
+xk)  $EDITOR ~/.kbd-layout/custom-azerty.xkb
+;;
+xm)  $EDITOR ~/.xmod
+;;
+z)   $EDITOR ~/.zshrc ~/.zsh/{alias,funcs}.zsh
+;;
+w)   $EDITOR ~/.weechat/{weechat,irc}.conf
+;;
+
+elf) ranger ~/.local/share/luakit/forms
+;;
+ev)  ranger ~/.vim
+;;
+er)  ranger ~/.config/ranger
+;;
+el)  ranger ~/.config/luakit
+;;
+en)  ranger ~/.config/newsbeuter
+;;
+ep)  ranger ~/.pentadactyl
+;;
+
+*) awk '/^[a-z]+\)/ {print}' < "`which $0`";; # help
+esac

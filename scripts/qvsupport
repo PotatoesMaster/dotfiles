@@ -1,0 +1,12 @@
+#!/bin/bash
+# check if the the url passed as argument contains a quvi supported domain name
+
+# get the list of supported domain names (one per line)
+supported="$(quvi info -D | awk -F',' '!/^#/{for(i=1;i<=NF;i++)print $i}')"
+
+for i in $supported; do
+    [[ "$1" = *"$i/"* ]] && exit 0
+done
+
+# set error code if no supported domain is found
+exit 1

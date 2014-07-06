@@ -1,0 +1,25 @@
+#!/bin/zsh
+
+# Menu for console applications.
+
+exe=`dmenu -i -p term << EOF
+newsbeuter
+wifi-select
+rtorrent
+trmission
+alsamixer
+xev
+weechat-curses
+EOF` || exit
+
+case $exe in
+	*\;)
+        exec urxvt -e zsh -i "${exe%;} | less"
+        ;;
+    rtorrent|weechat-curses|trmission)
+        exec urxvtmux "$exe"
+        ;;
+	*)
+        exec urxvt -name "$exe" -title "$exe" -e zsh -ic "$exe"
+        ;;
+esac

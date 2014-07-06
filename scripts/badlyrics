@@ -1,0 +1,31 @@
+#!/bin/zsh
+
+# Little script for cleaning dumb lyrics files downloaded by ncmpcpp
+# 'fetch lyrics' function.
+
+ask() {
+	if [ -z "$1" ] ; then
+		echo Nop
+		exit
+	fi
+	echo "Erase $1 ? [yes no edit]"
+	select action in yes no edit ; do
+		case $action in
+			y*) echo > "$1" ; break ;;
+			n*) break ;;
+			e*) $EDITOR "$1" ;;
+		esac
+	done
+}
+
+files=()
+grep -rl -e 'iTunes' -e 'Last.fm' ~/.lyrics | while read i; do
+	echo "$i"
+	files+=("$i")
+done
+
+echo  "${files[@]}"
+
+for i in "${files[@]}"; do
+	ask "$i"
+done

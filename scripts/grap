@@ -1,0 +1,3 @@
+#!/bin/bash
+# a wrapper for grepping through a directory tree ignoring some common binary files
+grep --color=always --exclude='*\\'.{gb,gba,dvi,ttf,otp,odt,odf,exe,pdf,7z,ace,cbz,cbr,jar,zip,rar,tar,gz,xz,bmp,jpg,jpeg,png,gif,mp3,mp4,ogg,avi,mkv,o,pyc,pyo,so} --exclude-dir={.svn,.git,__pycache__} -rI "$@"

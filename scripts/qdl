@@ -1,0 +1,11 @@
+#!/bin/bash
+# downlod a video stream found with quvi, select video format with dmenu
+if [ $# = 0 ] ; then
+    url="$(xsel -o)"
+else
+    url="$1"
+fi
+
+formats="$(qvformats "$url")" || exit
+choice="$(dmenu -p format <<< "$formats")" && \
+    quvi get -s "$choice" "$url"

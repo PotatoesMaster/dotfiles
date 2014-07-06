@@ -1,0 +1,51 @@
+#!/bin/perl
+
+# This program is free software. It comes without any warranty, to the extent
+# permitted by applicable law. You can redistribute it and/or modify it under
+# the terms of the Do What The Fuck You Want To Public License, Version 2, as
+# published by Sam Hocevar. See http://www.wtfpl.net/ for more details.
+
+use strict;
+use warnings;
+
+my $source_dir = shift or usage();
+my $source_filename_pattern = shift or usage();
+my $dest_filename_pattern = shift or usage();
+my $command = shift or usage();
+
+opendir(my $dir, $source_dir) or die "Error: Cannot read directory '$source_dir'";
+
+while (my $file = readdir $dir) {
+    next unless $file =~ $source_filename_pattern;
+    if (-l "$source_dir/$file") {
+        print STDERR "\e[31m$file is a symlink: ignoring\e[0m\n";
+        next;
+    }
+    my $dest_filename = eval "\"$dest_filename_pattern\"";
+    system($command, "$source_dir/$file", "$dest_filename");
+}
+
+closedir $dir;
+
+sub usage {
+    use File::Basename qw(basename);
+
+    my $bin = basename($0);
+    print <<USAGE;
+$bin: a tool for doing stuff.
+
+usage: $bin dir filename_pattern dest_pattern command
+
+  Find every file in 'dir' matching 'filename_pattern' regex,
+  construct the new filename using 'dest_pattern' and execute
+  'command' by passing it two arguments:
+    - the source file path ('dir'/filename);
+    - the new filename.
+
+  Example:
+    `$bin '/home/john' 'junk (\\d+).txt' '/home/john/books/junk/\$1.txt' mv`
+
+USAGE
+
+    exit;
+}

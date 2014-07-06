@@ -1,0 +1,70 @@
+#!/bin/zsh
+
+# t      noms de base
+# t2     noms voulus
+# t3     noms qui changent entre les deux
+# t4     noms temporaires
+
+# creation fichier temp
+f=$(mktemp)
+
+trap "rm -f $f" EXIT
+
+print -l *(/) > $f 
+[ `wc -l <$f` -lt 1 ] && exit
+vim $f
+
+# ls → tableau t
+c=0
+print -l *(/) | while read n
+do
+  t[$((++c))]="$n"
+done
+
+# c2 = nb ligne de $f
+c2=$(wc -l <$f)
+
+# quitte si nb de ligne ≠
+[ $c -eq $c2 ] || exit
+
+# récup des lignes du fichier dans tableau t2
+c2=0
+while read n
+do
+  t2[$((++c2))]="$n"
+done <$f
+
+# t3 : tableau des noms qui changent
+j=0
+for i in {1..$c}
+do
+  [ "$t[$i]" != "$t2[$i]" ] && t3[$((++j))]=$i
+done
+
+# renommage temporaire
+for i in $t3
+do
+  t4[$i]="$(mktemp --tmpdir=. -u)"
+done
+
+# rennomage 1
+for i in $t3
+do
+  [ -e "$t4[$i]" ] \
+    && echo "\"$t[$i]\" not renamed : \"$t4[$i]\" exists" >/dev/stderr \
+    || mv "$t[$i]" "$t4[$i]"
+done
+
+# rennomage 2
+for i in $t3
+do
+	case "$t2[$i]" in
+		*/*)
+			mkdir -p "${t2[$i]%/*}"
+			;;
+	esac
+
+  [ -e "$t2[$i]" ] \
+    && echo "\"$t4[$i]\" (previously \"$t[$i]\")  not renamed : \"$t2[$i]\" exists" >/dev/stderr \
+    || mv "$t4[$i]" "$t2[$i]"
+done

@@ -1,0 +1,30 @@
+#!/bin/bash
+# A script to create a simple patch.
+
+EDITOR="${EDITOR-vi}"
+
+if (( $# < 1 || $# > 2 )); then
+	echo "usage: mkpatch file [patch_name]"
+	echo "  If patch_name is not given, the resulting patch will be printed"
+	echo "  on standard output."
+	exit 1
+fi
+
+if [ ! -f "$1" ]; then
+	echo "Input file is not a regular file."
+	exit 1
+fi
+
+FILE="$(readlink -m "$1")"
+FILE_NAME="${FILE##*/}"
+
+TMPDIR="$(mktemp --tmpdir -d 'mkpatch-XXXX')"
+trap "rm -rf '$TMPDIR'" EXIT
+
+cp "$FILE" "$TMPDIR/$FILE_NAME"
+$EDITOR "$TMPDIR/$FILE_NAME"
+if (( $# > 1 )); then
+	diff -up "$FILE" "$TMPDIR/$FILE_NAME" >"$2"
+else
+	diff -up "$FILE" "$TMPDIR/$FILE_NAME"
+fi

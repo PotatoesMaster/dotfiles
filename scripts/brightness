@@ -1,0 +1,35 @@
+#!/bin/sh
+
+# A script to change screen brightness.
+# Stolen at Archlinux forum.
+
+SYSFS_BACKLIGHT=/sys/class/backlight/acpi_video0
+BRIGHTNESS_INTERFACE=$SYSFS_BACKLIGHT/brightness
+ACTUAL_BRIGHTNESS_VALUE=$SYSFS_BACKLIGHT/actual_brightness
+MIN=0
+MAX=15
+
+if [ $# -gt 1 -o x"$1" = x-h ]
+then
+	echo "usage: $0 [[+|-]value]"
+	exit 1
+fi
+
+if [ $# -eq 0 ]
+then
+	cat $ACTUAL_BRIGHTNESS_VALUE
+else
+	case $1 in
+		-*|+*)
+			actual_value=$(cat $ACTUAL_BRIGHTNESS_VALUE)
+			new_value=$(($actual_value + $1))
+			if [ $new_value -gt $MAX ]; then
+				new_value=$MAX
+			elif [ $new_value -lt $MIN ]; then
+				new_value=$MIN
+			fi
+			echo $new_value > $BRIGHTNESS_INTERFACE;;
+		*)
+			echo $1 > $BRIGHTNESS_INTERFACE;;
+	esac
+fi

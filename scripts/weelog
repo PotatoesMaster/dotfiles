@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+cd ~/.weechat/logs
+log="$(print -l *(.) | dmenu -p log)" || exit 1
+vim "$log"

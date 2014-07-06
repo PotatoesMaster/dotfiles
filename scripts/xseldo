@@ -1,0 +1,94 @@
+#!/usr/bin/python
+
+from ranger.ext.shell_escape import shell_quote
+from subprocess import Popen, PIPE
+from os import execl, spawnl, P_WAIT
+from sys import argv, stdin
+ENCODING = 'utf-8'
+
+def spawn(*args, input=None):
+    if input:
+        stdin = PIPE
+        input = input.encode()
+    else:
+        stdin = None
+    process = Popen(args, stdout=PIPE, stdin=stdin)
+    stdout, stderr = process.communicate(input=input)
+    return stdout.decode(ENCODING)
+
+def run(cmd):
+    execl('/bin/sh', 'sh', '-c', cmd)
+
+if len(argv) == 2:
+    if argv[1] == '-i':
+        selection = stdin.read().rstrip()
+        fromclip = False
+    else:
+        selection = argv[1]
+        fromclip = False
+else:
+    selection = spawn('xsel', '-o')
+    fromclip = True
+
+print(selection)
+
+commands = {
+        'qdl': "urxvt -e sh -c 'cd ~/downloads/quvi && qdl {sel}'",
+        'qplay': "urxvt -e qplay {sel}",
+        'qchoose': "urxvt -e qchoose {sel}",
+        'vimcurl': "urxvt -e sh -c 'curl {sel} | vim -'",
+        'mpv': 'urxvt -e mpv -cache 30000 -cache-min 2 -cache-seek-min 2 {sel}',
+        'editsel': "urxvt -e sh -c 'xsel -o | vipe | xsel -i'",
+        'timidity': 'urxvt -e timidity -ig {sel}',
+        'torrent': 'cd ~/downloads/torrents/watch && wget --trust-server-names --content-disposition {sel}'
+        }
+
+choices = []
+
+if selection.startswith('http') and not '\n' in selection:
+    # it's an url then
+    selection = selection.replace('youtube.com/v/', 'youtube.com/watch?v=')
+    selection = selection.replace('youtu.be/', 'youtube.com/watch?v=')
+
+    choices = ['qscan']
+
+    if Popen(['qvsupport', selection]).wait() == 0:
+        # quvi claims to support it
+        choices = ['qchoose', 'qdl'] + choices
+
+    if selection.lower().endswith(('.avi', '.ogg', '.mp3', '.ogv', '.mov', '.mp4', '.ogm', '.webm')):
+        choices.insert(0, 'mpv')
+
+    if selection.lower().endswith(('.mid', '.midi', '.rmi', '.mod', '.wrd')):
+        choices.insert(0, 'timidity')
+
+    if selection.lower().endswith(('.png', '.gif', '.jpg', '.jpeg')):
+        choices = ['gimp', 'feh'] + choices
+
+    if selection.lower().endswith('.pdf'):
+        choices = ['mupdf'] + choices
+
+    if selection.lower().endswith('.torrent'):
+        choices = ['torrent'] + choices
+
+    # quvi claims to support it
+
+    choices.append('vimcurl')
+
+if fromclip:
+    choices.append('editsel')
+
+choices_as_text = '\n'.join(choices)+'\n'
+choice = spawn('dmenu', '-p', 'xsel', input=choices_as_text).rstrip('\n')
+
+if not choice == '':
+    if choice in commands:
+        cmd = commands[choice]
+    else:
+        cmd = choice
+    if '{sel}' in cmd:
+        cmd = cmd.format(sel=shell_quote(selection))
+    else:
+        cmd = cmd + ' ' + shell_quote(selection)
+
+    run(cmd)

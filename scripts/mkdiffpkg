@@ -1,0 +1,38 @@
+#!/bin/bash
+# A script to facilitate Archlinux package customization with
+# customizepkg-patching.
+
+EDITOR="${EDITOR-vi}"
+
+if (( $# < 1 )); then
+	echo "usage: mkdiffpkg <pkgname>"
+	exit 1
+fi
+
+PKG="$1"
+
+if [ -e "/etc/customizepkg.d/$PKG" ]; then
+	echo "==> Warning: /etc/customizepkg.d/$PKG already exists and would be overwritten."
+	echo -n "Continue anyway? [Ny] "
+	read -n 1 CONT
+	echo
+	[[ "$CONT" != y && "$CONT" != Y ]] && exit 1
+fi
+
+TMPDIR="$(mktemp --tmpdir -d 'mkdiffpkg-XXXX')"
+trap "rm -rf '$TMPDIR'" EXIT
+
+cd "$TMPDIR"
+yaourt -G "$PKG"
+cd "$PKG"
+cp PKGBUILD ../oldPKGBUILD
+$EDITOR PKGBUILD
+diff -up ../oldPKGBUILD PKGBUILD >../PKGBUILD.patch
+
+if (( $? != 0 )); then
+	sudo mv ../PKGBUILD.patch "/etc/customizepkg.d/$PKG"
+	echo  "/etc/customizepkg.d/$PKG written."
+else
+	echo "No changes in PKGBUILD, operation aborted."
+	exit 1
+fi

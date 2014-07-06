@@ -1,0 +1,33 @@
+#!/bin/bash
+
+nb="${1-3}"
+
+case $nb in
+    -h|--help)
+        echo -e "pacclean, generate instructions to remove old packages\nusage: pacclean [nb. of packages to keep (default 3)]>"
+        ;;
+    [0-9])
+        # ok
+        ls /var/cache/pacman/pkg | \
+            awk '
+        {
+            pkg = $0;
+            sub(/-[0-9]+.*/, "", pkg);
+            if (int(numpkg[pkg]) >= '$nb')
+            {
+                print "rm /var/cache/pacman/pkg/" $0;
+            }
+            else
+            {
+                numpkg[pkg] = numpkg[pkg]+1;
+            }
+        }'
+        ;;
+    *)
+        echo 'wtf dude?'
+        exit 1
+        ;;
+esac
+
+
+

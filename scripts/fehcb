@@ -1,0 +1,27 @@
+#!/bin/zsh
+# fehcb - open comic book archives (.cbr or .cbz) with feh, extracting content in /tmp/fehcb
+
+function usage() {
+	echo "Usage: fehcb /path/to/file.cb{z,r}"
+	exit 1
+}
+
+function error() {
+	echo "$1"
+	exit 2
+}
+
+(( $# != 1 )) && usage
+
+rm -rf /tmp/fehcb \
+	&& mkdir /tmp/fehcb \
+	|| error "There was a problem"
+
+case "$1" in
+	*.zip|*.cbz) ARCHIVE_TYPE=zip;;
+	*.rar|*.cbr) ARCHIVE_TYPE=rar;;
+	*) error "Unrecognized archive type";;
+esac
+
+aunpack -F $ARCHIVE_TYPE -X /tmp/fehcb "$1" || error "Problem extracting archive content"
+exec feh -T scan /tmp/fehcb

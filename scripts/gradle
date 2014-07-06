@@ -1,0 +1,3 @@
+#!/bin/sh
+export GRADLE_HOME="$HOME/.gradle/gradle-1.12"
+$GRADLE_HOME/bin/gradle "$@"

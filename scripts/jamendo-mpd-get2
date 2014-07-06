@@ -1,0 +1,255 @@
+#!/bin/bash
+
+# A script to get infos on the current mpd jamendo track.
+# Depends on mpc and wget.
+
+# infos on Jamendo get2 api come from http://developer.jamendo.com/en/wiki/Musiclist2Api
+PROGNAME="${0##*/}"
+if [ $# != 1 -o "x$1" = 'x-h' -o "x$1" = 'x--help' ]; then
+	cat << EOHELP
+${PROGNAME} gets infos on the current mpd track from jamendo (only works for streaming url).
+
+  Basic usage:  ${PROGNAME} <field_unit>
+
+  Examples:     ${PROGNAME} album_name
+                ${PROGNAME} artist_url
+                ${PROGNAME} license_name
+
+  Run \`${PROGNAME} api\` to view the list of available units and fields.
+EOHELP
+	exit 1
+fi
+
+if [ "x$1" = "xapi" ]; then
+	less << EOAPI
+################
+jamendo.get2 api
+################
+
+Fields/Unit availability
+========================
+
+This table details the availability of the most common fields. Additional
+fields can be found below, for each unit.
+
+  Fields /    album file artist license playlist review tag track user location usergroup
+    Units
+     id       Y     Y    Y      Y       Y        Y      Y   Y     Y    Y        Y
+    idstr     N     N    Y      N       N        N      Y   N     Y    N        Y
+    name      Y     Y    Y      Y       Y        Y      Y   Y     Y    N        Y
+     url      Y     N    Y      Y       Y        Y      Y   Y     Y    N        Y
+    image     Y     N    Y      Y       N        N      N   Y     Y    N        Y
+    dates     Y     N    Y      N       Y        Y      N   Y     Y    N        Y
+    text      N     N    N      N       N        Y      N   Y     N    N        Y
+    lang      N     N    N      N       N        Y      N   Y     Y    N        N
+    type      N     Y    N      N       N        N      Y   N     N    Y        Y
+    class     Y     Y    N      Y       N        N      N   N     N    N        N
+  duration    Y     N    N      N       Y        N      N   N     N    N        N
+    ahref     same as url
+ ahrefidstr   same as url+idstr
+  ahrefname   same as url+name
+
+unit artist
+===========
+
+targets description            examples
+------- ---------------------- -----------------------------------------------
+id      numeric id of the      Both : 5, Madame Olga : 2464
+        artist
+idstr   string id of the       Both : both, Madame Olga : madameolga
+        artist
+        Display name of the
+name    artist. different of   "Both", "Madame Olga"
+        idstr
+        link to the image of   Both : http://img.jamendo.com/artists/b/
+image   the artist             both.jpg, Madame Olga : http://img.jamendo.com/
+                               artists/m/madameolga.jpg
+url     link to the page of    Both : http://www.jamendo.com/artist/both
+        the artist on Jamendo
+mbgid   String id of the       Both : 0781a3f3-645c-45d1-a84f-76b4e4decf6d
+        artist on MusicBrainz
+mbid    Integer id of the      Both : 263632
+        artist on MusicBrainz
+        Description of the     "Both" : "Eclectick Rock", "Madame Olga" :
+genre   artist (written by the "Fusion-Rock-Electro"
+        artist)
+
+unit album
+==========
+
+targets  description  examples
+-------- ------------ ---------------------------------------------------------
+id       numeric id   "Simple Exercice" : 33
+         of the album
+name     name of the  "Simple Exercice"
+         album
+         link to the  "Simple Exercice" : http://img.jamendo.com/albums/33/
+image    cover of the covers/1.100.jpg
+         album
+         link to the
+url      page of the  "Simple Exercice" : http://www.jamendo.com/album/33
+         album on
+         Jamendo
+         Total length
+duration of the album "Simple Exercice" : 1586 (seconds)
+         (in seconds)
+         Description
+genre    of the album "Simple Exercice" : "Rock e'clectique"
+         (written by
+         the artist)
+         array of
+         dates,
+         contains
+         date of      "Simple Exercice" :
+dates    publication  "validation":"2005-05-20T12:36:20+01",
+         (upload),    "release":"2004-12-28T18:46:23+01","public":"0000-00-00",
+         date of      "year":"2005"
+         validation,
+         and date of
+         release
+
+unit file
+=========
+
+targets    description examples
+---------- ----------- --------------------------------------------------------------------
+id         numeric id  "Simple Exercice" archive in MP3 : 3243061
+           of the file
+name       name of the "Simple Exercice" archive in MP3 : "Both - Simple Exercice --
+           file        Jamendo - MP3 VBR 192k - 2004.12.28 [www.jamendo.com].zip"
+type       type of the "Simple Exercice" archive in MP3 : "archive"
+           file
+           class of
+class      the format  5 Possible values : "mp31", "mp32", "mp34", "ogg2", "ogg3"
+           used in the
+           file
+           url of the  "Simple Exercice" archive in MP3 : http://imgjam.com/torrents/album/
+bittorrent torrent of  /33/33/
+           the file    33-mp32.torrentBoth%20-%20Simple%20Exercice%20--%20Jamendo%20-
+                       %20MP3%20VBR%20192k%20-%202004.12.28%20%5Bwww.jamendo.com%5D.torrent
+           ed2k link   "Simple Exercice" archive in MP3 : ed2k://|file|
+ed2k       for the     Both.-.Simple.Exercice.--.Jamendo.-.
+           file        MP3.VBR.192k.-.2004.12.28.[www.jamendo.com].zip
+                       |35842536|83f288c72ff263b82117daaec543ebe5|/
+
+unit playlist
+=============
+
+targets  description                       examples
+-------- --------------------------------- -----------------------------
+id       numeric id of the playlist        32582
+name     name of the playlist              "Playlists2007_iLikeIt"
+duration length of the playlist (in        "Playlists2007_iLikeIt" : 310
+         seconds)                          (seconds)
+
+unit track
+==========
+
+targets  description            examples
+-------- ---------------------- -----------------------------------------------
+id       numeric id of the      "Tout se passera bien" : 108254
+         track
+name     name of the track      "Tout se passera bien"
+duration length of the track    "Tout se passera bien" : 310 (seconds)
+         (in seconds)
+         url of the stream for  "Tout se passera bien" : http://
+         the track (format mp31 stream28.jamendo.com/stream/108254/mp31/
+stream   by default, specify    03%20-%20Madame%20Olga%20-%20Madame%20Olga
+         streamencoding         %20-%2003%20-%20Tout%20se%20passera%20bien.mp3?
+         parameter for other    u=0&h=7d823101bb
+         formats)
+         link to the page of    "Tout se passera bien" : http://www.jamendo.com
+url      the track on Jamendo   /track/108254
+         (lyrics)
+albumnum track number in album  "Tout se passera bien" : 2
+
+unit tag
+========
+
+targets description                                          examples
+------- ---------------------------------------------------- ----------------
+id      numeric id of the tag                                "rock" : 23
+name    name of the tag                                      "rock"
+idstr   same as name
+        weight of the tag.
+weight  this target is available only if you use a           number between 0
+        tag-related relation                                 and 1
+        like artist_tag, album_tag,...
+
+unit License
+============
+
+targets description                    examples
+------- ------------------------------ ----------------------------------------
+id      numeric id of the license (    "http://creativecommons.org/licenses/
+        according to our database)     by-nc-nd/2.0/fr/" : 49
+class   class of the license           4 possible values : "artlibre",
+                                       "cc_standard", "cc_recombo", "multiple"
+name    name of the license            "Attribution-Noncommercial-No Derivative
+                                       Works 2.0 France"
+url     url of the license             "http://creativecommons.org/licenses/
+                                       by-nc-nd/2.0/fr/"
+
+unit user
+=========
+
+targets description                           examples
+------- ------------------------------------- ---------------------------------
+id      numeric id of the user
+idstr   string id of the user (its login)     "pierrotsmnrd"
+name    name of the user                      "Pierre-Olivier"
+lang    lang of the user                      "fr", "en", "sv",...
+image   url of the avatar of the user         http://img.jamendo.com/avatars/89
+                                              /4089.100.jpg
+dates   array containing the date of          "pierrotsmnrd" :
+        inscription of the user               2005-08-30T19:50:36+01
+
+unit review
+===========
+
+targets description                                    examples
+------- ---------------------------------------------- ------------------------
+id      numeric id of the review                       59231
+name    title of the review                            "this album is wonderful
+                                                       !!"
+text    text of the review                             "yes, really, this album
+                                                       is wonderful"
+rating  rating of the review                           number between 0 and 10
+lang    lang the review is written in                  "fr", "en", "sv",...
+        array containing the date when the review has
+dates   been added, and when it has been updated for   "2005-08-30T19:50:36+01"
+        the last time
+
+unit radio
+==========
+
+targets  description                     examples
+-------- ------------------------------- --------------------------------
+id       numeric id of the radio         59231
+name     title of the radio              "doc.pilot"
+image    image of the radio              http://imgjam.com/radios/hiphop/
+                                         hiphop.100.jpg
+weight   unknown - seems to be 0 in most
+         cases
+duration unknown - seems to be 0 in most
+         cases
+idstr    unknown - identical with name
+EOAPI
+	exit 1
+fi
+
+# get current track url with mpc
+STREAM_URL="$(mpc -f '%file%' | head -n 1 2>/dev/null)"
+
+# quit if the track is not a valid jamendo stream url (or if STREAM_URL is blank)
+[[ "$STREAM_URL" == http*jamendo*id* ]] || exit 1
+
+# keep only the track id
+TRACK_ID=${STREAM_URL%&*} # drop text after '&'
+TRACK_ID=${STREAM_URL#*=} # drop text before '='
+
+# use Jamendo get2 api to get the infos
+DATA="$(wget -O- "http://api.jamendo.com/get2/$1/track/plain/?id=$TRACK_ID" 2>/dev/null)"
+[ -z "$DATA" ] && exit 1
+
+echo "$DATA"

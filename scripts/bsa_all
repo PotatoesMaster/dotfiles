@@ -1,0 +1,28 @@
+#!/bin/zsh
+
+if [[ $# != 3 ]]; then
+    cat <<EOF
+An helper script for OpenMW bsatool
+Usage:
+  bsa_all <archive.bsa> <dest_directory> <namepart>
+EOF
+    exit 1
+fi
+
+archive="`readlink -e "$1"`"
+targetdir="`readlink -e "$2"`"
+namepart="$3"
+
+function extract() {
+	# create dir
+	dirname="${1#\\*}"
+	newdir="$targetdir/${dirname//\\//}"
+	mkdir -p "$newdir"
+	cd "$newdir"
+
+	bsatool "$archive" -x "$1"
+}
+
+bsatool -l "$archive" | while read -r i a; do
+	[[ "$i" = *"$3"* ]] && extract "$i"
+done

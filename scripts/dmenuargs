@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Another wrapper for dmenu.
+# Open dmenu with menu items from command line arguments.
+#
+# Usage:
+#   dmenuargs [<options> --] item1 [item2 [item3 ...]]
+# Options are passed as is to dmenu.
+
+menu_items () {
+	items=
+	while [[ $# > 0 ]]; do
+		items="$items${1//\\/\\\\}\n"
+		shift
+	done
+	printf -- "$items"
+}
+
+dmenu_options=()
+while [[ $# > 0 ]]; do
+	if [[ "$1" == "--" ]]; then
+		doubledash_found=1
+		shift
+		break
+	fi
+	dmenu_options+=("$1")
+	shift
+done
+
+if [[ $doubledash_found ]]; then
+	menu_items $@ | dmenu "${dmenu_options[@]}"
+else
+	menu_items "${dmenu_options[@]}" | dmenu
+fi

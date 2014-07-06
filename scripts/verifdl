@@ -1,0 +1,19 @@
+#!/bin/zsh
+
+if [ $# -lt 2 ]
+then
+	cat <<EOF
+Usage: verifdl start end
+
+Pass two number, a list of files matching a number inbetween are displayed.
+Numbers that do not match any file are displayed in red bold font.
+Useful to check the completness of a set of numbered files, hence the name.
+EOF
+	exit
+fi
+
+list="`ls`"
+for i in {$1..$2}
+do
+	echo "$list" | grep -e "$i" || echo "\e[31;1m >>> $i\e[0m"
+done

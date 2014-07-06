@@ -1,0 +1,73 @@
+#!/usr/bin/env python
+#
+# latex-tree
+# Generates the latex code for a tree figure (using a tikzpicture block).
+#
+# example input:
+#  root
+#    leaf1
+#      sub1
+#      sub2
+#    leaf2
+#
+# output generated:
+#  \begin{tikzpicture}'
+#    \node{root}
+#      child {node {leaf1}
+#        child {node {sub1}}
+#        child {node {sub2}}}
+#      child {node {leaf2}}
+#    ;
+#  \end{tikzpicture}
+
+import sys
+
+def usage():
+    print("usage: latex-tree <file>", file=sys.stderr)
+    sys.exit(1)
+
+def error(text):
+    print('Error: ' + text, file=sys.stderr)
+    sys.exit(2)
+
+def file_open(path):
+    if path == '-':
+        return sys.stdin
+    else:
+        return open(path)
+
+if len(sys.argv) != 2:
+    usage()
+
+start = True
+indent = 0
+
+with file_open(sys.argv[1]) as f:
+    print("\\begin{tikzpicture}'")
+    for line in f.readlines():
+        i=0
+        while line[i] == '\t':
+            i += 1
+
+        line = line.strip()
+
+        if not line:
+            continue
+
+        if start:
+            start = False
+            print('\t\\node{' + line + '}', end='')
+        else:
+            if indent > i:
+                print('}' * (indent - i + 1), end='')
+            if indent == i:
+                print('}', end='')
+            elif i > indent + 1:
+                error('indentation error ')
+
+            print('\n' + ('\t' * i) + '\tchild {node {' + line +'}',end='')
+
+        indent = i
+
+    print('}' * indent)
+    print('\t;\n\\end{tikzpicture}')
