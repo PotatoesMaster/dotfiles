@@ -43,11 +43,4 @@ fdfmdaemon.py &
 dunst &
 
 # For use with slim to select wm
-case "${1-i3}" in
-	i3)
-		exec i3 &>/dev/null
-		;;
-	other) # place-holder
-		exec other &>/dev/null
-		;;
-esac
+exec "${1-i3}"
