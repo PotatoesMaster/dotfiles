@@ -37,7 +37,7 @@ commands = {
         'qplay': "urxvt -e qplay {sel}",
         'qchoose': "urxvt -e qchoose {sel}",
         'vimcurl': "urxvt -e sh -c 'curl {sel} | vim -'",
-        'mpv': 'urxvt -e mpv -cache 30000 -cache-min 2 -cache-seek-min 2 {sel}',
+        'mpv': 'urxvt -e mpv --cache 30000 --cache-initial 2 --cache-seek-min 2 {sel}',
         'editsel': "urxvt -e sh -c 'xsel -o | vipe | xsel -i'",
         'timidity': 'urxvt -e timidity -ig {sel}',
         'torrent': 'cd ~/downloads/torrents/watch && wget --trust-server-names --content-disposition {sel}'
