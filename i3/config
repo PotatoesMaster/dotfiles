@@ -131,10 +131,10 @@ bindsym XF86PowerOff exec $i dmshutdown
 bindsym Shift+XF86PowerOff exec $i cputwist
 
 # multimedia keys
-bindsym XF86AudioNext exec $i ncmpcpp next
-bindsym XF86AudioPlay exec $i ncmpcpp toggle
+bindsym XF86AudioNext exec $i mpc next
+bindsym XF86AudioPlay exec $i mpc toggle
 bindsym Shift+XF86AudioPlay exec $i urxvt -e ncmpcpp
-bindsym XF86AudioPrev exec $i ncmpcpp prev
+bindsym XF86AudioPrev exec $i mpc prev
 bindsym XF86AudioStop exec $i mpc && mpd --kill || mpd
 
 # xrandr
@@ -144,12 +144,12 @@ bindsym Mod5+F8 exec $i razorxrandr
 # add current playing song to file
 bindsym Mod5+Ctrl+Down exec $i marksong
 
-# ncmpcpp
-bindsym Mod5+Left exec $i ncmpcpp prev
+# mpd controls (AltGr based)
+bindsym Mod5+Left exec $i mpc prev
 bindsym Mod5+Shift+Left exec $i mpc seek -10
-bindsym Mod5+Right exec $i ncmpcpp next
+bindsym Mod5+Right exec $i mpc next
 bindsym Mod5+Shift+Right exec $i mpc seek +10
-bindsym Mod5+Down exec $i ncmpcpp toggle
+bindsym Mod5+Down exec $i mpc toggle
 bindsym Mod5+Shift+Down exec $i urxvt -e ncmpcpp
 bindsym Mod5+Up exec $i mpc && mpd --kill || mpd
 
