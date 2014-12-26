@@ -6,5 +6,5 @@
 if [ -z "$DISPLAY" ]; then
 	slmenu "$@"
 else
-	/usr/bin/dmenu -nb \#000 -nf \#AAA -sb \#"$I3_COLOR" -sf \#000 $@
+	/usr/bin/dmenu -nb \#000 -nf \#AAA -sb \#"$I3_COLOR" -sf \#000 "$@"
 fi
