@@ -17,7 +17,7 @@ set guifont=monofur\ 13
 
 " Automatically indent, and do not try to be smart
 " (prefer filetype based indent)
-set autoindent nosmartindent
+set autoindent nosmartindent breakindent
 " Disable implicit use of X clipboard
 set clipboard=exclude:cons\|linux
 
