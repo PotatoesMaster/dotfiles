@@ -6,7 +6,6 @@ browser_display_mode = "columns"
 search_engine_display_mode = "columns"
 tag_editor_extended_numeration = "no"
 user_interface = "alternative"
-display_screens_numbers_on_start = "no"
 mouse_list_scroll_whole_page = "no"
 
 # Color of empty tag marker.
