@@ -17,28 +17,15 @@ function err () {
 scans
 
 # get number of the last chapter out
-#kai_out="$(linkgrab Kl | tail -n 1)" || err
-ken_out="$(linkgrab kl | head -n 1)" || err
 bl_out="$(linkgrab bll | head -n 1)" || err
 
-echo "Last Kenichi chap is $ken_out"
 echo "Last Blood Lad chap is $bl_out"
 
 # get number of the last downloaded chapter
-#kai_dl="$(actual_nb 'kaibutsu oujo')" || err
-ken_dl="$(actual_nb kenichi)" || err
 bl_dl="$(actual_nb 'Blood Lad')" || err
 
 # create the arguments for each chap to download
 args=
-#if [ "$kai_out" != "" ] && [ "$kai_out" -gt "$kai_dl" ]; then
-#	args+="K{$(($kai_dl + 1))..$kai_out}"
-#	echo Kaibutsu, new chaps: {$(($kai_dl + 1))..$kai_out}
-#fi
-if [ "$ken_out" != "" ] && [ "$ken_out" -gt "$ken_dl" ]; then
-	args+=" k{$(($ken_dl + 1))..$ken_out}"
-	echo Kenichi, new chaps: {$(($ken_dl + 1))..$ken_out}
-fi
 if [ "$bl_out" != "" ] && [ "$bl_out" -gt "$bl_dl" ]; then
 	args+=" bl{$(($bl_dl + 1))..$bl_out}"
 	echo Blood Lad, new chaps: {$(($bl_dl + 1))..$bl_out}
@@ -50,12 +37,4 @@ if [ -n "$args" ]; then
 	eval linkgrab ${args}
 else
 	echo "No new chapters."
-fi
-
-# update ranger tags
-#if [ "$kai_out" -gt "$kai_dl" -a -e ~/scans/kaibutsu\ oujo/$kai_out ]; then
-#    rantag maybe_set_play ~/scans/kaibutsu\ oujo/$kai_out
-#fi
-if [ "$ken_out" -gt "$ken_dl" -a -e ~/scans/kenichi/$ken_out.cbz ]; then
-    rantag maybe_set_play ~/scans/kenichi/$ken_out.cbz
 fi
