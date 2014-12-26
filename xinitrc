@@ -43,4 +43,4 @@ fdfmdaemon.py &
 dunst &
 
 # For use with slim to select wm
-exec "${1-i3}"
+exec "${1-i3}" &>/dev/null
