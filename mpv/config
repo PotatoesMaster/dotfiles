@@ -3,11 +3,12 @@ msg-color = yes
 
 # Video output
 vo = opengl,xv,x11
-framedrop = yes
+framedrop = decoder+vo
 
 # Audio output
 ao = alsa,oss
 audio-samplerate = 48000
+audio-display = no
 
 # Fullscreen
 fullscreen = yes
