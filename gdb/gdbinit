@@ -6,7 +6,7 @@ set print vtbl on
 set print demangle on
 set demangle-style gnu-v3
 
-set prompt \033[36m gdb \033[32m$ \033[0m
+set prompt gdb>>>
 
 # These commands provide facilities for debugging program using data structures
 # from queue.h. I certainly did not write it myself, but I do not remember where
