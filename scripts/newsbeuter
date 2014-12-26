@@ -1,0 +1,3 @@
+#!/bin/sh
+sqlite3 ~/.local/share/newsbeuter/cache.db VACUUM
+exec /usr/bin/newsbeuter
