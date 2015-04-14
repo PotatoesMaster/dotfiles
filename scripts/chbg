@@ -11,5 +11,5 @@ then
 		feh --bg-scale $HOME/.slim/background.jpg || \
 		echo There was a problem...
 else
-  feh -z $HOME/.backgrounds -A 'rm '$HOME'/.slim/background.jpg && ln -s "%f" '$HOME'/.slim/background.jpg && feh --bg-scale '$HOME'/.slim/background.jpg && pkill feh'
+  feh -z $HOME/images/backgrounds -A 'ln -sf "%f" '$HOME'/.slim/background.jpg && feh --bg-scale '$HOME'/.slim/background.jpg && pkill feh'
 fi
