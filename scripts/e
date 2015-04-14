@@ -58,11 +58,11 @@ xc)  $EDITOR ~/.XCompose
 ;;
 xd)  $EDITOR ~/.Xdefaults
 ;;
-xi)  $EDITOR ~/.xinitrc
-;;
 xk)  $EDITOR ~/.kbd-layout/custom-azerty.xkb
 ;;
 xm)  $EDITOR ~/.xmod
+;;
+xp)  $EDITOR ~/.xprofile
 ;;
 z)   $EDITOR ~/.zshrc ~/.zsh/{alias,funcs}.zsh
 ;;
