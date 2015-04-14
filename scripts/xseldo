@@ -33,9 +33,10 @@ else:
 print(selection)
 
 commands = {
-        'youtube-dl': "urxvt -e sh -c 'cd ~/downloads/quvi && youtube-dl {sel}'",
+        'youtube-dl': "urxvt -e sh -c 'cd ~/downloads/quvi && youtube-dl --write-sub {sel}'",
         'vimcurl': "urxvt -e sh -c 'curl {sel} | vim -'",
         'mpv': 'urxvt -e mpv --ytdl --cache 30000 --cache-initial 2 --cache-seek-min 2 {sel}',
+        'music': 'urxvt -e mpv --ytdl --ytdl-format=bestaudio --cache 30000 --cache-initial 2 --cache-seek-min 2 {sel}',
         'editsel': "urxvt -e sh -c 'xsel -o | vipe | xsel -i'",
         'timidity': 'urxvt -e timidity -ig {sel}',
         'torrent': 'cd ~/downloads/torrents/watch && wget --trust-server-names --content-disposition {sel}'
@@ -50,7 +51,7 @@ if selection.startswith('http') and not '\n' in selection:
 
     if Popen(['youtube-dl', '-s', selection]).wait() == 0:
         # youtube-dl agrees to handle it
-        choices = ['mpv', 'youtube-dl'] + choices
+        choices = ['mpv', 'music', 'youtube-dl'] + choices
     elif selection.lower().endswith(('.avi', '.ogg', '.mp3', '.ogv', '.mov', '.mp4', '.ogm', '.webm')):
         choices.insert(0, 'mpv')
 
