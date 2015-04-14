@@ -38,8 +38,7 @@ feedlist-format " %n %8u %t"
 notify-format "Synchronisation terminée, %f fils non-lus (%n articles non-lus)"
 
 # Hack to separate feeds into categories
-highlight feedlist "╴.*" green default
-highlight feedlist "─+.*" blue default
+highlight feedlist "─+╴.*" color237 default
 
 ignore-mode display
 
