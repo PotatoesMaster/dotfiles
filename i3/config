@@ -138,7 +138,6 @@ bindsym XF86AudioPrev exec $i mpc prev
 bindsym XF86AudioStop exec $i mpc && mpd --kill || mpd
 
 # xrandr
-#bindsym Mod5+F8 exec $i xrandr_menu
 bindsym Mod5+F8 exec $i razorxrandr
 
 # add current playing song to file

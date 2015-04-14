@@ -45,9 +45,6 @@ Bundle 'tpope/vim-surround'
 " fancy status line
 Bundle 'bling/vim-airline'
 
-" Emacs-style yank ring
-Bundle 'vim-scripts/YankRing.vim'
-
 " vcs diff in the sign column
 Bundle 'mhinz/vim-signify'
 
@@ -56,9 +53,6 @@ Bundle 'ervandew/supertab'
 
 " Sublime Text style multiple selections
 Bundle 'terryma/vim-multiple-cursors'
-
-" plugin that displays tags in a window
-Bundle 'majutsushi/tagbar'
 
 " syntax for Rockbox theme files
 Bundle 'vim-scripts/wps.vim'
