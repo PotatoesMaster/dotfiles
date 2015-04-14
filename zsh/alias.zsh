@@ -33,6 +33,11 @@ alias maj='yaourt -Syu --aur --devel'
 alias sctl='sudo systemctl'
 alias sudo='sudo nopasssudo'
 alias pi='ping 8.8.8.8'
+alias kid3='kid3-qt'
+alias bip='sfxr'
+alias blip='sfxr'
+alias gling='sfxr'
+alias epub-edit='sigil'
 
 # always sudo
 # ===========
