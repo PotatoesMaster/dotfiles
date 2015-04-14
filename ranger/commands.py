@@ -9,7 +9,7 @@ from ranger.core.loader import CommandLoader
 
 # hash_to_bookmarks
 from ranger.ext.spawn import spawn
-from ranger.fsobject import Directory
+from ranger.container.directory import Directory
 import re
 
 class cd(cd):
@@ -98,7 +98,7 @@ class grep(Command):
         if self.rest(1):
             action = self.command[:]
             action.extend([self.rest(1)])
-            action.extend(f.path for f in self.fm.env.get_selection())
+            action.extend(f.path for f in self.fm.thistab.get_selection())
             self.fm.execute_command(action, flags='p')
 
 class grepi(grep):
@@ -250,7 +250,7 @@ class pasta(Command):
     def execute(self):
         from os.path import join, expanduser
 
-        filename = join(self.fm.env.cwd.path, expanduser(self.rest(1)))
+        filename = join(self.fm.thisdir.path, expanduser(self.rest(1)))
         self.fm.execute_command('xsel -o > "' + filename + '"')
 
 
@@ -265,7 +265,7 @@ class md(Command):
         from os.path import join, lexists
         from os import makedirs
 
-        dirname = join(self.fm.env.cwd.path, self.rest(1))
+        dirname = join(self.fm.thisdir.path, self.rest(1))
         if not lexists(dirname):
             makedirs(dirname)
         self.fm.thisdir.load_content(schedule=False)
@@ -285,7 +285,7 @@ class mds(Command):
         from os import makedirs
 
         for dirname in self.args[1:]:
-            dirpath = join(self.fm.env.cwd.path, dirname)
+            dirpath = join(self.fm.thisdir.path, dirname)
             if not lexists(dirpath):
                 makedirs(dirpath)
 
@@ -299,7 +299,7 @@ class diff(Command):
 class diffyanked(Command):
     # vimdiff yanked files
     def execute(self):
-        self.fm.execute_command(['vimdiff'] + [f.path for f in self.fm.env.copy])
+        self.fm.execute_command(['vimdiff'] + [f.path for f in self.fm.copy_buffer])
 
 
 class feh(Command):
@@ -320,14 +320,14 @@ class feh(Command):
 class compress(Command):
     def execute(self):
         """ Compress marked files to current directory """
-        cwd = self.fm.env.cwd
+        cwd = self.fm.thisdir
         marked_files = cwd.get_selection()
 
         if not marked_files:
             return
 
         def refresh(_):
-            cwd = self.fm.env.get_directory(original_path)
+            cwd = self.fm.get_directory(original_path)
             cwd.load_content()
 
         original_path = cwd.path
@@ -349,17 +349,17 @@ class compress(Command):
 class compressyanked(Command):
     def execute(self):
         """ Compress copied files to current directory """
-        copied_files = tuple(self.fm.env.copy)
+        copied_files = tuple(self.fm.copy_buffer)
 
         if not copied_files:
             return
 
         def refresh(_):
-            cwd = self.fm.env.get_directory(original_path)
+            cwd = self.fm.get_directory(original_path)
             cwd.load_content()
 
         one_file = copied_files[0]
-        cwd = self.fm.env.cwd
+        cwd = self.fm.thisdir
         original_path = cwd.path
         parts = self.line.split()
         au_flags = parts[1:]
@@ -368,8 +368,8 @@ class compressyanked(Command):
         obj = CommandLoader(args=['apack'] + au_flags + \
             [os.path.relpath(f.path, cwd.path) for f in copied_files], descr=descr)
 
-        self.fm.env.copy.clear()
-        self.fm.env.cut = False
+        self.fm.copy_buffer.clear()
+        self.fm.do_cut = False
 
         obj.signal_bind('after', refresh)
         self.fm.loader.add(obj)
@@ -383,24 +383,24 @@ class compressyanked(Command):
 class extractthere(Command):
     def execute(self):
         """ Extract copied files to current directory """
-        copied_files = tuple(self.fm.env.copy)
+        copied_files = tuple(self.fm.copy_buffer)
 
         if not copied_files:
             return
 
         def refresh(_):
-            cwd = self.fm.env.get_directory(original_path)
+            cwd = self.fm.get_directory(original_path)
             cwd.load_content()
 
         one_file = copied_files[0]
-        cwd = self.fm.env.cwd
+        cwd = self.fm.thisdir
         original_path = cwd.path
         au_flags = ['-X', cwd.path]
         au_flags += self.line.split()[1:]
         au_flags += ['-e']
 
-        self.fm.env.copy.clear()
-        self.fm.env.cut = False
+        self.fm.copy_buffer.clear()
+        self.fm.do_cut = False
         if len(copied_files) == 1:
             descr = "extracting: " + os.path.basename(one_file.path)
         else:
@@ -418,7 +418,7 @@ class play_anime(Command):
             self.fm.notify("You can't do that with files selected.", bad=True)
             return
 
-        cwd = self.fm.env.cwd
+        cwd = self.fm.thisdir
         # select next tagged file, save it to play later
         self.fm.execute_console("search_next order=tag")
         selection = cwd.pointed_obj
@@ -432,7 +432,7 @@ class play_anime(Command):
             self.fm.move(left=1)
             # as we will play the last file, we can assume
             # the directory state will go from play (>) to paused (")
-            if self.fm.tags.tags.get(self.fm.env.cwd.pointed_obj.path) == '>':
+            if self.fm.tags.tags.get(self.fm.thisdir.pointed_obj.path) == '>':
                 self.fm.tag_toggle(tag='"', movedown=False)
         else:
             # there is a file below, mark it to play it next time
@@ -457,7 +457,7 @@ class store_file(Command):
     "Store current selected file"
     stored = None
     def execute(self):
-        cwd = self.fm.env.cwd
+        cwd = self.fm.thisdir
         selection = cwd.pointed_obj
         store_file.stored = selection
 
@@ -467,7 +467,7 @@ class copy_as_and_link(Command):
         if not store_file.stored:
             return
 
-        cwd = self.fm.env.cwd
+        cwd = self.fm.thisdir
         new_name = self.rest(1)
 
         if not new_name:
@@ -500,7 +500,7 @@ class random(Command):
     def execute(self):
         from random import sample
         nb = int(self.rest(1) or 1)
-        cwd = self.fm.env.cwd
+        cwd = self.fm.thisdir
         population = cwd.marked_items or cwd.files
         elected = sample(population, nb)
         for i in cwd.files:
@@ -512,12 +512,12 @@ class paste_rename(Command):
     """Paste copy buffer content, renaming file"""
 
     def execute(self):
-        copied_files = tuple(self.fm.env.copy)
+        copied_files = tuple(self.fm.copy_buffer)
 
         if not copied_files:
             return
 
-        cwd = self.fm.env.cwd
+        cwd = self.fm.thisdir
         new_name = self.rest(1)
 
         if not new_name:
@@ -525,7 +525,7 @@ class paste_rename(Command):
         # shell cp/mv %c 
 
         def refresh(_):
-            cwd = self.fm.env.get_directory(original_path)
+            cwd = self.fm.get_directory(original_path)
             cwd.load_content()
 
         original_path = cwd.path
@@ -534,9 +534,9 @@ class paste_rename(Command):
         cp_flags = ['--backup=numbered', '-a', '--']
         mv_flags = ['--backup=numbered', '--']
 
-        if self.fm.env.cut:
-            self.fm.env.copy.clear()
-            self.fm.env.cut = False
+        if self.fm.do_cut:
+            self.fm.copy_buffer.clear()
+            self.fm.do_cut = False
             if len(copied_files) == 1:
                 descr = "moving: " + one_file.path
             else:
