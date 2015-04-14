@@ -1,8 +1,5 @@
 #!/bin/bash
 
-feh --bg-scale ~/.slim/background.jpg # display background image
-( rm -rf ~/.trash; mkdir ~/.trash ) & # empty trash
-
 # group can't write and others can nothing
 umask 027
 
@@ -18,6 +15,9 @@ export TERMCMD=urxvt
 export GOPATH="$HOME/sources/go"
 
 export PATH=~/.bin:~/.scripts:"$PATH"
+
+feh --bg-scale -z ~/images/backgrounds # display a random background image
+( rm -rf ~/.trash; mkdir ~/.trash ) & # empty trash
 
 xset +fp /usr/share/fonts/local # add directory to X font path
 xsetroot -cursor_name left_ptr # arrow cursor on root window
