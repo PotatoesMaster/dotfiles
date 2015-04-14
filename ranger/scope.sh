@@ -53,7 +53,7 @@ case "$extension" in
         w3m -dump "$filepath" | head -n $maxln | fmt -s -w $width
         success && exit 4
         ;;
-    torrent)
+    torrent|torrent.added)
         torrentinfo -f "$filepath"
         success && exit 5
         ;;
