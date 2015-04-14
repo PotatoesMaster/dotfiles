@@ -41,6 +41,3 @@ fdfmdaemon.py &
 
 # notifications
 dunst &
-
-# For use with slim to select wm
-exec "${1-i3}" &>/dev/null
