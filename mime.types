@@ -12,6 +12,7 @@ image/dds         dds
 
 # Video
 video/x-binkvideo bik
+video/x-mts       mts
 
 # Audio
 audio/x-gbs       gbs
