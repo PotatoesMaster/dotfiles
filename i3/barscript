@@ -5,9 +5,6 @@
 
 killall conky
 
-# The first instance displays infos in its own window.
-nice -n 19 conky -d -c ~/.conkyrc &>/dev/null
-
-# The second outputs to stdout for i3bar to display it.
+# Outputs to stdout for i3bar to display it.
 echo '{"version": 1}[[],'
 exec nice -n 19 conky -c ~/.i3/conky.conf
