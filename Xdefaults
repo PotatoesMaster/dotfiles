@@ -106,11 +106,11 @@ URxvt.boldFont:          xft:erusfont:bold:pixelsize=9:antialias=false
 ! pseudo-zooming with Ctrl-F*
 URxvt.keysym.Control-F1: command:\033]710;xft:fixed:pixelsize=6:antialias=false\007\033]711;xft:fixed:pixelsize=6:antialias=false\007
 URxvt.keysym.Control-F2: command:\033]710;xft:Terminus:pixelsize=9:antialias=false,xft:erusfont:pixelsize=9:antialias=false,xft:clean:pixelsize=9:antialias=false\007\033]711;xft:erusfont:bold:pixelsize=9:antialias=false\007
-URxvt.keysym.Control-F3: command:\033]710;xft:Inconsolata:pixelsize=18:antialias=true\007\033]711;xft:Deja Vu Sans Mono:bold:pixelsize=16:antialias=true\007
-URxvt.keysym.Control-F4: command:\033]710;xft:Inconsolata:pixelsize=22:antialias=true\007\033]711;xft:Deja Vu Sans Mono:bold:pixelsize=20:antialias=true\007
-URxvt.keysym.Control-F5: command:\033]710;xft:Inconsolata:pixelsize=32:antialias=true\007\033]711;xft:Deja Vu Sans Mono:bold:pixelsize=30:antialias=true\007
-URxvt.keysym.Control-F6: command:\033]710;xft:Inconsolata:pixelsize=48:antialias=true\007\033]711;xft:Inconsolata:bold:pixelsize=48:antialias=true\007
-URxvt.keysym.Control-F7: command:\033]710;xft:Inconsolata:pixelsize=64:antialias=true\007\033]711;xft:Inconsolata:bold:pixelsize=64:antialias=true\007
+
+URxvt.keysym.Control-F3: command:\033]710;xft:Deja Vu Sans Mono:pixelsize=12:antialias=true\007\033]711;xft:Deja Vu Sans Mono:bold:pixelsize=12:antialias=true\007
+URxvt.keysym.Control-F4: command:\033]710;xft:Deja Vu Sans Mono:pixelsize=16:antialias=true\007\033]711;xft:Deja Vu Sans Mono:bold:pixelsize=16:antialias=true\007
+URxvt.keysym.Control-F5: command:\033]710;xft:Deja Vu Sans Mono:pixelsize=22:antialias=true\007\033]711;xft:Deja Vu Sans Mono:bold:pixelsize=20:antialias=true\007
+URxvt.keysym.Control-F6: command:\033]710;xft:Deja Vu Sans Mono:pixelsize=32:antialias=true\007\033]711;xft:Deja Vu Sans Mono:bold:pixelsize=30:antialias=true\007
 
 ! keypad fix
 URxvt.keysym.KP_Prior:    command:\033]720;100\007
