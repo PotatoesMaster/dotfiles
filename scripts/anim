@@ -18,6 +18,10 @@
 #  Untagged directories are full series I have not started to watch.
 #
 #  Directories tagged with ?, -, +, x and # are not displayed in the list.
+#  Directories containing no regular files (only other directories and
+#  symlinks) are not displayed neither. This permits to hide directories
+#  synced with Git annex, if the content is not present in this directory
+#  but only in a distant repo.
 
 MAIN_DIR="$HOME/animes"
 
@@ -48,6 +52,9 @@ do
 	elif [ "$pause[$i]" = 1 ] ; then
 		print -Pn "%F{1}\" "
 	else
+        # do not display directories with only symlinks
+        [[ -z $(find "$i" -type f -print -quit) ]] && continue
+
 		print -Pn "%F{0}- "
 	fi
 	print -P "%F{6}`ls "$i" | perl -ne 'print "$1\n" for /(\d+)[^\d]*\.[^\.]+/' \
