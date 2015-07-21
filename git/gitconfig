@@ -11,9 +11,6 @@
 	co = checkout
 	st = status
 	br = branch
-	pl = pull
-	ph = push
-	k = !gitk
 
 	# cancel changes to specified files
 	discard = checkout --
@@ -22,11 +19,9 @@
 
 	# comit
 	c = commit -v
-	ca = commit -a -v
-	am = commit --amend -v
 
 	# unstage
-	unadd = reset HEAD
+	unadd = reset --
 
 	# diff
 	d = diff --patch-with-stat --patience
@@ -71,8 +66,8 @@
 	fap = fetch --all --prune
 
 	# stolen from http://log.winsos.net/2013/02/06/ma-configuration-git.html
-	addm = !git-ls-files -m -z | xargs -0 git-add && git status
-	addu = !git-ls-files -o --exclude-standard -z | xargs -0 git-add && git status
+	addmodified = !git-ls-files -m -z | xargs -0 git-add && git status
+	adduntracked = !git-ls-files -o --exclude-standard -z | xargs -0 git-add && git status
 	rmm = !git ls-files -d -z | xargs -0 git-rm && git status
 
 	serve = daemon --reuseaddr --verbose --base-path=. --export-all
