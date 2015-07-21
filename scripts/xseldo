@@ -35,8 +35,8 @@ print(selection)
 commands = {
         'youtube-dl': "urxvt -e sh -c 'cd ~/downloads/quvi && youtube-dl --write-sub {sel}'",
         'vimcurl': "urxvt -e sh -c 'curl {sel} | vim -'",
-        'mpv': 'urxvt -e mpv --ytdl --cache 30000 --cache-initial 2 --cache-seek-min 2 {sel}',
-        'music': 'urxvt -e mpv --ytdl --ytdl-format=bestaudio --cache 30000 --cache-initial 2 --cache-seek-min 2 {sel}',
+        'mpv': 'urxvt -e mpv --ytdl --cache-initial 2 --cache-seek-min 2 {sel}',
+        'music': 'urxvt -e mpv --no-video --ytdl --ytdl-format=bestaudio --cache-initial 2 --cache-seek-min 2 {sel}',
         'editsel': "urxvt -e sh -c 'xsel -o | vipe | xsel -i'",
         'timidity': 'urxvt -e timidity -ig {sel}',
         'torrent': 'cd ~/downloads/torrents/watch && wget --trust-server-names --content-disposition {sel}'
