@@ -64,6 +64,14 @@ class Rantag():
             self.log('file {} has no tag, exiting'.format(filename.__repr__()))
             raise NormalFailure()
 
+    def get_tagged_files(self, tag=None, path=os.curdir):
+        abs_path = os.path.abspath(path)
+        tagged_files = [f for f in self.tags.tags.keys()
+            if f.startswith(abs_path)
+                and (tag is None or self.tags.tags[f] == tag)]
+        for f in sorted(tagged_files):
+            print(f)
+
     def maybe_set_play(self, filename):
         from os.path import dirname
 
