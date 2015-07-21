@@ -24,6 +24,3 @@ screenshot-format = png
 # Soft volume
 softvol = yes
 softvol-max = 200
-
-input-joystick = no
-input-lirc = yes
