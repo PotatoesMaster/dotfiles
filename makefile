@@ -14,8 +14,9 @@ i3_:
 	mkdir -p ~/.i3
 	chmod u+x i3/barscript
 	ln -sf $(MKPATH)/i3/barscript                       ~/.i3/barscript
+	ln -sf $(MKPATH)/i3/blocks_config.lua               ~/.i3/blocks_config.lua
 	ln -sf $(MKPATH)/i3/config                          ~/.i3/config
-	ln -sf $(MKPATH)/i3/conky.conf                      ~/.i3/conky.conf
+	ln -sf $(MKPATH)/i3/conky.lua                       ~/.i3/conky.lua
 
 mpv_:
 	mkdir -p ~/.mpv
