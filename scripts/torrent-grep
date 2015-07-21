@@ -1,0 +1,19 @@
+#!/bin/bash
+
+list_torrents() {
+    find ~/.config/transmission-daemon -type f -name '*.torrent'
+}
+
+magenta=$'\033''[35m'
+cyan=$'\033''[36m'
+reset=$'\033''[0m'
+list_torrents | while read t; do
+    transmission-show "$t" | awk "
+BEGIN {
+    IGNORECASE=1
+}
+tolower(\$0) ~ /$1/ {
+    gsub(/$1/, \"$cyan&$reset\");
+    print \"$magenta${t//\"/\\\"}:$reset\" \$0;
+}"
+done
