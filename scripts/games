@@ -3,6 +3,11 @@
 # menu for games
 
 exe=`dmenu -i -p x << EOF
+riskofrain
+capsized
+hotlinemiami
+hotlinemiami2
+markoftheninja
 darkmod
 mwlauncher
 mwedit

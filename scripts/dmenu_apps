@@ -3,7 +3,6 @@
 # Menu for graphical applications.
 
 exe=`dmenu -i -p x << EOF
-klystrack
 milkytracker
 ariamaestosa
 eclipse
