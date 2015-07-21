@@ -1,0 +1,7 @@
+#!/bin/bash
+if [[ "$1" == "-s" ]]; then
+    shift
+    exec "$@" &>/dev/null &
+else
+    exec "$@" &
+fi

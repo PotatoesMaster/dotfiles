@@ -1,4 +1,4 @@
-feh    -F --hide-pointer -C /usr/share/fonts/TTF/ -M VeraMono/8 --action1 "sh -c 'gimp %n &'"
+feh    -F --hide-pointer -C /usr/share/fonts/TTF/ -M VeraMono/8 --action1 "bgrun -s gimp %n"
 magick -F --hide-pointer -C /usr/share/fonts/TTF/ -M VeraMono/8 --magick-timeout 5
 scan   -F --hide-pointer -C /usr/share/fonts/TTF/ -M VeraMono/8 --zoom 100 -r -d --sort name
 thumbs -F --hide-pointer -C /usr/share/fonts/TTF/ -M VeraMono/8 --thumbnails --cache-thumbnails --thumb-width 128 --thumb-height 128 --limit-width 1024 --sort filename
