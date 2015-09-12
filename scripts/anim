@@ -27,7 +27,7 @@ MAIN_DIR="$HOME/animes"
 
 (( $# >= 1 )) && MAIN_DIR="$1"
 
-typeset -A play pause nop
+typeset -A play pause waiting nop
 
 cat ~/.config/ranger/tagged | while read tag; do
 	case "$tag" in
@@ -37,7 +37,10 @@ cat ~/.config/ranger/tagged | while read tag; do
 		\":$MAIN_DIR/*)
 			pause[${tag#?:$MAIN_DIR/}]=1
 			;;
-		(?|-|+|x|#):$MAIN_DIR/*)
+		\?:$MAIN_DIR/*)
+			waiting[${tag#?:$MAIN_DIR/}]=1
+            ;;
+		(-|+|x|#):$MAIN_DIR/*)
 			nop[${tag#?:$MAIN_DIR/}]=1
 			;;
 	esac
@@ -47,6 +50,8 @@ for i in *(/)
 do
 	if [ "$nop[$i]" = 1 ] ; then
 		continue
+	elif [ "$waiting[$i]" = 1 ] ; then
+		print -Pn "%F{240}? "
 	elif [ "$play[$i]" = 1 ] ; then
 		print -Pn "%F{3}> "
 	elif [ "$pause[$i]" = 1 ] ; then
