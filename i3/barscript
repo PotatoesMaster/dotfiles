@@ -8,4 +8,9 @@ killall conky
 # Outputs to stdout for i3bar to display it.
 echo '{"version": 1}[[],'
 cd ~/.i3
-exec nice -n 19 conky -c conky.lua
+
+# sometimes conky crashes, rerun it if it happens
+while true; do
+    nice -n 19 conky -c conky.lua
+    sleep 1 # just in case
+done
