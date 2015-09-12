@@ -46,5 +46,6 @@ selected_item_prefix = "$8"
 browser_playlist_prefix = "$5→$9 "
 song_columns_list_format = "(5f)[yellow]{l} (25)[cyan]{a} (40)[]{t|f} (30)[red]{b}"
 
+follow_now_playing_lyrics = "yes"
 external_editor = "vim"
 use_console_editor = "yes"
