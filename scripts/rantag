@@ -104,6 +104,18 @@ class Rantag():
         self.tags.add(filename, tag=play_tag)
         self.tags.add(parentpath, tag=play_tag)
 
+        self.refresh()
+
+    def refresh(self):
+        from os import listdir
+
+        for f in listdir('/tmp'):
+            if f.startswith('ranger-ipc.'):
+                try:
+                    with open('/tmp/' + f, 'w') as fdesc:
+                        fdesc.write('eval fm.tags.sync()')
+                except IOError:
+                    pass
 
 if __name__ == '__main__':
     arg = parse_arguments()
