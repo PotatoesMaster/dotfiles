@@ -28,11 +28,6 @@ ncmpcpp_:
 	ln -sf $(MKPATH)/ncmpcpp/config                     ~/.ncmpcpp/config
 	ln -sf $(MKPATH)/ncmpcpp/keys                       ~/.ncmpcpp/keys
 
-pentadactyl_:
-	ln -sf $(MKPATH)/pentadactyl/pentadactylrc          ~/.pentadactylrc
-	mkdir -p ~/.pentadactyl/colors
-	ln -sf $(MKPATH)/pentadactyl/colors/molokai.penta   ~/.pentadactyl/colors/molokai.penta
-
 gdb_:
 	ln -sf $(MKPATH)/gdb/gdbinit                        ~/.gdbinit
 
