@@ -552,25 +552,3 @@ class paste_rename(Command):
 
         obj.signal_bind('after', refresh)
         self.fm.loader.add(obj)
-
-class filter_tag(Command):
-    """
-    :filter_tag <allowed_tags> [reverse]
-
-    Displays only the files whose tag is contained in the given string. If the
-    second parameter is 'reverse', filters out files whose tag is contained in
-    the given string.
-    """
-
-    def execute(self):
-        allowed_tags = self.arg(1)
-        reverse = True if self.arg(2) == 'reverse' else False
-        if not allowed_tags:
-            self.fm.thisdir.inode_type_filter = None
-        else:
-            def tag_filter(file):
-                file_tag = self.fm.tags.tags.get(file.path)
-                tag_in_given_ones = (file_tag is not None) and (allowed_tags.find(file_tag) >= 0)
-                return tag_in_given_ones ^ reverse
-            self.fm.thisdir.inode_type_filter = tag_filter
-        self.fm.thisdir.refilter()
