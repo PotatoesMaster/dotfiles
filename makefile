@@ -94,9 +94,13 @@ ranger_:
 	mkdir -p $(XDG_CONFIG_DIR)/ranger/colorschemes
 	ln -sf $(MKPATH)/ranger/colorschemes/greeny.py      $(XDG_CONFIG_DIR)/ranger/colorschemes/greeny.py
 	mkdir -p $(XDG_CONFIG_DIR)/ranger/plugins
+	ln -sf $(MKPATH)/ranger/plugins/plugin_date_linemode.py      $(XDG_CONFIG_DIR)/ranger/plugins/plugin_date_linemode.py
+	ln -sf $(MKPATH)/ranger/plugins/plugin_ipc.py      $(XDG_CONFIG_DIR)/ranger/plugins/plugin_ipc.py
 	ln -sf $(MKPATH)/ranger/plugins/extra_archives.py   $(XDG_CONFIG_DIR)/ranger/plugins/extra_archives.py
+	ln -sf $(MKPATH)/ranger/plugins/plugin_play_filter.py      $(XDG_CONFIG_DIR)/ranger/plugins/plugin_play_filter.py
 	ln -sf $(MKPATH)/ranger/plugins/vcs_symbols.py      $(XDG_CONFIG_DIR)/ranger/plugins/vcs_symbols.py
 	ln -sf $(MKPATH)/ranger/plugins/w3mimgdisplay_options.py  $(XDG_CONFIG_DIR)/ranger/plugins/w3mimgdisplay_options.py
+	ln -sf $(MKPATH)/ranger/plugins/zsh_expand.py      $(XDG_CONFIG_DIR)/ranger/plugins/zsh_expand.py
 
 scripts_:
 	ln -sf $(MKPATH)/scripts                            $(HOME)/.scripts
